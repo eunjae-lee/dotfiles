@@ -34,6 +34,9 @@ echo "Setting up node.js..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 git clone https://github.com/lukechilds/zsh-nvm "$ZSH_CUSTOM/plugins/zsh-nvm" --depth=1
 
+echo "Setting up yarn..."
+brew install tophat/bar/yvm
+
 brew install wget
 
 apps=(
@@ -42,7 +45,12 @@ apps=(
   spotify
   iterm2
   visual-studio-code
+  karabiner-elements
 )
 
 echo "installing apps with Cask..."
 brew install --cask ${apps[@]}
+
+brew tap homebrew/cask-fonts
+brew install --cask font-jetbrains-mono
+
