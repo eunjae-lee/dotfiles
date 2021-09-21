@@ -80,16 +80,24 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 alias rc="vi ~/.zshrc && source ~/.zshrc"
+
 alias gs="git status"
 alias gac="git add . && git commit -m"
 alias gp="git push"
 alias gpl="git pull"
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gdf="git diff"
+alias gpr="gh pr checkout"
+alias gco="git checkout"
+
 alias y="yarn"
 alias yd="yarn dev || yarn start"
 alias ya="yarn add"
 alias yr="yarn remove"
+alias yt="yarn test"
+alias ytw="yarn test --watch"
+alias yl="yarn lint"
+alias ytc="yarn type-check"
 
 export YVM_DIR=/usr/local/opt/yvm
 [ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh

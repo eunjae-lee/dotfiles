@@ -13,7 +13,7 @@ fi
 brew update
 
 echo "Installing Git..."
-brew install git
+brew install git gh
 
 echo "Setting up dotfiles..."
 git clone git@github.com:eunjae-lee/dotfiles.git .dotfiles
@@ -46,6 +46,7 @@ apps=(
   iterm2
   visual-studio-code
   karabiner-elements
+  discord
 )
 
 echo "installing apps with Cask..."
