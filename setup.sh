@@ -49,6 +49,8 @@ apps=(
   visual-studio-code
   karabiner-elements
   discord
+  iina
+  insomnia
 )
 
 echo "installing apps with Cask..."
