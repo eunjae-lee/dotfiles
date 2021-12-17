@@ -1,0 +1,133 @@
+# espanso configuration file
+
+# This is the default configuration file, change it as you like it
+# You can refer to the official documentation:
+# https://espanso.org/docs/
+
+# Matches are the substitution rules, when you type the "trigger" string
+# it gets replaced by the "replace" string.
+
+# cursor: $|$
+
+# - trigger: ""
+#   replace: ""
+
+matches:
+  - trigger: "zsnp"
+    replace: |
+      - trigger: "$|$"
+        replace: ""
+
+  - trigger: "Batiment"
+    replace: "Bâtiment"
+
+  - trigger: "creme"
+    replace: "crème"
+
+  - trigger: "brulee"
+    replace: "brûlée"
+
+  - trigger: "zemail"
+    replace: "eunjae.mps@gmail.com"
+
+  - trigger: "zphone"
+    replace: "0761657351"
+
+  - trigger: "zzip"
+    replace: "95600"
+
+  - trigger: "zaddr1"
+    replace: "11 Rue Louis Blanc"
+
+  - trigger: "zaddr2"
+    replace: "Bâtiment F / RDC / Interphone 01 / 2ème porte gauche"
+
+  # Abbrs
+  - trigger: "zgtm"
+    replace: "Google Tag Manager"
+
+  - trigger: "zzoom"
+    replace: "https://algolia.zoom.us/my/eunjae"
+
+  - trigger: "zsi"
+    replace: "search-insights"
+
+  - trigger: "zris"
+    replace: "React InstantSearch"
+
+  - trigger: "zis"
+    replace: "InstantSearch.js"
+
+  - trigger: "zvis"
+    replace: "Vue InstantSearch"
+
+  - trigger: "zais"
+    replace: "Angular InstantSearch"
+
+  - trigger: "zds"
+    replace: "Daily Stand-up"
+
+  - trigger: "zjira"
+    replace: |
+      **What:**
+
+
+      **Why:**
+
+
+      **Sync points:**
+
+
+      **Done if:**
+
+  # Code
+  - trigger: "zcl"
+    replace: "console.log('# $|$');"
+
+  - trigger: "zlg"
+    replace: "console.log('# {{clipboard}}', {{clipboard}});"
+    vars:
+      - name: "clipboard"
+        type: "clipboard"
+
+  # Dates
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  # Symbols
+  - trigger: "z->"
+    replace: "→"
+
+  - trigger: "z<-"
+    replace: "←"
+
+  - trigger: "z^^"
+    replace: "↑"
+
+  - trigger: "zvv"
+    replace: "↓"
+
+  # Shell commands
+  - trigger: "zpb"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "/usr/bin/pbpaste"
+
+  - trigger: "ztods"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - node
+            - -e
+            - "console.log(new Date().toLocaleDateString('en-us', {day: 'numeric', month: 'short', year: 'numeric'}))"

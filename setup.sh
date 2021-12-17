@@ -51,6 +51,7 @@ apps=(
   discord
   iina
   insomnia
+  fork
 )
 
 echo "installing apps with Cask..."
@@ -59,3 +60,6 @@ brew install --cask ${apps[@]}
 brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono
 
+echo "Installing espanso (text expander)"
+brew tap federico-terzi/espanso
+brew install espanso
