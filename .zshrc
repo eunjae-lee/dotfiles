@@ -105,5 +105,3 @@ alias ys="yarn start"
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
 
-export YVM_DIR=/usr/local/opt/yvm
-[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh

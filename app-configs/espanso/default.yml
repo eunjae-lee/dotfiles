@@ -27,6 +27,9 @@ matches:
   - trigger: "brulee"
     replace: "brûlée"
 
+  - trigger: "Clement"
+    replace: "Clément"
+
   - trigger: "zemail"
     replace: "eunjae.mps@gmail.com"
 
