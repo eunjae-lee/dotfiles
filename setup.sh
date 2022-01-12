@@ -40,7 +40,6 @@ echo "installing packages with Brew...."
 packages = (
   yarn
   wget
-  docker
 )
 brew install install ${packages[@]}
 
@@ -55,6 +54,7 @@ apps=(
   iina
   insomnia
   fork
+  docker
 )
 
 echo "installing apps with Cask..."
