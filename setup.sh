@@ -16,9 +16,10 @@ echo "Installing Git..."
 brew install git gh
 
 echo "Setting up dotfiles..."
-git clone git@github.com:eunjae-lee/dotfiles.git .dotfiles
+mkdir -p ~/workspace/
+git clone git@github.com:eunjae-lee/dotfiles.git ~/workspace/dotfiles
 
-ln -s .dotfiles/.gitconfig .gitconfig
+ln -s ~/workspace/dotfiles/.gitconfig .gitconfig
 
 echo "Setting up zsh..."
 chsh -s /bin/zsh
@@ -30,7 +31,7 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
 
 rm .zshrc
-ln -s ~/.dotfiles/.zshrc .zshrc
+ln -s ~/workspace/dotfiles/.zshrc .zshrc
 
 echo "Setting up node.js..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
