@@ -35,6 +35,13 @@ ln -s ~/workspace/dotfiles/.zshrc .zshrc
 
 echo "Installing apps from App Store"
 brew install mas
+apps_app_store = (
+  1333542190 # 1Password
+  1487937127 # Craft
+  1465439395 # Dark Noise
+  1502839586 # Hand Mirror
+  904280696 # Things3
+)
 # mas install xxxx
 
 echo "Setting up node.js..."
@@ -46,7 +53,7 @@ packages = (
   yarn
   wget
 )
-brew install install ${packages[@]}
+brew install ${packages[@]}
 
 apps=(
   firefox
