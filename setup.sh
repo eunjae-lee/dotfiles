@@ -41,6 +41,7 @@ apps_app_store = (
   1465439395 # Dark Noise
   1502839586 # Hand Mirror
   904280696 # Things3
+  869223134 # KakaoTalk
 )
 # mas install xxxx
 
