@@ -89,7 +89,9 @@ alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %
 alias gdf="git diff"
 alias gpr="gh pr checkout"
 alias gco="git checkout"
-alias gup="git branch --set-upstream-to=origin/`git branch --show-current` `git branch --show-current`"
+function gup {
+    git branch --set-upstream-to=origin/`git branch --show-current` `git branch --show-current`
+}
 
 alias y="yarn"
 alias yd="yarn dev || yarn start"
@@ -101,6 +103,7 @@ alias yl="yarn lint"
 alias ytc="yarn type-check"
 alias yb="yarn build"
 alias ys="yarn start"
+alias yw="yarn workspace"
 
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
