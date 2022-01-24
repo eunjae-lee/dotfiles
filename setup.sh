@@ -42,6 +42,9 @@ apps_app_store = (
   1502839586 # Hand Mirror
   904280696 # Things3
   869223134 # KakaoTalk
+  1446377255 # Menu World Time
+  1534275760 # LanguageTool
+  639968404 # Parcel
 )
 # mas install xxxx
 
@@ -68,9 +71,12 @@ apps=(
   insomnia
   fork
   docker
+  google-chrome-canary
+  raycast
 )
 
 echo "installing apps with Cask..."
+brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
 brew tap homebrew/cask-fonts
@@ -79,3 +85,14 @@ brew install --cask font-jetbrains-mono
 echo "Installing espanso (text expander)"
 brew tap federico-terzi/espanso
 brew install espanso
+espanso register
+rm ~/Library/Preferences/espanso/default.yml
+ln -s ~/workspace/dotfiles/app-configs/espanso/default.yml ~/Library/Preferences/espanso/default.yml
+
+echo "Installing karabiner config"
+ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
+
+echo "Installing Raycast commands"
+git clone git@github.com:eunjae-lee/raycast-scripts.git ~/workspace/raycast-scripts
+git clone git@github.com:eunjae-lee/raycast-contextual-commands.git ~/workspace/raycast-contextual-commands
+

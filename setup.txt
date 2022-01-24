@@ -1,0 +1,6 @@
+* https://setapp.com/
+* http://cron.app
+* https://www.keyboardmaestro.com/
+* https://github.com/avibrazil/RDM
+  * http://avi.alkalay.net/software/RDM/RDM-2.2.dmg
+  * ln -s /Applications/RDM.app/Contents/MacOS/SetResX /usr/local/bin/rdm
