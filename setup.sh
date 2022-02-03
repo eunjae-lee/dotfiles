@@ -73,6 +73,8 @@ apps=(
   docker
   google-chrome-canary
   raycast
+  telegram
+  handbrake
 )
 
 echo "installing apps with Cask..."
