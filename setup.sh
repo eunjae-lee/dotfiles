@@ -19,7 +19,7 @@ echo "Setting up dotfiles..."
 mkdir -p ~/workspace/
 git clone git@github.com:eunjae-lee/dotfiles.git ~/workspace/dotfiles
 
-ln -s ~/workspace/dotfiles/.gitconfig .gitconfig
+ln -s ~/workspace/dotfiles/.gitconfig ~/.gitconfig
 
 echo "Setting up zsh..."
 chsh -s /bin/zsh
