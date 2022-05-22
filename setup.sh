@@ -45,6 +45,10 @@ apps_app_store = (
   1446377255 # Menu World Time
   1534275760 # LanguageTool
   639968404 # Parcel
+  1453273600 # Data Jar
+  1176895641 # Spark
+  1604176982 # One Thing
+  1425368544 # Timery
 )
 # mas install xxxx
 
@@ -74,6 +78,7 @@ apps=(
   google-chrome-canary
   raycast
   telegram
+  keycastr
   handbrake
 )
 
