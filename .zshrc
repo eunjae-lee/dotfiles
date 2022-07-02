@@ -65,19 +65,14 @@ ZSH_THEME="spaceship"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-export NVM_LAZY_LOAD=true
-export NVM_COMPLETION=true
-
-plugins=(zsh-nvm zsh-z git)
+plugins=(zsh-z git)
 
 source $ZSH/oh-my-zsh.sh
 
 export LANG=en_US.UTF-8
+
+# asdf
+. /usr/local/opt/asdf/libexec/asdf.sh
 
 alias rc="vi ~/.zshrc && source ~/.zshrc"
 
@@ -108,7 +103,5 @@ alias yw="yarn workspace"
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
 
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias d="cd ~/Downloads"
+alias ytb="youtube-dl"

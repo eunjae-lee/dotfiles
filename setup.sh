@@ -53,8 +53,14 @@ apps_app_store = (
 # mas install xxxx
 
 echo "Setting up node.js..."
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-git clone https://github.com/lukechilds/zsh-nvm "$ZSH_CUSTOM/plugins/zsh-nvm" --depth=1
+# asdf
+# https://gist.github.com/Grawl/461c7c1acfcf7e2ecbf99ce9fed40c31
+brew install asdf
+echo ". /usr/local/opt/asdf/libexec/asdf.sh" >> ~/.zshrc
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+brew install gnupg
+asdf install nodejs lts
+asdf global nodejs lts
 
 echo "installing packages with Brew...."
 packages = (
