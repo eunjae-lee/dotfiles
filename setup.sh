@@ -23,6 +23,10 @@ ln -s ~/workspace/dotfiles/.gitconfig ~/.gitconfig
 
 echo "Setting up zsh..."
 chsh -s /bin/zsh
+
+# https://unix.stackexchange.com/questions/557486/allowing-comments-in-interactive-zsh-commands
+setopt interactive_comments
+
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
@@ -35,7 +39,7 @@ ln -s ~/workspace/dotfiles/.zshrc .zshrc
 
 echo "Installing apps from App Store"
 brew install mas
-apps_app_store = (
+apps_app_store=(
   1333542190 # 1Password
   1487937127 # Craft
   1465439395 # Dark Noise
@@ -50,7 +54,7 @@ apps_app_store = (
   1604176982 # One Thing
   1425368544 # Timery
 )
-# mas install xxxx
+mas install ${apps_app_store[@]}
 
 echo "Setting up node.js..."
 # asdf
@@ -63,7 +67,7 @@ asdf install nodejs lts
 asdf global nodejs lts
 
 echo "installing packages with Brew...."
-packages = (
+packages=(
   yarn
   wget
 )
