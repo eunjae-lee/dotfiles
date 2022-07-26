@@ -99,17 +99,9 @@ brew install --cask ${apps[@]}
 brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono
 
-echo "Installing espanso (text expander)"
-brew tap federico-terzi/espanso
-brew install espanso
-espanso register
-rm ~/Library/Preferences/espanso/default.yml
-ln -s ~/workspace/dotfiles/app-configs/espanso/default.yml ~/Library/Preferences/espanso/default.yml
-
 echo "Installing karabiner config"
 ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 
 echo "Installing Raycast commands"
 git clone git@github.com:eunjae-lee/raycast-scripts.git ~/workspace/raycast-scripts
-git clone git@github.com:eunjae-lee/raycast-contextual-commands.git ~/workspace/raycast-contextual-commands
 
