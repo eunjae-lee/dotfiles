@@ -105,3 +105,10 @@ alias nevermind="git reset --hard HEAD"
 
 alias d="cd ~/Downloads"
 alias ytb="youtube-dl"
+
+# bun completions
+[ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/eunjae/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
