@@ -12,6 +12,8 @@
   * Coupon: `yac`
 * https://setapp.com/
   * CleanShot X
+  * GoodTask
+  * Jump Desktop
   * Rocket Typist
   * Lungo
   * Bartender
