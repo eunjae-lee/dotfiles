@@ -70,6 +70,7 @@ echo "installing packages with Brew...."
 packages=(
   yarn
   wget
+  http-server
 )
 brew install ${packages[@]}
 
