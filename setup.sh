@@ -23,6 +23,10 @@ ln -s ~/workspace/dotfiles/.gitconfig ~/.gitconfig
 
 echo "Setting up zsh..."
 chsh -s /bin/zsh
+
+# https://unix.stackexchange.com/questions/557486/allowing-comments-in-interactive-zsh-commands
+setopt interactive_comments
+
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
@@ -35,7 +39,7 @@ ln -s ~/workspace/dotfiles/.zshrc .zshrc
 
 echo "Installing apps from App Store"
 brew install mas
-apps_app_store = (
+apps_app_store=(
   1333542190 # 1Password
   1487937127 # Craft
   1465439395 # Dark Noise
@@ -50,22 +54,23 @@ apps_app_store = (
   1604176982 # One Thing
   1425368544 # Timery
 )
-# mas install xxxx
+mas install ${apps_app_store[@]}
 
 echo "Setting up node.js..."
 # asdf
 # https://gist.github.com/Grawl/461c7c1acfcf7e2ecbf99ce9fed40c31
 brew install asdf
-echo ". /usr/local/opt/asdf/libexec/asdf.sh" >> ~/.zshrc
+# echo ". /usr/local/opt/asdf/libexec/asdf.sh" >> ~/.zshrc
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 brew install gnupg
 asdf install nodejs lts
 asdf global nodejs lts
 
 echo "installing packages with Brew...."
-packages = (
+packages=(
   yarn
   wget
+  http-server
 )
 brew install ${packages[@]}
 
@@ -95,17 +100,9 @@ brew install --cask ${apps[@]}
 brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono
 
-echo "Installing espanso (text expander)"
-brew tap federico-terzi/espanso
-brew install espanso
-espanso register
-rm ~/Library/Preferences/espanso/default.yml
-ln -s ~/workspace/dotfiles/app-configs/espanso/default.yml ~/Library/Preferences/espanso/default.yml
-
 echo "Installing karabiner config"
 ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 
 echo "Installing Raycast commands"
 git clone git@github.com:eunjae-lee/raycast-scripts.git ~/workspace/raycast-scripts
-git clone git@github.com:eunjae-lee/raycast-contextual-commands.git ~/workspace/raycast-contextual-commands
 
