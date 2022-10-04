@@ -87,6 +87,8 @@ alias gco="git checkout"
 function gup {
     git branch --set-upstream-to=origin/`git branch --show-current` `git branch --show-current`
 }
+alias gbase-branch="git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
+alias gmergebase="gco `gbase-branch` && gpl && gco - && git merge `gbase-branch`"
 
 alias y="yarn"
 alias yd="yarn dev || yarn start"
@@ -104,7 +106,9 @@ alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
 
 alias d="cd ~/Downloads"
+alias f="open ."
 alias ytb="youtube-dl"
+alias localip="ifconfig -l | xargs -n1 ipconfig getifaddr"
 
 # bun completions
 [ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"
