@@ -72,7 +72,7 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 # asdf
-. /usr/local/opt/asdf/libexec/asdf.sh
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 alias rc="vi ~/.zshrc && source ~/.zshrc"
 
@@ -88,7 +88,9 @@ function gup {
     git branch --set-upstream-to=origin/`git branch --show-current` `git branch --show-current`
 }
 alias gbase-branch="git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
-alias gmergebase="gco `gbase-branch` && gpl && gco - && git merge `gbase-branch`"
+function gmergebase {
+    gco `gbase-branch` && gpl && gco - && git merge `gbase-branch`
+}
 
 alias y="yarn"
 alias yd="yarn dev || yarn start"

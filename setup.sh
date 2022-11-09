@@ -71,6 +71,7 @@ packages=(
   yarn
   wget
   http-server
+  jq
 )
 brew install ${packages[@]}
 
