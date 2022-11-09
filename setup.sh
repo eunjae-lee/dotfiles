@@ -75,6 +75,7 @@ packages=(
 brew install ${packages[@]}
 
 apps=(
+  slack
   firefox
   google-chrome
   spotify
