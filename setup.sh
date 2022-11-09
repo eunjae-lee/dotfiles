@@ -63,8 +63,8 @@ brew install asdf
 # echo ". /usr/local/opt/asdf/libexec/asdf.sh" >> ~/.zshrc
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 brew install gnupg
-asdf install nodejs lts
-asdf global nodejs lts
+asdf install nodejs latest
+asdf global nodejs latest
 
 echo "installing packages with Brew...."
 packages=(
