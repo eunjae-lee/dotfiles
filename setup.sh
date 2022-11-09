@@ -93,6 +93,7 @@ apps=(
   telegram
   keycastr
   handbrake
+  notion
 )
 
 echo "installing apps with Cask..."
