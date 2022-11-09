@@ -1,4 +1,4 @@
-* https://cron.app
+* https://flexibits.com/fantastical
 * https://www.keyboardmaestro.com/
 * https://github.com/avibrazil/RDM
   * http://avi.alkalay.net/software/RDM/RDM-2.2.dmg
