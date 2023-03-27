@@ -72,6 +72,8 @@ packages=(
   wget
   http-server
   jq
+  m-cli # https://github.com/rgcr/m-cli
+  switchaudio-osx # https://github.com/deweller/switchaudio-osx
 )
 brew install ${packages[@]}
 
@@ -94,6 +96,7 @@ apps=(
   keycastr
   handbrake
   notion
+  postman
 )
 
 echo "installing apps with Cask..."
@@ -101,7 +104,7 @@ brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
 brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono
+brew install --cask font-jetbrains-mono font-roboto font-spectral
 
 echo "Installing karabiner config"
 ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
@@ -109,3 +112,6 @@ ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabi
 echo "Installing Raycast commands"
 git clone git@github.com:eunjae-lee/raycast-scripts.git ~/workspace/raycast-scripts
 
+crontab -l > /tmp/current-crontab
+echo "0 * * * * sh /Users/workspace/raycast-scripts/commands/always/sync-raycast-scripts.sh" >> /tmp/current-crontab
+cat /tmp/current-crontab | crontab -

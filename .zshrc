@@ -111,6 +111,15 @@ alias d="cd ~/Downloads"
 alias f="open ."
 alias ytb="youtube-dl"
 alias localip="ifconfig -l | xargs -n1 ipconfig getifaddr"
+alias localssl_3000="local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem"
+alias localssl_5173="local-ssl-proxy --source 5174 --target 5173 --cert localhost.pem --key localhost-key.pem"
+alias localssl_8080="local-ssl-proxy --source 8081 --target 8080 --cert localhost.pem --key localhost-key.pem"
+alias ngrok_3000="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 3000"
+alias ngrok_8080="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 8080"
+#alias ngrok_5173="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 5173"
+alias ngrok_5173="ngrok http https://localhost:5173 --region=eu --hostname=eunjae.eu.ngrok.io"
+alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
+alias ngrok_smartling="ngrok http --hostname=smartling.ngrok.app 3000"
 
 # bun completions
 [ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"
@@ -118,3 +127,8 @@ alias localip="ifconfig -l | xargs -n1 ipconfig getifaddr"
 # Bun
 export BUN_INSTALL="/Users/eunjae/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# python
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
