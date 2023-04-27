@@ -83,8 +83,9 @@ alias gpl="git pull"
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gdf="git diff"
 alias gpr="gh pr checkout"
+alias gprc="gp && gh pr create --web"
 alias gco="git checkout"
-function gup {
+function gbrup {
     git branch --set-upstream-to=origin/`git branch --show-current` `git branch --show-current`
 }
 alias gbase-branch="git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
@@ -119,7 +120,7 @@ alias ngrok_8080="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 8080"
 #alias ngrok_5173="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 5173"
 alias ngrok_5173="ngrok http https://localhost:5173 --region=eu --hostname=eunjae.eu.ngrok.io"
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
-alias ngrok_smartling="ngrok http --hostname=smartling.ngrok.app 3000"
+alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
 # bun completions
 [ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"

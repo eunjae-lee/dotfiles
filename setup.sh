@@ -113,5 +113,5 @@ echo "Installing Raycast commands"
 git clone git@github.com:eunjae-lee/raycast-scripts.git ~/workspace/raycast-scripts
 
 crontab -l > /tmp/current-crontab
-echo "0 * * * * sh /Users/workspace/raycast-scripts/commands/always/sync-raycast-scripts.sh" >> /tmp/current-crontab
+echo "0 * * * * sh /Users/eunjae/workspace/raycast-scripts/commands/always/sync-raycast-scripts.sh" >> /tmp/current-crontab
 cat /tmp/current-crontab | crontab -
