@@ -74,6 +74,8 @@ packages=(
   jq
   m-cli # https://github.com/rgcr/m-cli
   switchaudio-osx # https://github.com/deweller/switchaudio-osx
+  slimhud # https://github.com/AlexPerathoner/SlimHUD
+  shortcat # https://shortcat.app/
 )
 brew install ${packages[@]}
 
