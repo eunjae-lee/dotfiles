@@ -118,9 +118,10 @@ alias localssl_8080="local-ssl-proxy --source 8081 --target 8080 --cert localhos
 alias ngrok_3000="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 3000"
 alias ngrok_8080="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 8080"
 #alias ngrok_5173="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 5173"
-alias ngrok_5173="ngrok http https://localhost:5173 --region=eu --hostname=eunjae.eu.ngrok.io"
+alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae.eu.ngrok.io"
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
+alias lgtm="~/workspace/dotfiles/lgtm"
 
 # bun completions
 [ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"

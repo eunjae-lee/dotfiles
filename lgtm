@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Define the array of strings
+strings=(
+  "Nice job"
+  "Looks good"
+  "Clean fix!"
+  "Well done"
+  "Thank you! Really nice PR"
+  "Great job"
+  "Looks amazing"
+  "Thank you! I'm so happy that we finally did this"
+  "Looks nice!"
+  "Nice refactor!"
+  "Amazing Job 🥇 It was a complex task you've pulled off!"
+  "Great work on this!"
+  "Looking good so far"
+  "I think this is a good change"
+  "This is looking"
+  "Superb work! You completed a challenging task"
+  "Excellent work"
+  "This is an excellent improvement"
+  "Nice and tidy, great job!"
+  "Outstanding job!"
+  "Nicely done!"
+  "Way to go!"
+  "Good feature, let's merge it!"
+)
+
+# Get the length of the array
+length=${#strings[@]}
+
+# Generate a random index
+index=$(( RANDOM % length ))
+
+# Print the randomly selected string
+echo "${strings[index]}"
