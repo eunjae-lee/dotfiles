@@ -69,6 +69,8 @@ asdf global nodejs latest
 echo "installing packages with Brew...."
 packages=(
   yarn
+  rg
+  lazygit
   wget
   http-server
   jq
@@ -106,7 +108,7 @@ brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
 brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono font-roboto font-spectral
+brew install --cask font-jetbrains-mono font-jetbrains-mono-nerd-font font-roboto font-spectral
 
 echo "Installing karabiner config"
 ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json

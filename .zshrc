@@ -92,6 +92,7 @@ alias gbase-branch="git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/rem
 function gmergebase {
     gco `gbase-branch` && gpl && gco - && git merge `gbase-branch`
 }
+alias greset="git reset --mixed HEAD~1"
 
 alias y="yarn"
 alias yd="yarn dev || yarn start"
@@ -107,6 +108,7 @@ alias yw="yarn workspace"
 
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
+alias clean_node_modules="find . -type d -name "node_modules" -exec rm -rf {} +"
 
 alias d="cd ~/Downloads"
 alias f="open ."
