@@ -76,6 +76,8 @@ packages=(
   switchaudio-osx # https://github.com/deweller/switchaudio-osx
   slimhud # https://github.com/AlexPerathoner/SlimHUD
   shortcat # https://shortcat.app/
+  rustup
+  pnpm
 )
 brew install ${packages[@]}
 

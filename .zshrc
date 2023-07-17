@@ -105,6 +105,8 @@ alias yb="yarn build"
 alias ys="yarn start"
 alias yw="yarn workspace"
 
+alias pn="pnpm"
+
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
 
