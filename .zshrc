@@ -92,6 +92,7 @@ alias gbase-branch="git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/rem
 function gmergebase {
     gco `gbase-branch` && gpl && gco - && git merge `gbase-branch`
 }
+alias greset="git reset --mixed HEAD~1"
 
 alias y="yarn"
 alias yd="yarn dev || yarn start"
@@ -109,6 +110,7 @@ alias pn="pnpm"
 
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
+alias clean_node_modules="find . -type d -name "node_modules" -exec rm -rf {} +"
 
 alias d="cd ~/Downloads"
 alias f="open ."
@@ -120,9 +122,10 @@ alias localssl_8080="local-ssl-proxy --source 8081 --target 8080 --cert localhos
 alias ngrok_3000="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 3000"
 alias ngrok_8080="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 8080"
 #alias ngrok_5173="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 5173"
-alias ngrok_5173="ngrok http https://localhost:5173 --region=eu --hostname=eunjae.eu.ngrok.io"
+alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae.eu.ngrok.io"
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
+alias lgtm="~/workspace/dotfiles/lgtm"
 
 # bun completions
 [ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"
