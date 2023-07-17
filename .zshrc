@@ -110,6 +110,8 @@ alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
 alias clean_node_modules="find . -type d -name "node_modules" -exec rm -rf {} +"
 
+alias nv="nvim"
+
 alias d="cd ~/Downloads"
 alias f="open ."
 alias ytb="youtube-dl"
