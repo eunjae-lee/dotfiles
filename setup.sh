@@ -110,7 +110,7 @@ brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
 brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono font-jetbrains-mono-nerd-font font-roboto font-spectral
+brew install --cask font-jetbrains-mono font-jetbrains-mono-nerd-font font-roboto font-spectral font-noto-sans-cjk
 
 echo "Installing karabiner config"
 ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json

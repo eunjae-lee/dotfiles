@@ -96,7 +96,7 @@ alias greset="git reset --mixed HEAD~1"
 
 alias y="ni"
 alias yd="nr dev"
-alias ya="ni add"
+alias ya="ni"
 alias yr="nun remove"
 alias yt="nr test"
 alias ytw="nr test --watch"
