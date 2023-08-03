@@ -1,0 +1,28 @@
+{
+  "name": "raycast-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eunjae-lee/raycast-scripts.git"
+  },
+  "author": "Eunjae Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eunjae-lee/raycast-scripts/issues"
+  },
+  "homepage": "https://github.com/eunjae-lee/raycast-scripts#readme",
+  "dependencies": {
+    "applescript": "^1.0.0",
+    "clipboardy": "^2.3.0",
+    "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0",
+    "node-fetch": "2.6.1",
+    "open": "^8.3.0",
+    "puppeteer": "^13.0.0",
+    "shelljs": "^0.8.4"
+  }
+}

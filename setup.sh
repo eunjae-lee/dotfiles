@@ -110,6 +110,9 @@ apps=(
   postman
 )
 
+# configure raycast
+ln -s ~/workspace/dotfiles/app-configs/raycast-scripts ~/workspace/raycast-scripts
+
 echo "installing apps with Cask..."
 brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
