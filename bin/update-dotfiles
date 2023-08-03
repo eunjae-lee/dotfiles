@@ -4,4 +4,4 @@ cd ~/workspace/dotfiles
 git add . && git commit -m "update"
 git pull --quiet
 git push
-
+echo "DONE"
