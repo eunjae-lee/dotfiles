@@ -80,8 +80,12 @@ packages=(
   shortcat # https://shortcat.app/
   rustup
   pnpm
+  neovim
 )
 brew install ${packages[@]}
+
+# configure neovim
+ln -s ~/workspace/dotfiles/.config/nvim ~/.config/nvim
 
 apps=(
   slack
