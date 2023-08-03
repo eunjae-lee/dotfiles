@@ -1,5 +1,5 @@
 ## Symbolic links
 
 ```sh
-ln -s ~/workspace/dotfiles/.config.nvm ~/.config/nvim
+ln -s ~/workspace/dotfiles/.config/nvim ~/.config/nvim
 ```
