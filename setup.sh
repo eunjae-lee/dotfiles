@@ -64,7 +64,8 @@ brew install asdf
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 brew install gnupg
 asdf install nodejs latest
-asdf global nodejs latest
+
+ln -s ~/workspace/dotfiles/.tool-versions ~/.tool-versions
 
 echo "installing packages with Brew...."
 packages=(
