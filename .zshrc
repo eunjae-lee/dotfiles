@@ -95,9 +95,10 @@ function gmergebase {
 alias greset="git reset --mixed HEAD~1"
 
 alias y="ni"
+alias yr="nr"
 alias yd="nr dev"
 alias ya="ni"
-alias yr="nun remove"
+alias yun="nun remove"
 alias yt="nr test"
 alias ytw="nr test --watch"
 alias yl="nr lint"
