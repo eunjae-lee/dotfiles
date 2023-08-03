@@ -130,6 +130,8 @@ alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 300
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 alias lgtm="~/workspace/dotfiles/lgtm"
 
+export PATH="/Users/eunjae/workspace/dotfiles/bin:$PATH"
+
 # bun completions
 [ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"
 
