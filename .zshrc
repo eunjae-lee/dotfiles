@@ -67,6 +67,8 @@ ZSH_THEME="spaceship"
 
 plugins=(zsh-z git)
 
+zstyle ':omz:plugins:git' aliases no
+
 source $ZSH/oh-my-zsh.sh
 
 export LANG=en_US.UTF-8
@@ -93,6 +95,11 @@ function gmergebase {
     gco `gbase-branch` && gpl && gco - && git merge `gbase-branch`
 }
 alias greset="git reset --mixed HEAD~1"
+function gcl() {
+  git clone "$1"
+  local repo_name=$(basename "$1" .git)
+  cd "$repo_name"
+}
 
 function y() {
   if [[ -n $1 ]]; then
