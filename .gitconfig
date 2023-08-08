@@ -37,3 +37,6 @@
 	default = current
 [pull]
 	rebase = false
+
+[core]
+	editor = nvim
