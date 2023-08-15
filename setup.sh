@@ -86,7 +86,7 @@ packages=(
 brew install ${packages[@]}
 
 # configure neovim
-ln -s ~/workspace/dotfiles/config/nvim ~/.config/nvim
+ln -s ~/workspace/dotfiles/config/NvChad ~/.config/nvim
 
 apps=(
   slack
