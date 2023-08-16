@@ -86,7 +86,8 @@ packages=(
 brew install ${packages[@]}
 
 # configure neovim
-ln -s ~/workspace/dotfiles/config/NvChad ~/.config/nvim
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+ln -s ~/workspace/dotfiles/config/NvChad/lua/custom ~/.config/nvim/lua/custom
 
 apps=(
   slack
