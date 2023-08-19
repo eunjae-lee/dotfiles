@@ -87,16 +87,11 @@ brew install ${packages[@]}
 
 # configure neovim
 rm -rf ~/.local/share/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.cache/nvim
 mv ~/.config/nvim ~/.config/nvim.backup
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-ln -s ~/workspace/dotfiles/config/NvChad/lua/custom ~/.config/nvim/lua/custom
-
-# configure lsp for neovim
-#npm i -g @astrojs/language-server
-#npm i -g vscode-langservers-extracted
-#npm i -g svelte-language-server
-#npm i -g @tailwindcss/language-server
-#npm i -g typescript typescript-language-server
+git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+ln -s ~/workspace/dotfiles/config/AstroNvim ~/.config/nvim/lua/user
 
 # install apps with brew cask
 apps=(
