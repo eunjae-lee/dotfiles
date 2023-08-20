@@ -33,8 +33,34 @@ return {
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },
+  i = {
+    -- save even in insert mode, and enter normal mode
+    ["<C-s>"] = { "<Esc>:write<CR>" },
+    ["<C-9>"] = { "<Esc>I" },
+    ["<C-0>"] = { "<Esc>A" },
+  },
   t = {
     -- setting a mapping to false will disable it
     -- ["<esc>"] = false,
+
+    -- fix toggleterm shift+space issue
+    -- https://github.com/akinsho/toggleterm.nvim/issues/338#issuecomment-1534546031
+    ["<S-BS>"] = { "<BS>" },
+    ["<C-BS>"] = { "<BS>" },
+    ["<M-S-BS>"] = { "<BS>" },
+    ["<M-C-BS>"] = { "<BS>" },
+    ["<C-S-BS>"] = { "<BS>" },
+    ["<M-C-S-BS>"] = { "<BS>" },
+    ["<S-Space>"] = { "<Space>" },
+    ["<M-S-Space>"] = { "<Space>" },
+    ["<M-C-Space>"] = { "<Space>" },
+    ["<C-S-Space>"] = { "<Space>" },
+    ["<M-C-S-Space>"] = { "<Space>" },
+    ["<S-CR>"] = { "<CR>" },
+    ["<C-CR>"] = { "<CR>" },
+    ["<M-S-CR>"] = { "<CR>" },
+    ["<M-C-CR>"] = { "<CR>" },
+    ["<C-S-CR>"] = { "<CR>" },
+    ["<M-C-S-CR>"] = { "<CR>" },
   },
 }
