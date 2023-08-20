@@ -32,6 +32,8 @@ return {
     ["<leader>b"] = { name = "Buffers" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    ["<C-9>"] = { "I" },
+    ["<C-0>"] = { "A" },
   },
   i = {
     -- save even in insert mode, and enter normal mode
