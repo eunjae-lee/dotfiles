@@ -2,32 +2,23 @@
 
 @ 5 Oct 2023
 
-Congratulations for getting a Mac for the first time!
+Congratulations on getting your first Mac!
 
-This post is going to teach you how to setup your Mac for web development, and
-also how to create a `dotfiles` repository to keep your config more
-persistently.
+Congratulations on getting your first Mac! This post will guide you through setting up your Mac for web development and creating a ﻿`dotfiles` repository to store your configurations more persistently.
 
 ## dotfiles
 
-When you develop, you see lots of config files that starts with `.`, like:
+When you develop, you often come across configuration files that start with a period (.), such as:
 
 - `.env`
 - `.prettierrc`
 - `.eslintrc`
 
-Files that starts with `.` are hidden in many applications by default. That's a
-convention. And there are some system-wide dotfiles that you may want to keep in
-your GitHub repository, and use it for your next Mac in the future.
+Files starting with a period are hidden by default in many applications. This is a convention. There are also system-wide dotfiles that you may want to store in your GitHub repository and use for future Mac setups.
 
-For example, `~/.zshrc` is the most common dotfile you want to keep somewhere.
-It contains all the aliases and prompt-related configs, etc. So what we're going
-to do is to create a repository on GitHub and name it something like `dotfiles`.
-We will create a `.zshrc` file inside the repo, and make a symbolic link at
-`~/.zshrc` to this file. It means it seems like there is a file at `~/.zshrc`
-but it's actually a link to an actual file like `~/workspace/dotfiles/.zshrc`.
-However, we cannot do this yet, because your brand new Mac doesn't have `git`
-installed. So let's begin there.
+For example, `﻿~/.zshrc` is a common dotfile that contains aliases and prompt-related configurations. To manage these dotfiles, we will create a repository on GitHub called ﻿dotfiles. Inside this repository, we will create a ﻿`.zshrc` file and create a symbolic link at `﻿~/.zshrc` that points to this file. This way, it appears as though there is a file at `﻿~/.zshrc`, but it is actually linked to the file `﻿~/workspace/dotfiles/.zshrc`.
+
+However, before we proceed, we need to install `﻿git` on your new Mac. Let's start there.
 
 ## Configure GitHub SSH key
 
@@ -38,16 +29,13 @@ cat ~/.ssh/id_rsa.pub | pbcopy
 open "https://github.com/settings/ssh/new"
 ```
 
-Run the code above line by line. In case it doesn't work, you can learn more
-from
+Run the above code line by line. If it doesn't work, you can learn more from
 [this link](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account),
-which may differ from this.
+which may have different instructions.
 
 ## Install homebrew
 
-Homebrew is a package manager for Mac. As if you install a Node.js package with
-`npm install <package-name>`, you can use Homebrew to install Mac-related
-packages.
+Homebrew is a package manager for Mac. Similar to installing a Node.js package with `﻿npm install <package-name>`, you can use Homebrew to install Mac-related packages.
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -57,7 +45,7 @@ brew update
 
 ## Install Git
 
-Now that Homebrew is installed, we can install git.
+Now that Homebrew is installed, we can install `git`.
 
 ```sh
 brew install git
@@ -65,8 +53,7 @@ brew install git
 
 ## Create dotfiles repo
 
-Personally I keep all the projects at `~/workspace/`. Feel free to use your own
-directory name if you want from now on.
+I prefer keeping all my projects in `﻿~/workspace/`. You can choose your own directory name if you prefer.
 
 ```sh
 mkdir -p ~/workspace/dotfiles
@@ -75,21 +62,21 @@ git init
 touch .gitconfig
 ```
 
-This `.gitconfig` will contain any global git configuration. And let's move the
+The `.gitconfig` will contain any global git configuration. Let's move the
 existing `.zshrc` to this dotfiles repo.
 
 ```sh
 mv ~/.zshrc ~/workspace/dotfiles/
 ```
 
-And commit them.
+Now, let's commit them.
 
 ```sh
 git add .
 git commit -m "initial commit"
 ```
 
-## Make symbolic links for dotfiles
+## Create symbolic links for dotfiles
 
 ```sh
 rm -f ~/.gitconfig ~/.zshrc
@@ -98,13 +85,11 @@ ln -s ~/workspace/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/workspace/dotfiles/.zshrc ~/.zshrc
 ```
 
-We first remove the dotfiles, and make symbolic links (a.k.a symlinks) to the
-ones in our dotfiles repo.
+First, we remove the existing dotfiles and then create symbolic links (symlinks) to the ones in our dotfiles repository.
 
 ## Install `gh` command
 
-`gh` is a CLI tool from GitHub. It helps you interact with your GitHub
-repository easily.
+`gh` is a command-line tool from GitHub that makes it easy to interact with your GitHub repository.
 
 ```sh
 brew install gh
@@ -112,32 +97,22 @@ brew install gh
 gh auth login
 ```
 
-Once you're logged in, let's create a `dotfiles` repo on your GitHub and push
-the existing local repository to it.
+Once you're logged in, let's create a ﻿`dotfiles` repository on your GitHub account and push the existing local repository to it.
 
 ```sh
 cd ~/workspace/dotfiles
 gh repo create
 ```
 
-And then follow the steps from there, and choose to push existing repository to
-the newly created remote repository.
+Follow the steps provided and choose to push the existing repository to the newly created GitHub repository.
 
 ## Keeping dotfiles up-to-date
 
-Now that you made the symlinks, whenever you update `~/.zshrc` or
-`~/.gitconfig`, the files within the `~/workspace/dotfiles` will change. Then
-you need to go to the repo and commit the change from time to time.
+After creating symlinks, any updates made to `﻿~/.zshrc` or `﻿~/.gitconfig` will automatically change the corresponding files in `﻿~/workspace/dotfiles`. Therefore, you will need to periodically go to the repository and commit the changes.
 
 ## Setup Node.js
 
-By default, MacOS includes Node.js. However, you need a version manager for
-Node.js. There are lots of different versions of Node.js and you want to install
-many, and want to switch from one to another easily. That's what version
-managers are for. There are `nvm` and `nodenv`. Personally I use `asdf`. `asdf`
-is not specific to Node.js but it's a general tool to manage versions of many
-different things. So we will install `asdf` first, and then install
-`asdf-nodejs` plugin.
+Although Node.js is included by default in MacOS, you need a version manager for Node.js. There are many version managers available, such as ﻿`nvm` and ﻿`nodenv`. Personally, I prefer using ﻿`asdf`, which is a general tool for managing versions of various software. To begin, install ﻿`asdf` and then add the `﻿asdf-nodejs` plugin using the following commands:
 
 ```sh
 brew install asdf
@@ -146,12 +121,9 @@ brew install gnupg
 asdf install nodejs 18.18.0
 ```
 
-Look carefully at the output of those commands. If they tell you to add
-something to `~/.zshrc` or to run some command that adds something to it, then
-follow all of them.
+Carefully review the output of these commands. If they instruct you to add something to ﻿`~/.zshrc` or run a command that modifies it, make sure to follow those instructions.
 
-Let's create a config file for `asdf` so that we can specify a default Node.js
-version for us.
+Next, let's create a configuration file for ﻿asdf that will allow us to specify a default Node.js version. Execute the following commands:
 
 ```sh
 cd ~/workspace/dotfiles
@@ -160,20 +132,11 @@ touch .tool-versions
 ln -s ~/workspace/dotfiles/.tool-versions ~/.tool-versions
 ```
 
-Let's open this `.tool-versions` and put `nodejs 18.18.0` as content. With this
-config, wherever you are, `18.18.0` will be used by default. When you're in a
-folder that contains a local `.tool-versions`, then `asdf` will respect its
-version. For example you go to `~/workspace/project-a`, and if there is
-`~/workspace/project-a/.tool-versions`, then it will read the Node.js version
-from it and try to use it. However, let's say, if the version is "18.0.0" and
-it's not installed on your Mac, `asdf` will show you an error message. Then you
-can follow the instruction to install `18.0.0` and it will continue to work
-again.
+Open the `﻿.tool-versions` file and set ﻿`nodejs 18.18.0` as its content. With this configuration, ﻿`18.18.0` will be the default Node.js version wherever you are. When you navigate to a folder that contains a local `﻿.tool-versions` file, ﻿asdf will use the specified version from that file. For example, if you go to `﻿~/workspace/project-a` and there is a `﻿~/workspace/project-a/.tool-versions` file, ﻿asdf will read the Node.js version specified in that file and attempt to use it. However, if the version is `18.0.0` and it is not installed on your Mac, ﻿`asdf` will display an error message. In that case, you can follow the instructions to install version ﻿`18.0.0`, and `﻿asdf` will resume working.
 
 ## Install applications
 
-Let's install some applications. Here is a list. Feel free to remove if you
-don't want or don't recognize.
+To install applications, use the following list. Feel free to remove any that you don't want or recognize:
 
 ```sh
 apps=(
@@ -199,47 +162,35 @@ apps=(
 )
 ```
 
-(You need to copy the whole block and run it on the terminal. Not line by line)
+Copy the entire block and run it in the terminal, rather than line by line. This command will install all the apps from the list.
 
 ```sh
 brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 ```
 
-Now the command above will install all the apps from the list.
-
 ## Install fonts
 
-You can also install fonts with Homebrew.
+You can also install fonts using Homebrew:
 
 ```sh
 brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono font-jetbrains-mono-nerd-font font-roboto font-spectral font-noto-sans-cjk
 ```
 
-The snippet above is an example. Feel free to google and see more fonts.
+The snippet above is an example. Feel free to Google and explore more fonts.
 
 ## Explore other dotfiles
 
-If you go to GitHub and search for `dotfiles`, you will see lots of different
-dotfiles repositories from others. If you're adventurous, you may find something
-intersting from there.
+If you visit GitHub and search for ﻿`dotfiles`, you will find numerous repositories from others. If you're adventurous, you might discover something interesting there.
 
 ## Learn more about terminal
 
-If you want to step up with your terminal setup, check out this
+If you want to enhance your terminal setup, check out this
 [Free course by Wes Bos](https://commandlinepoweruser.com/).
 
-You will learn about Oh My Zsh in this course. Oh My Zsh is a plugin of `zsh`
-(which is the default shell in MacOS). Once you intall Oh My Zsh, you can
-install plugins of Oh My Zsh which provides more functionalites to your
-terminal. However, this step is totally optional.
+The course covers Oh My Zsh, a plugin for `﻿zsh`, which is the default shell in MacOS. By installing Oh My Zsh, you can add plugins that provide additional functionalities to your terminal. However, this step is optional.
 
 ## Customize your terminal prompt
 
-You can make your terminal prompt more shiny. Not only beautiful, but also it
-can display which version of Node.js you're using in your current project, and
-more. There are many scripts that do this, but personall I use
-[Spaceship](https://github.com/spaceship-prompt/spaceship-prompt). You can
-install it via Oh My Zsh, but if you haven't configured it, then you can just
-install it with Homebrew too. You can learn more about it on its GitHub repo.
+You can make your terminal prompt more visually appealing. Not only can it be beautiful, but it can also display the version of Node.js you're using in your current project and more. There are many scripts that can achieve this, but personally, I use [Spaceship](https://github.com/spaceship-prompt/spaceship-prompt). You can install it via Oh My Zsh, or if you haven't configured Oh My Zsh, you can also install it with Homebrew. For more information, you can visit its GitHub repository.
