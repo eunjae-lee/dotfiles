@@ -2,6 +2,8 @@
 
 @ 5 Oct 2023
 
+Congratulations for getting a Mac for the first time!
+
 This post is going to teach you how to setup your Mac for web development, and
 also how to create a `dotfiles` repository to keep your config more
 persistently.
