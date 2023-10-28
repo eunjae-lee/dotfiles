@@ -86,8 +86,14 @@ packages=(
 brew install ${packages[@]}
 
 # configure neovim
-ln -s ~/workspace/dotfiles/config/nvim ~/.config/nvim
+rm -rf ~/.local/share/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.cache/nvim
+mv ~/.config/nvim ~/.config/nvim.backup
+git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+ln -s ~/workspace/dotfiles/config/AstroNvim ~/.config/nvim/lua/user
 
+# install apps with brew cask
 apps=(
   slack
   firefox
@@ -118,15 +124,9 @@ brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
 brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono font-jetbrains-mono-nerd-font font-roboto font-spectral font-noto-sans-cjk
+brew install --cask font-jetbrains-mono font-jetbrains-mono-nerd-font font-roboto font-spectral font-noto-sans-cjk font-cascadia-code font-cascadia-code-pl font-cascadia-mono font-cascadia-mono-pl
 
 echo "Installing karabiner config"
 ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 
-echo "Installing Raycast commands"
-git clone git@github.com:eunjae-lee/raycast-scripts.git ~/workspace/raycast-scripts
 
-crontab -l > /tmp/current-crontab
-echo "0 * * * * sh /Users/eunjae/workspace/raycast-scripts/commands/always/sync-raycast-scripts.sh" >> /tmp/current-crontab
-echo "0 * * * * sh /Users/eunjae/workspace/raycast-scripts/commands/always/sync-dotfiles.sh" >> /tmp/current-crontab
-cat /tmp/current-crontab | crontab -
