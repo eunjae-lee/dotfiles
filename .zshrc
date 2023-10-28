@@ -126,6 +126,7 @@ alias nevermind="git reset --hard HEAD"
 alias clean_node_modules="find . -type d -name "node_modules" -exec rm -rf {} +"
 
 alias nv="nvim"
+alias vi="nvim"
 
 alias d="cd ~/Downloads"
 alias f="open ."
