@@ -103,7 +103,7 @@ function gcl() {
 
 function y() {
   if [[ -n $1 ]]; then
-    nr $1
+    nr "$@" 
   else
     ni
   fi
