@@ -9,4 +9,7 @@ const { readClipboard } = require("../../lib");
 
 const clipboard = readClipboard();
 
-open(clipboard);
+clipboard
+  .trim()
+  .split("\n")
+  .forEach((line) => open(line));
