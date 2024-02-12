@@ -2,8 +2,8 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Configure Audio: MacBook
-# @raycast.mode fullOutput
+# @raycast.title [Audio] krisp + AirPods
+# @raycast.mode compact
 
 # Optional parameters:
 # @raycast.icon 🎤
