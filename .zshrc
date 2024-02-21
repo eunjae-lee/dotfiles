@@ -99,6 +99,7 @@ function gcl() {
   git clone "$1"
   local repo_name=$(basename "$1" .git)
   cd "$repo_name"
+  code .
 }
 
 function y() {
@@ -141,6 +142,10 @@ alias ngrok_8080="ngrok http --region=eu --hostname=eunjae.eu.ngrok.io 8080"
 alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae.eu.ngrok.io"
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
+
+ej() {
+  (cd /Users/eunjae/workspace/eunjae-cli && yarn dev "$@")
+}
 
 export PATH="/Users/eunjae/workspace/dotfiles/bin:$PATH"
 

@@ -65,6 +65,9 @@ asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 brew install gnupg
 asdf install nodejs latest
 
+asdf plugin add alias https://github.com/andrewthauer/asdf-alias.git
+asdf alias node 18 18.16.0
+
 ln -s ~/workspace/dotfiles/.tool-versions ~/.tool-versions
 
 echo "installing packages with Brew...."
