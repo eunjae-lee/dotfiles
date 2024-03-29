@@ -101,6 +101,10 @@ function gcl() {
   cd "$repo_name"
   code .
 }
+alias gbranch="git rev-parse --abbrev-ref HEAD"
+function gupstream() {
+  git branch --set-upstream-to=origin/$(gbranch) $(gbranch)
+}
 
 function y() {
   if [[ -n $1 ]]; then
