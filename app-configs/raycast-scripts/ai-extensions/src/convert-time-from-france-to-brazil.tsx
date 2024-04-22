@@ -1,12 +1,3 @@
-#!/usr/bin/env node
-
-// @raycast.title Convert Time France - Brazil
-//
-// @raycast.mode compact
-// @raycast.icon 🗓
-// @raycast.schemaVersion 1
-// @raycast.argument1 { "type": "text", "placeholder": "Time in France" }
-
 import { AI, Clipboard } from "@raycast/api";
 
 export default async function command() {
@@ -20,4 +11,5 @@ export default async function command() {
 `);
 
   await Clipboard.copy(answer);
+  return "hello";
 }
