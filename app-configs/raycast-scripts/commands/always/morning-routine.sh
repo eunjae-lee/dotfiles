@@ -7,3 +7,6 @@
 
 cd /Users/eunjae/workspace/dotfiles/xc
 xc -f morning-routine.md next
+
+file="/tmp/morning-routine-$(date +'%Y-%m-%d').txt"
+echo "Morning Routine (step #$(cat "$file"))"
