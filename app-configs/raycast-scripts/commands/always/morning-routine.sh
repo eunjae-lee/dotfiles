@@ -5,8 +5,8 @@
 # @raycast.title Morning Routine
 # @raycast.mode compact
 
-cd /Users/eunjae/workspace/dotfiles/xc
-xc -f morning-routine.md next
+cd /Users/eunjae/workspace/morning-routine
+xc next
 
 file="/tmp/morning-routine-$(date +'%Y-%m-%d').txt"
 echo "Morning Routine (step #$(cat "$file"))"
