@@ -132,4 +132,10 @@ brew install --cask font-jetbrains-mono font-jetbrains-mono-nerd-font font-robot
 echo "Installing karabiner config"
 ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 
+# install xc
+# https://xcfile.dev/
+brew tap joerdav/xc
+brew install xc
 
+# install one-thing CLI
+npm install -g one-thing

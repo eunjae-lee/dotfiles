@@ -104,6 +104,7 @@ function gcl() {
 alias gbranch="git rev-parse --abbrev-ref HEAD"
 function gupstream() {
   git branch --set-upstream-to=origin/$(gbranch) $(gbranch)
+  git pull
 }
 
 function y() {
