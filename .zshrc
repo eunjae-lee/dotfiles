@@ -106,6 +106,7 @@ function gupstream() {
   git branch --set-upstream-to=origin/$(gbranch) $(gbranch)
   git pull
 }
+alias prview="gh pr view --web"
 
 function y() {
   if [[ -n $1 ]]; then

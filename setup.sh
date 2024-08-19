@@ -53,6 +53,7 @@ apps_app_store=(
   1176895641 # Spark
   1604176982 # One Thing
   1425368544 # Timery
+  6450279539 # Second Clock
 )
 mas install ${apps_app_store[@]}
 
@@ -85,6 +86,7 @@ packages=(
   rustup
   pnpm
   neovim
+  ffmpeg
 )
 brew install ${packages[@]}
 
@@ -139,3 +141,7 @@ brew install xc
 
 # install one-thing CLI
 npm install -g one-thing
+
+# torch
+pip3 install --upgrade pip
+pip3 install torch torchvision
