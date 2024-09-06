@@ -39,4 +39,5 @@
 	rebase = false
 
 [core]
-	editor = nvim
+	editor = vim
+	pager = delta

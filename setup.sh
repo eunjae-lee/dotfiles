@@ -85,10 +85,13 @@ packages=(
   shortcat # https://shortcat.app/
   rustup
   pnpm
-  neovim
   ffmpeg
+  git-delta
 )
 brew install ${packages[@]}
+
+# configure git-delta
+git config --global core.pager "delta"
 
 # configure neovim
 rm -rf ~/.local/share/nvim
