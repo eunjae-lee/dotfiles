@@ -162,7 +162,3 @@ export PATH="/Users/eunjae/workspace/dotfiles/bin:$PATH"
 export BUN_INSTALL="/Users/eunjae/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# python
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-fi
