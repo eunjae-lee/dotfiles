@@ -78,6 +78,7 @@ export LANG=en_US.UTF-8
 
 alias rc="vi ~/.zshrc && source ~/.zshrc"
 
+alias g="lazygit"
 alias gs="git status"
 alias gac="git add . && git commit -m"
 alias gp="git push"
@@ -110,7 +111,7 @@ alias prview="gh pr view --web"
 
 function y() {
   if [[ -n $1 ]]; then
-    nr "$@" 
+    nr "$@"
   else
     ni
   fi
@@ -161,4 +162,3 @@ export PATH="/Users/eunjae/workspace/dotfiles/bin:$PATH"
 # Bun
 export BUN_INSTALL="/Users/eunjae/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
