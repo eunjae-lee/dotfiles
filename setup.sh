@@ -13,7 +13,7 @@ fi
 brew update
 
 echo "Installing Git..."
-brew install git gh
+brew install git gh lazygit
 
 echo "Setting up dotfiles..."
 mkdir -p ~/workspace/
