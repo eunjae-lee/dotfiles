@@ -87,6 +87,7 @@ packages=(
   pnpm
   ffmpeg
   git-delta
+  libheif # heif-convert
 )
 brew install ${packages[@]}
 

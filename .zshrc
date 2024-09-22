@@ -150,10 +150,6 @@ alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
-ej() {
-  (cd /Users/eunjae/workspace/eunjae-cli && yarn dev "$@")
-}
-
 export PATH="/Users/eunjae/workspace/dotfiles/bin:$PATH"
 
 # bun completions
