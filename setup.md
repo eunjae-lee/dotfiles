@@ -1,6 +1,7 @@
 * https://www.blackmagicdesign.com/products/davinciresolve
 * https://krisp.ai/
 * https://obsproject.com/
+* https://hyperkey.app/
 * https://setapp.com/
   * BetterTouchTool
   * CleanShot X
