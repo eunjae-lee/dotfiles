@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+# configure neovim
+rm -rf ~/.local/share/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.cache/nvim
+mv ~/.config/nvim ~/.config/nvim.backup
+git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+ln -s ~/workspace/dotfiles/config/AstroNvim ~/.config/nvim/lua/user
