@@ -131,7 +131,10 @@ alias pn="pnpm"
 
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
-alias clean_node_modules="find . -type d -name "node_modules" -exec rm -rf {} +"
+alias clean_node_modules="find . -type d -name \"node_modules\" -exec rm -rf {} +"
+function clean_all() {
+  find . -type d -name $1 -exec rm -rf {} +
+}
 
 alias nv="nvim"
 alias vi="nvim"
