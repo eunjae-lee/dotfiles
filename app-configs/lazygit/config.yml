@@ -1,5 +1,5 @@
 customCommands:
   - key: "<c-p>"
     context: "global"
-    command: "gprc"
+    command: "git pull && git push && gh pr create --web"
     description: "Create a PR"
