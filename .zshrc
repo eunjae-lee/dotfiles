@@ -81,6 +81,11 @@ alias rc="vi ~/.zshrc && source ~/.zshrc"
 alias g="lazygit"
 alias gs="git status"
 alias gac="git add . && git commit -m"
+function gacp() {
+    git add .
+    git commit -m $1
+    git push
+}
 alias gp="git push"
 alias gpl="git pull"
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
@@ -88,9 +93,6 @@ alias gdf="git diff"
 alias gpr="gh pr checkout"
 alias gprc="gp && gh pr create --web"
 alias gco="git checkout"
-function gbrup {
-    git branch --set-upstream-to=origin/`git branch --show-current` `git branch --show-current`
-}
 alias gbase-branch="git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
 function gmergebase {
     gco `gbase-branch` && gpl && gco - && git merge `gbase-branch`
