@@ -41,11 +41,17 @@ apps=(
   handbrake
   notion
   postman
+  zed
 )
 echo "installing apps with Cask..."
 brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
+# Configure Zed
+rm -f ~/.config/zed/settings.json
+rm -f ~/.config/zed/keymap.json
+ln -s ~/workspace/dotfiles/app-configs/zed/settings.json ~/.config/zed/settings.json
+ln -s ~/workspace/dotfiles/app-configs/zed/keymap.json ~/.config/zed/keymap.json
 
 # echo "Installing karabiner config"
 # ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
