@@ -11,3 +11,7 @@ ln -s ~/workspace/dotfiles/app-configs/raycast-scripts ~/workspace/raycast-scrip
 
 rm ~/Library/Application\ Support/lazygit/config.yml
 ln -s ~/workspace/dotfiles/app-configs/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
+
+git clone git@github.com:eunjae-lee/morning-routine.git ~/workspace/morning-routine
+git clone git@github.com:eunjae-lee/eunjae-dev-nuxt.git ~/workspace/eunjae-dev-nuxt
+git clone git@github.com:eunjae-lee/eunjae-cli.git ~/workspace/eunjae-cli
