@@ -8,6 +8,11 @@ brew install asdf
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 brew install gnupg
 asdf install nodejs latest
+asdf global nodejs latest
 
 asdf plugin add alias https://github.com/andrewthauer/asdf-alias.git
 asdf alias node 18 18.16.0
+
+asdf plugin-add pnpm
+asdf install pnpm latest
+asdf global pnpm latest

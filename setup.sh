@@ -8,3 +8,4 @@
 ./setup-apps.sh
 ./setup-packages.sh
 ./setup-python.sh
+./setup-cli.sh

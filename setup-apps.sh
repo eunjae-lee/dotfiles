@@ -6,14 +6,10 @@ apps_app_store=(
   1333542190 # 1Password
   1487937127 # Craft
   1465439395 # Dark Noise
-  1502839586 # Hand Mirror
   904280696 # Things3
   869223134 # KakaoTalk
-  1446377255 # Menu World Time
-  1534275760 # LanguageTool
   639968404 # Parcel
   1453273600 # Data Jar
-  1176895641 # Spark
   1604176982 # One Thing
   1425368544 # Timery
   6450279539 # Second Clock
@@ -25,10 +21,10 @@ apps=(
   slack
   firefox
   google-chrome
-  spotify
+  # spotify
   iterm2
   visual-studio-code
-  karabiner-elements
+  # karabiner-elements
   discord
   iina
   insomnia
@@ -37,10 +33,10 @@ apps=(
   google-chrome-canary
   raycast
   telegram
-  keycastr
+  # keycastr
   handbrake
   notion
-  postman
+  # postman
   zed
 )
 echo "installing apps with Cask..."

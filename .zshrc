@@ -129,8 +129,6 @@ alias yb="nr build"
 alias ys="nr start"
 alias yw="yarn workspace"
 
-alias pn="pnpm"
-
 alias amend="git commit --amend"
 alias nevermind="git reset --hard HEAD"
 alias clean_node_modules="find . -type d -name \"node_modules\" -exec rm -rf {} +"
