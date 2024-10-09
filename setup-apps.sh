@@ -38,6 +38,7 @@ apps=(
   notion
   # postman
   zed
+  input-source-pro # https://inputsource.pro/
 )
 echo "installing apps with Cask..."
 brew tap homebrew/cask-versions
