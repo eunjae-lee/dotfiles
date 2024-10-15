@@ -6,7 +6,7 @@ packages=(
   rg
   lazygit
   wget
-  http-server
+  # http-server
   jq
   m-cli # https://github.com/rgcr/m-cli
   switchaudio-osx # https://github.com/deweller/switchaudio-osx
