@@ -15,6 +15,7 @@
   * Sip
   * AirBuddy
   * CleanMyMac X
+* DropBox
 
 ## Folder Actions
 
