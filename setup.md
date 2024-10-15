@@ -15,11 +15,5 @@
   * Sip
   * AirBuddy
   * CleanMyMac X
-* DropBox
-
-## Folder Actions
-
-```
-source ~/.zshrc
-ej downloads --input "$1"
-```
+* https://www.dropbox.com
+* https://arc.net/
