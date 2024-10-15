@@ -30,7 +30,7 @@ apps=(
   insomnia
   fork
   docker
-  google-chrome-canary
+  google-chrome@canary
   raycast
   telegram
   # keycastr
@@ -41,7 +41,6 @@ apps=(
   input-source-pro # https://inputsource.pro/
 )
 echo "installing apps with Cask..."
-brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
 # Configure Zed
