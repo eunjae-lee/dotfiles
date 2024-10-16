@@ -12,5 +12,5 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 
 git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
 
-rm .zshrc
-ln -s ~/workspace/dotfiles/.zshrc .zshrc
+rm ~/.zshrc
+ln -s ~/workspace/dotfiles/.zshrc ~/.zshrc

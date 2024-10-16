@@ -3,7 +3,6 @@
 echo "Installing apps from App Store"
 brew install mas
 apps_app_store=(
-  1333542190 # 1Password
   1487937127 # Craft
   1465439395 # Dark Noise
   904280696 # Things3
@@ -13,6 +12,7 @@ apps_app_store=(
   1604176982 # One Thing
   1425368544 # Timery
   6450279539 # Second Clock
+  1607635845 # Velja
 )
 mas install ${apps_app_store[@]}
 
@@ -30,7 +30,7 @@ apps=(
   insomnia
   fork
   docker
-  google-chrome-canary
+  google-chrome@canary
   raycast
   telegram
   # keycastr
@@ -41,7 +41,6 @@ apps=(
   input-source-pro # https://inputsource.pro/
 )
 echo "installing apps with Cask..."
-brew tap homebrew/cask-versions
 brew install --cask ${apps[@]}
 
 # Configure Zed

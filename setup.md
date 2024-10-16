@@ -1,3 +1,4 @@
+* https://1password.com/downloads/mac
 * https://www.blackmagicdesign.com/products/davinciresolve
 * https://krisp.ai/
 * https://obsproject.com/
@@ -15,10 +16,5 @@
   * Sip
   * AirBuddy
   * CleanMyMac X
-
-## Folder Actions
-
-```
-source ~/.zshrc
-ej downloads --input "$1"
-```
+* https://www.dropbox.com
+* https://arc.net/
