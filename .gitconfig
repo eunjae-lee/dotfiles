@@ -1,11 +1,9 @@
-[includeIf "gitdir:~/workspace/"]
-    path = ~/workspace/dotfiles/.gitconfig-default
+[user]
+    name = "Eunjae Lee"
+	email = hey@eunjae.dev
 
-[includeIf "gitdir:~/sandbox/"]
-    path = ~/workspace/dotfiles/.gitconfig-default
-
-[includeIf "gitdir:~/workspace_lwe/"]
-    path = ~/workspace/dotfiles/.gitconfig-lwe
+[github]
+    user = "eunjae-lee"
 
 [color]
 

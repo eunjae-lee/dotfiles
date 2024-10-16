@@ -2,7 +2,6 @@
 
 echo "Setting up dotfiles..."
 mkdir -p ~/workspace/
-mkdir -p ~/workspace_lwe/
 mkdir -p ~/sandbox/
 git clone git@github.com:eunjae-lee/dotfiles.git ~/workspace/dotfiles
 

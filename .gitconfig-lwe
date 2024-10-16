@@ -1,9 +1,0 @@
-[user]
-    email = hey@learnwitheunjae.dev
-    name = Eunjae Lee
-
-[github]
-    user = "learnwitheunjae"
-
-[core]
-    sshCommand = "ssh -i ~/.ssh/learnwitheunjae"
