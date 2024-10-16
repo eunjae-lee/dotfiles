@@ -1,3 +1,4 @@
+* https://1password.com/downloads/mac
 * https://www.blackmagicdesign.com/products/davinciresolve
 * https://krisp.ai/
 * https://obsproject.com/
