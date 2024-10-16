@@ -3,7 +3,6 @@
 echo "Installing apps from App Store"
 brew install mas
 apps_app_store=(
-  1333542190 # 1Password
   1487937127 # Craft
   1465439395 # Dark Noise
   904280696 # Things3
