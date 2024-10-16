@@ -136,9 +136,6 @@ function clean_all() {
   find . -type d -name $1 -exec rm -rf {} +
 }
 
-alias nv="nvim"
-alias vi="nvim"
-
 alias d="cd ~/Downloads"
 alias f="open ."
 alias ytb="youtube-dl"
