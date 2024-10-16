@@ -18,3 +18,4 @@
   * CleanMyMac X
 * https://www.dropbox.com
 * https://arc.net/
+* [Multi GH account setup](https://blog.gitguardian.com/8-easy-steps-to-set-up-multiple-git-accounts/)
