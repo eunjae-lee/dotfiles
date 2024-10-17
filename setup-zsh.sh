@@ -12,5 +12,7 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 
 git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
 
-rm ~/.zshrc
+rm -f ~/.zshrc
+rm -f ~/.zprofile
 ln -s ~/workspace/dotfiles/.zshrc ~/.zshrc
+ln -s ~/workspace/dotfiles/.zprofile ~/.zprofile
