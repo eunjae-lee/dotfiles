@@ -16,3 +16,7 @@ asdf plugin add alias https://github.com/andrewthauer/asdf-alias.git
 asdf plugin-add pnpm
 asdf install pnpm latest
 asdf global pnpm latest
+
+asdf plugin add ni https://github.com/CanRau/asdf-ni.git
+asdf install ni latest
+asdf global ni latest
