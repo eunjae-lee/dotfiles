@@ -13,6 +13,7 @@ apps_app_store=(
   1425368544 # Timery
   6450279539 # Second Clock
   1607635845 # Velja
+  1586435171 # Actions
 )
 mas install ${apps_app_store[@]}
 
@@ -39,6 +40,7 @@ apps=(
   # postman
   zed
   input-source-pro # https://inputsource.pro/
+  whatsapp
 )
 echo "installing apps with Cask..."
 brew install --cask ${apps[@]}
