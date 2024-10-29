@@ -51,6 +51,12 @@ rm -f ~/.config/zed/keymap.json
 ln -s ~/workspace/dotfiles/app-configs/zed/settings.json ~/.config/zed/settings.json
 ln -s ~/workspace/dotfiles/app-configs/zed/keymap.json ~/.config/zed/keymap.json
 
+# Configure VSCode
+rm -f ~/Library/Application\ Support/Code/User/keybindings.json
+rm -f ~/Library/Application\ Support/Code/User/settings.json
+ln -s ~/workspace/dotfiles/app-configs/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+ln -s ~/workspace/dotfiles/app-configs/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
+
 # echo "Installing karabiner config"
 # ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 
