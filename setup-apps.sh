@@ -57,6 +57,40 @@ rm -f ~/Library/Application\ Support/Code/User/settings.json
 ln -s ~/workspace/dotfiles/app-configs/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
 ln -s ~/workspace/dotfiles/app-configs/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
 
+extensions=(
+  aaron-bond.better-comments
+  astro-build.astro-vscode
+  beardedbear.beardedtheme
+  bibhasdn.unique-lines
+  britesnow.vscode-toggle-quotes
+  christian-kohler.path-intellisense
+  dbaeumer.vscode-eslint
+  donjayamanne.githistory
+  dracula-theme.theme-dracula
+  esbenp.prettier-vscode
+  fabiospampinato.vscode-open-in-github
+  formulahendry.auto-rename-tag
+  github.copilot
+  github.copilot-chat
+  github.vscode-github-actions
+  k--kato.intellij-idea-keybindings
+  mikestead.dotenv
+  ms-playwright.playwright
+  pepri.subtitles-editor
+  pomdtr.excalidraw-editor
+  sebsojeda.vscode-svx
+  svelte.svelte-vscode
+  tldraw-org.tldraw-vscode
+  vitest.explorer
+  vue.volar
+  wmaurer.change-case
+  yatki.vscode-surround
+  yoavbls.pretty-ts-errors
+)
+for extension in "${extensions[@]}"; do
+  code --install-extension "$extension"
+done
+
 # echo "Installing karabiner config"
 # ln -s ~/workspace/dotfiles/app-configs/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 
