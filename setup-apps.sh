@@ -45,6 +45,9 @@ apps=(
 echo "installing apps with Cask..."
 brew install --cask ${apps[@]}
 
+# Install Ice (https://github.com/jordanbaird/Ice)
+brew install jordanbaird-ice
+
 # Configure Zed
 rm -f ~/.config/zed/settings.json
 rm -f ~/.config/zed/keymap.json

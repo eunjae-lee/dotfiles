@@ -6,14 +6,7 @@
 * https://setapp.com/
   * BetterTouchTool
   * CleanShot X
-  * GoodTask
   * Jump Desktop
-  * Rocket Typist
-  * Lungo
-  * Bartender
-  * TextSniper
-  * Unite
-  * Sip
   * AirBuddy
   * CleanMyMac X
 * https://www.dropbox.com

@@ -1,6 +1,11 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
   {
+    "key": "cmd+up",
+    "command": "cursorTop",
+    "when": "textInputFocus"
+  },
+  {
     "key": "cmd+down",
     "command": "cursorBottom",
     "when": "textInputFocus"
@@ -134,5 +139,26 @@
     "key": "ctrl+cmd+g",
     "command": "-editor.action.selectHighlights",
     "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+shift+alt+cmd+enter",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.closePanel",
+        "workbench.action.closeSidebar"
+      ]
+    },
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+shift+alt+cmd+enter",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "inDebugRepl && panelAlignment == 'center' || problemFocus && panelAlignment == 'center' || terminalFocus && panelAlignment == 'center' || focusedView == 'workbench.panel.output' && panelAlignment == 'center' || inDebugRepl && panelPosition != 'bottom' && panelPosition != 'top' || problemFocus && panelPosition != 'bottom' && panelPosition != 'top' || terminalFocus && panelPosition != 'bottom' && panelPosition != 'top' || focusedView == 'workbench.panel.output' && panelPosition != 'bottom' && panelPosition != 'top'"
+  },
+  {
+    "key": "shift+cmd+'",
+    "command": "-workbench.action.toggleMaximizedPanel",
+    "when": "inDebugRepl && panelAlignment == 'center' || problemFocus && panelAlignment == 'center' || terminalFocus && panelAlignment == 'center' || focusedView == 'workbench.panel.output' && panelAlignment == 'center' || inDebugRepl && panelPosition != 'bottom' && panelPosition != 'top' || problemFocus && panelPosition != 'bottom' && panelPosition != 'top' || terminalFocus && panelPosition != 'bottom' && panelPosition != 'top' || focusedView == 'workbench.panel.output' && panelPosition != 'bottom' && panelPosition != 'top'"
   }
 ]
