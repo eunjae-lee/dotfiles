@@ -153,7 +153,13 @@
   },
   {
     "key": "ctrl+shift+alt+cmd+enter",
-    "command": "workbench.action.toggleMaximizedPanel",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleMaximizedPanel",
+        "workbench.action.closeSidebar"
+      ]
+    },
     "when": "inDebugRepl && panelAlignment == 'center' || problemFocus && panelAlignment == 'center' || terminalFocus && panelAlignment == 'center' || focusedView == 'workbench.panel.output' && panelAlignment == 'center' || inDebugRepl && panelPosition != 'bottom' && panelPosition != 'top' || problemFocus && panelPosition != 'bottom' && panelPosition != 'top' || terminalFocus && panelPosition != 'bottom' && panelPosition != 'top' || focusedView == 'workbench.panel.output' && panelPosition != 'bottom' && panelPosition != 'top'"
   },
   {

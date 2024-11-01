@@ -110,6 +110,7 @@ function gupstream() {
   git pull
 }
 alias prview="gh pr view --web"
+alias repoview="gh repo view --web"
 
 function y() {
   if [[ -n $1 ]]; then
