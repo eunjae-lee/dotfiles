@@ -1,5 +1,5 @@
 customCommands:
-  - key: "<s-m-p>"
+  - key: "<c-P>"
     context: "global"
     command: "git push --set-upstream && gh pr create --web"
     description: "Create a PR"
