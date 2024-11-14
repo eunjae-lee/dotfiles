@@ -193,5 +193,10 @@
   {
     "key": "shift shift",
     "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "shift+cmd+t",
+    "command": "editor.action.surroundWithSnippet",
+    "when": "editorHasSelection && !editorReadonly"
   }
 ]

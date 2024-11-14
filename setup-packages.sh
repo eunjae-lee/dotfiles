@@ -13,7 +13,6 @@ packages=(
   # shortcat # https://shortcat.app/
   rustup
   ffmpeg
-  git-delta
   libheif # heif-convert
 )
 brew install ${packages[@]}

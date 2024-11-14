@@ -16,7 +16,7 @@
   {
     "context": "Workspace",
     "bindings": {
-      "shift shift": "terminal_panel::ToggleFocus"
+      "alt-t": "terminal_panel::ToggleFocus"
       // "shift shift": "file_finder::Toggle"
     }
   },

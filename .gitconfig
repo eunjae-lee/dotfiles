@@ -40,4 +40,3 @@
 
 [core]
 	editor = vim
-	pager = delta
