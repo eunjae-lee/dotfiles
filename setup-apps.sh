@@ -41,6 +41,8 @@ apps=(
   zed
   input-source-pro # https://inputsource.pro/
   whatsapp
+
+  docker
 )
 echo "installing apps with Cask..."
 brew install --cask ${apps[@]}

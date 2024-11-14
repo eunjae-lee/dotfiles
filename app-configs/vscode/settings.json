@@ -102,5 +102,6 @@
   "workbench.editor.showTabs": "none",
   "workbench.activityBar.location": "top",
   "github.copilot.editor.enableAutoCompletions": true,
-  "settingsSync.ignoredExtensions": []
+  "settingsSync.ignoredExtensions": [],
+  "sherlock.userId": "9df28fec-1162-4559-908b-6e917181b7d6"
 }

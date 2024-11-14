@@ -102,7 +102,7 @@ function gcl() {
   git clone "$1"
   local repo_name=$(basename "$1" .git)
   cd "$repo_name"
-  code .
+  cursor .
 }
 alias gbranch="git rev-parse --abbrev-ref HEAD"
 function gupstream() {
