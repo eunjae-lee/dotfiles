@@ -11,4 +11,4 @@
 # Documentation:
 # @raycast.author Eunjae Lee
 
-open /Users/eunjae/Downloads
+open /Users/$(whoami)/Downloads

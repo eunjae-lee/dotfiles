@@ -1,2 +1,2 @@
 #!/bin/zsh
-cd /Users/eunjae/workspace/eunjae-cli && pnpm --silent dev "$@"
+cd /Users/$(whoami)/workspace/eunjae-cli && pnpm --silent dev "$@"

@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/eunjae/.oh-my-zsh"
+export ZSH="/Users/$(whoami)/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -151,13 +151,13 @@ alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
-export PATH="/Users/eunjae/workspace/dotfiles/bin:$PATH"
+export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:$PATH"
 
 # bun completions
-[ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"
+[ -s "/Users/$(whoami)/.bun/_bun" ] && source "/Users/$(whoami)/.bun/_bun"
 
 # Bun
-export BUN_INSTALL="/Users/eunjae/.bun"
+export BUN_INSTALL="/Users/$(whoami)/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
