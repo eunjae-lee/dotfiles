@@ -13,6 +13,8 @@ apps_app_store=(
   1604176982 # One Thing
   1425368544 # Timery
   6450279539 # Second Clock
+  1607635845 # Velja
+  1586435171 # Actions
 )
 mas install ${apps_app_store[@]}
 

@@ -155,6 +155,8 @@ alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
 export PATH="/Users/eunjae/workspace/dotfiles/bin:$PATH"
 
+export PATH="/opt/homebrew/bin:$PATH"
+
 # bun completions
 [ -s "/Users/eunjae/.bun/_bun" ] && source "/Users/eunjae/.bun/_bun"
 
