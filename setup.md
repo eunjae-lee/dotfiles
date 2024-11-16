@@ -1,3 +1,4 @@
+* https://1password.com/downloads/mac
 * https://www.blackmagicdesign.com/products/davinciresolve
 * https://krisp.ai/
 * https://obsproject.com/
@@ -5,20 +6,9 @@
 * https://setapp.com/
   * BetterTouchTool
   * CleanShot X
-  * GoodTask
   * Jump Desktop
-  * Rocket Typist
-  * Lungo
-  * Bartender
-  * TextSniper
-  * Unite
-  * Sip
   * AirBuddy
   * CleanMyMac X
-
-## Folder Actions
-
-```
-source ~/.zshrc
-ej downloads --input "$1"
-```
+* https://www.dropbox.com
+* https://arc.net/
+* [Multi GH account setup](https://blog.gitguardian.com/8-easy-steps-to-set-up-multiple-git-accounts/)

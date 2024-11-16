@@ -11,8 +11,12 @@ asdf install nodejs latest
 asdf global nodejs latest
 
 asdf plugin add alias https://github.com/andrewthauer/asdf-alias.git
-asdf alias node 18 18.16.0
+asdf alias nodejs 18 18.20.4
 
 asdf plugin-add pnpm
 asdf install pnpm latest
 asdf global pnpm latest
+
+asdf plugin add ni https://github.com/CanRau/asdf-ni.git
+asdf install ni latest
+asdf global ni latest

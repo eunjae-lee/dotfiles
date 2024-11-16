@@ -102,7 +102,7 @@ function gcl() {
   git clone "$1"
   local repo_name=$(basename "$1" .git)
   cd "$repo_name"
-  code .
+  cursor .
 }
 alias gbranch="git rev-parse --abbrev-ref HEAD"
 function gupstream() {
@@ -110,6 +110,7 @@ function gupstream() {
   git pull
 }
 alias prview="gh pr view --web"
+alias repoview="gh repo view --web"
 
 function y() {
   if [[ -n $1 ]]; then
@@ -135,9 +136,6 @@ alias clean_node_modules="find . -type d -name \"node_modules\" -exec rm -rf {} 
 function clean_all() {
   find . -type d -name $1 -exec rm -rf {} +
 }
-
-alias nv="nvim"
-alias vi="nvim"
 
 alias d="cd ~/Downloads"
 alias f="open ."

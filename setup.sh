@@ -9,3 +9,4 @@
 ./setup-packages.sh
 ./setup-python.sh
 ./setup-cli.sh
+./setup-rust.sh

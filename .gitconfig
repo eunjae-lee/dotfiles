@@ -1,5 +1,5 @@
 [user]
-	name = Eunjae Lee
+    name = "Eunjae Lee"
 	email = hey@eunjae.dev
 
 [github]
@@ -40,4 +40,3 @@
 
 [core]
 	editor = vim
-	pager = delta

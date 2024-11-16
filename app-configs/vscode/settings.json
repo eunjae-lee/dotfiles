@@ -1,0 +1,107 @@
+{
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "breadcrumbs.icons": false,
+  "breadcrumbs.symbolPath": "off",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.accessibilitySupport": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.cursorBlinking": "solid",
+  "editor.fontFamily": "Geist Mono, JetBrains Mono, Fira Code, Cascadia Code, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 32,
+  "editor.fontWeight": "200",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": true,
+  "editor.guides.indentation": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.occurrencesHighlight": "off",
+  "editor.overviewRulerBorder": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.tabSize": 2,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "name": "envKeys",
+        "scope": "string.quoted.double.env,source.env,constant.numeric.env",
+        "settings": {
+          "foreground": "#19354900"
+        }
+      }
+    ]
+  },
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.openAfterClone": "alwaysNewWindow",
+  "screencastMode.mouseIndicatorColor": "#CC680C",
+  "screencastMode.mouseIndicatorSize": 30,
+  "screencastMode.verticalOffset": 5,
+  "security.workspace.trust.untrustedFiles": "open",
+  "svelte.enable-ts-plugin": true,
+  "terminal.integrated.fontFamily": "Geist Mono, JetBrains Mono, Fira Code, Cascadia Code, Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.fontSize": 24,
+  "terminal.integrated.fontWeight": 300,
+  "terminal.integrated.profiles.osx": {
+    "rosetta": {
+      "args": ["-x86_64", "zsh", "-l"],
+      "overrideName": true,
+      "path": "arch"
+    }
+  },
+  "terminal.integrated.scrollback": 10000000,
+  "window.title": "${rootName}",
+  "workbench.colorCustomizations": {
+    "editorLineNumber.activeForeground": "#ffffff66",
+    "editorLineNumber.foreground": "#ffffff19",
+    "tab.activeBackground": "#666",
+    "tab.activeBorder": "#666"
+  },
+  "workbench.colorTheme": "Bearded Theme HC Ebony",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.showIcons": false,
+  "workbench.startupEditor": "none",
+  "workbench.statusBar.visible": false,
+  "workbench.tips.enabled": false,
+  "terminal.integrated.env.osx": {
+    "FIG_NEW_SESSION": "1"
+  },
+  "editor.stickyScroll.enabled": true,
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.editor.tabActionCloseVisibility": false,
+  "update.mode": "manual",
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "workbench.sideBar.location": "right",
+  "workbench.editor.showTabs": "none",
+  "workbench.activityBar.location": "top",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "settingsSync.ignoredExtensions": [],
+  "sherlock.userId": "9df28fec-1162-4559-908b-6e917181b7d6"
+}

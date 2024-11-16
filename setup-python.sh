@@ -6,5 +6,5 @@ asdf install python 3.11.3
 asdf global python 3.11.3
 
 # torch
-pip3 install --upgrade pip
-pip3 install torch torchvision
+pip install --upgrade pip
+pip install torch torchvision
