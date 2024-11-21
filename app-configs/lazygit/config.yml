@@ -3,3 +3,12 @@ customCommands:
     context: "global"
     command: "git push --set-upstream && gh pr create --web"
     description: "Create a PR"
+  - key: "<c-C>"
+    context: "global"
+    description: "Commit and push"
+    prompts:
+      - type: "input"
+        title: "Commit summary"
+        key: "Summary"
+    command: 'git commit -m "{{.Form.Summary}}" && git push'
+    loadingText: "Committing and pushing..."

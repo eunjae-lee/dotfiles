@@ -16,4 +16,4 @@ cd ~/workspace
 git clone "$1"
 repo_name=$(basename "$1" .git)
 cd "$repo_name"
-code .
+cursor .
