@@ -151,6 +151,8 @@ alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
+alias cal="cd ~/workspace/cal.com"
+
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:$PATH"

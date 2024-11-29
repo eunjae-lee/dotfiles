@@ -1,10 +1,10 @@
 customCommands:
   - key: "<c-P>"
-    context: "global"
+    context: "files"
     command: "git push --set-upstream && gh pr create --web"
     description: "Create a PR"
   - key: "<c-C>"
-    context: "global"
+    context: "files"
     description: "Commit and push"
     prompts:
       - type: "input"
@@ -12,3 +12,12 @@ customCommands:
         key: "Summary"
     command: 'git commit -m "{{.Form.Summary}}" && git push'
     loadingText: "Committing and pushing..."
+  - key: "N"
+    context: "localBranches"
+    description: "Checkout PR by number"
+    prompts:
+      - type: "input"
+        title: "PR number"
+        key: "PRNumber"
+    command: "gh pr checkout {{.Form.PRNumber}}"
+    loadingText: "Checking out PR..."
