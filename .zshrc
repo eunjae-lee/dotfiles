@@ -120,7 +120,7 @@ function y() {
   fi
 }
 alias yr="nun"
-alias yd="nr dev"
+alias yd="npm_install_if_branch_changed && nr dev"
 alias ya="ni"
 alias yt="nr test"
 alias ytw="nr test --watch"

@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Define the temporary file to store the branch names for multiple projects
+TEMP_FILE="/tmp/last_branches.txt"
+
+# Get the current project path
+PROJECT_PATH=$(pwd)
+
+# Check if we are in a Git repository
+if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    echo "Error: Not inside a Git repository."
+    exit 1
+fi
+
+# Get the current Git branch name
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Initialize the last branch variable
+LAST_BRANCH=""
+
+# Function to get the last branch for the current project path
+get_last_branch() {
+    local path="$1"
+    while IFS=' ' read -r stored_path stored_branch; do
+        if [[ "$stored_path" == "$path" ]]; then
+            echo "$stored_branch"
+            return
+        fi
+    done < "$TEMP_FILE"
+    # Return an empty string if the path is not found
+    echo ""
+}
+
+# Function to update the last branch for the current project path
+update_last_branch() {
+    local path="$1"
+    local branch="$2"
+
+    # Check if the entry for this project path already exists
+    if grep -q "^$path " "$TEMP_FILE"; then
+        # Update the existing entry
+        sed -i.bak "s|^$path .*|$path $branch|" "$TEMP_FILE"
+    else
+        # Append the new branch for this project path
+        echo "$path $branch" >> "$TEMP_FILE"
+    fi
+}
+
+# Check if the temporary file exists and read the last branch name for the current project
+if [[ -f "$TEMP_FILE" ]]; then
+    LAST_BRANCH=$(get_last_branch "$PROJECT_PATH")
+else
+    echo "Temporary file does not exist. Creating a new one."
+    touch "$TEMP_FILE"
+fi
+
+# Compare the last branch with the current branch
+if [[ "$CURRENT_BRANCH" != "$LAST_BRANCH" ]]; then
+    echo "Branch has changed from '$LAST_BRANCH' to '$CURRENT_BRANCH'. Installing dependencies..."
+    ni
+fi
+
+# Store the current branch name into the temporary file
+update_last_branch "$PROJECT_PATH" "$CURRENT_BRANCH"
