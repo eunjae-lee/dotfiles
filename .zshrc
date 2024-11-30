@@ -152,6 +152,9 @@ alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 300
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
 alias cal="cd ~/workspace/cal.com"
+alias c1="cal && y && yd"
+alias c2="cal && g"
+alias c3="cal"
 
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
