@@ -130,7 +130,7 @@ alias yb="nr build"
 alias ys="nr start"
 alias yw="yarn workspace"
 
-alias amend="git commit --amend"
+alias amend="git commit --amend --no-edit"
 alias nevermind="git reset --hard HEAD"
 alias clean_node_modules="find . -type d -name \"node_modules\" -exec rm -rf {} +"
 function clean_all() {
@@ -155,6 +155,7 @@ alias cal="cd ~/workspace/cal.com"
 alias c1="cal && y && yd"
 alias c2="cal && g"
 alias c3="cal"
+alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
 
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
@@ -166,3 +167,9 @@ export PATH="/opt/homebrew/bin:$PATH"
 # Bun
 export BUN_INSTALL="/Users/$(whoami)/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Docker
+export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
+
+# memory increase for cal.com local dev environment
+export NODE_OPTIONS="--max-old-space-size=16384"

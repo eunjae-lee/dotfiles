@@ -30,7 +30,7 @@ apps=(
   iina
   insomnia
   fork
-  docker
+  # docker
   google-chrome@canary
   raycast
   telegram

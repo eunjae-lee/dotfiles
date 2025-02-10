@@ -8,12 +8,12 @@ customCommands:
     description: "Commit and push"
     prompts:
       - type: "input"
-        title: "Commit summary"
+        title: "Commit and push"
         key: "Summary"
     command: 'git commit -m "{{.Form.Summary}}" && git push'
     loadingText: "Committing and pushing..."
   - key: "N"
-    context: "localBranches"
+    context: "files"
     description: "Checkout PR by number"
     prompts:
       - type: "input"
