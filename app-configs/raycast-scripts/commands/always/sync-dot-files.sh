@@ -4,7 +4,7 @@
 # @raycast.schemaVersion 1
 # @raycast.title Sync dotfiles
 # @raycast.mode inline
-# @raycast.refreshTime 1h
+# @raycast.refreshTime 1d
 
 # Optional parameters:
 # @raycast.icon 🔄
