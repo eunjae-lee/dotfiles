@@ -142,9 +142,14 @@
       "commands": [
         "workbench.action.closePanel",
         "workbench.action.closeSidebar"
+        "aichat.close-sidebar"
       ]
-    },
-    "when": "editorFocus"
+    }
+  },
+  {
+    "key": "ctrl+shift+alt+cmd+u",
+    "command": "markdown.extension.checkTaskList",
+    "when": "editorTextFocus && editorLangId == 'markdown'"
   },
   {
     "key": "ctrl+shift+alt+cmd+enter",
@@ -198,5 +203,33 @@
     "key": "shift+cmd+t",
     "command": "editor.action.surroundWithSnippet",
     "when": "editorHasSelection && !editorReadonly"
+  },
+  {
+    "key": "cmd+l",
+    "command": "workbench.action.gotoLine"
+  },
+  {
+    "key": "ctrl+g",
+    "command": "-workbench.action.gotoLine"
+  },
+  {
+    "key": "shift+cmd+c",
+    "command": "composer.createNew",
+    "when": "editorFocus"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-composer.createNew",
+    "when": "focusedView == 'workbench.panel.composerViewPane2.view'"
+  },
+  {
+    "key": "shift+cmd+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "shift+cmd+c",
+    "command": "-copyFilePath",
+    "when": "!editorFocus && !terminalFocus"
   }
 ]
