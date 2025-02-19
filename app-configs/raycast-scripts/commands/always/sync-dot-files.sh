@@ -3,7 +3,8 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Sync dotfiles
-# @raycast.mode compact
+# @raycast.mode inline
+# @raycast.refreshTime 1h
 
 # Optional parameters:
 # @raycast.icon 🔄
