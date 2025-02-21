@@ -6,4 +6,7 @@
 # @raycast.icon 🖥
 # @raycast.schemaVersion 1
 
-osascript -e 'tell application "System Events" to key code 105'
+cursor ~/workspace/notes
+
+#F15
+#osascript -e 'tell application "System Events" to key code 105'
