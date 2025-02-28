@@ -13,7 +13,7 @@ customCommands:
     command: 'git commit -m "{{.Form.Summary}}" && git push'
     loadingText: "Committing and pushing..."
   - key: "N"
-    context: "files"
+    context: "files, localBranches"
     description: "Checkout PR by number"
     prompts:
       - type: "input"
