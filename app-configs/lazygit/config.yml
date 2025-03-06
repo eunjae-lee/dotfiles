@@ -1,8 +1,12 @@
 customCommands:
   - key: "<c-P>"
-    context: "files"
+    context: "files, localBranches"
     command: "git push --set-upstream && gh pr create --web"
     description: "Create a PR"
+  - key: "<c-D>"
+    context: "files"
+    command: "git checkout HEAD -- yarn.lock && git checkout main && git pull"
+    description: "Switch to main branch"
   - key: "<c-C>"
     context: "files"
     description: "Commit and push"

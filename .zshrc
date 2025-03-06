@@ -170,6 +170,3 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Docker
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
-
-# memory increase for cal.com local dev environment
-export NODE_OPTIONS="--max-old-space-size=16384"
