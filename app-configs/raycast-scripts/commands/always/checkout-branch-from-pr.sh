@@ -6,7 +6,7 @@
 # @raycast.mode compact
 
 # Optional parameters:
-# @raycast.icon ✔︎
+# @raycast.icon ✅
 
 # Get the content from the clipboard
 clip_content=$(pbpaste)  # Use 'xclip -o' on Linux instead of 'pbpaste'
