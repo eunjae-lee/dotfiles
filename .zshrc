@@ -74,7 +74,7 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 # asdf
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+#. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 alias rc="vi ~/.zshrc && source ~/.zshrc"
 
@@ -170,3 +170,4 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Docker
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
+eval "$(mise activate zsh)"
