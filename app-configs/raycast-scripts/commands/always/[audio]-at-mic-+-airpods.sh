@@ -11,5 +11,5 @@
 # Documentation:
 # @raycast.author Eunjae Lee
 
+shortcuts run "AirPods - Transparent"
 SwitchAudioSource -t input -s 'AT2020USB+'
-SwitchAudioSource -t output -s 'Eunjae’s AirPods Pro'
