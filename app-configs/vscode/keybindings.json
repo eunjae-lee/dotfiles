@@ -141,7 +141,7 @@
     "args": {
       "commands": [
         "workbench.action.closePanel",
-        "workbench.action.closeSidebar"
+        "workbench.action.closeSidebar",
         "aichat.close-sidebar"
       ]
     }
@@ -214,8 +214,7 @@
   },
   {
     "key": "shift+cmd+c",
-    "command": "composer.createNew",
-    "when": "editorFocus"
+    "command": "workbench.panel.composerViewPane2.view.focus"
   },
   {
     "key": "cmd+n",
@@ -231,5 +230,19 @@
     "key": "shift+cmd+c",
     "command": "-copyFilePath",
     "when": "!editorFocus && !terminalFocus"
+  },
+  {
+    "key": "shift+cmd+d",
+    "command": "-composer.fixerrormessage",
+    "when": "(arbitrary function)"
+  },
+  {
+    "key": "shift+cmd+d",
+    "command": "-workbench.view.debug",
+    "when": "viewContainer.workbench.view.debug.enabled"
+  },
+  {
+    "key": "shift+cmd+d",
+    "command": "github.cweijan.mysql.focus"
   }
 ]
