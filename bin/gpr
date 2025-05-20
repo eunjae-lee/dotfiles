@@ -1,0 +1,34 @@
+#!/bin/zsh
+
+# Function to extract PR number from input
+extract_pr_number() {
+    local input="$1"
+
+    # Check if input is a URL and extract the PR number
+    if [[ "$input" =~ pull/([0-9]+) ]]; then
+        echo "${match[1]}"
+    elif [[ "$input" =~ ([0-9]+) ]]; then
+        # If it's just a number, return it
+        echo "${match[1]}"
+    else
+        echo "Invalid input. Please provide a PR number or a valid URL."
+        return 1
+    fi
+}
+
+# Main script logic
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <PR number or URL>"
+    exit 1
+fi
+
+pr_input="$1"
+pr_number=$(extract_pr_number "$pr_input")
+
+# Check if extraction was successful
+if [ $? -eq 0 ]; then
+    echo "Checking out PR #$pr_number..."
+    gh pr checkout "$pr_number"
+else
+    exit 1
+fi
