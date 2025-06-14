@@ -171,3 +171,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Docker
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 eval "$(mise activate zsh)"
+
+# pnpm
+export PNPM_HOME="/Users/eunjae/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
