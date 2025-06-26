@@ -248,5 +248,20 @@
   {
     "key": "cmd+i",
     "command": "composerMode.agent"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-editor.action.inlineDiffs.rejectPartialEdit",
+    "when": "editorHasPromptBar && editorPromptBarFocused"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-editor.action.inlineDiffs.rejectPartialEdit",
+    "when": "editorTextFocus && @inlineDiffs.rejectPartialEdit.isActiveEditorWithDiffs"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-editor.action.rejectGPT4",
+    "when": "editorTextFocus && hasGPT4Diff"
   }
 ]
