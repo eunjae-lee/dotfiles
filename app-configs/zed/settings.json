@@ -20,7 +20,7 @@
   "project_panel": {
     "dock": "right"
   },
-  "assistant": {
+  "agent": {
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4o"
