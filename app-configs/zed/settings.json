@@ -21,6 +21,14 @@
     "dock": "right"
   },
   "agent": {
+    "profiles": {
+      "test": {
+        "name": "Test",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      }
+    },
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-sonnet-4"
