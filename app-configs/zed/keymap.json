@@ -24,7 +24,8 @@
     "context": "Editor",
     "bindings": {
       // "j k": ["workspace::SendKeystrokes", "escape"]
-      "cmd-e": "projects::OpenRecent"
+      "cmd-e": "projects::OpenRecent",
+      "alt-cmd-c": "workspace::CopyRelativePath"
     }
   },
   {

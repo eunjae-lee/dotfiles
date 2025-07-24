@@ -1,0 +1,9 @@
+layout {
+  pane split_direction="vertical" {
+    pane edit="package.json"
+    pane command="ls" {
+      start_suspended true
+      args "-a"
+    }
+  }
+}
