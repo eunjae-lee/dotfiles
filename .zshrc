@@ -150,12 +150,12 @@ alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
-alias cal="cd ~/workspace/cal.com"
 alias c1="cal && y && yd"
 alias c2="cal && g"
 alias c3="cal"
 alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
+alias cal="zellij attach cal"
 
 alias cc="opencode"
 
