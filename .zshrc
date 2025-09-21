@@ -154,10 +154,10 @@ alias cal_dir="cd ~/workspace/cal.com"
 alias c1="cal_dir && y && yd"
 alias c2="cal_dir && g"
 alias c3="cal_dir"
-alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
+alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights && yarn workspace @calcom/prisma seed-pbac"
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
 alias cal="zellij attach cal"
-alias cal_new="zellij --layout ~/.config/zellij/layouts/cal.kdl"
+alias z_cal="zellij --layout ~/.config/zellij/layouts/cal.kdl"
 alias cc="opencode"
 
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
@@ -182,3 +182,11 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+alias things="/Users/eunjae/.local/share/mise/installs/node/22.14.0/bin/things"
+export PATH="$PATH:/Users/eunjae/workspace/vchange"
+alias rvc="/Users/eunjae/workspace/vchange/rvc"

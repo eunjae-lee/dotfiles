@@ -4,7 +4,7 @@
 # @raycast.schemaVersion 1
 # @raycast.title Sync notes
 # @raycast.mode inline
-# @raycast.refreshTime 5m
+# @raycast.refreshTime 3h
 
 # Optional parameters:
 # @raycast.icon 🔄

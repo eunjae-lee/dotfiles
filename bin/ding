@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+# Default value for description
+DESCRIPTION="Ding"
+
+# Check if the first argument (description) is provided
+if [ ! -z "$1" ]; then
+    DESCRIPTION="$1"
+fi
+
+# Check if the second argument (title) is provided
+if [ ! -z "$2" ]; then
+    TITLE="$2"
+    # Show the notification with title
+    osascript -e "display notification \"$DESCRIPTION\" with title \"$TITLE\""
+else
+    # Show the notification without title
+    osascript -e "display notification \"$DESCRIPTION\""
+fi

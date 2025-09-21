@@ -101,3 +101,12 @@ done
 
 # install one-thing CLI
 npm install -g one-thing
+
+# markdown quick look
+brew install --cask qlmarkdown
+
+brew install imagemagick
+brew install libheif
+
+# atuin
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
