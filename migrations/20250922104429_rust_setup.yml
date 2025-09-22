@@ -1,0 +1,13 @@
+name: "Rust Setup"
+description: "Set up Rust via asdf"
+
+# Configuration that gets merged into config.yml
+config:
+  asdf:
+    plugins:
+      - rust
+
+# Commands to execute
+up:
+  - name: "Add Rust plugin to asdf"
+    command: "asdf plugin-add rust https://github.com/asdf-community/asdf-rust.git || true"
