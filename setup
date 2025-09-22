@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require_relative 'lib/setup'
+
+begin
+  Setup::CLI.new(ARGV).run
+rescue Setup::Error => e
+  puts "Error: #{e.message}"
+  exit 1
+rescue Interrupt
+  puts "\nInterrupted"
+  exit 130
+end

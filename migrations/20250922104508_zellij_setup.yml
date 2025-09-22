@@ -1,0 +1,24 @@
+name: "Zellij Setup"
+description: "Install zellij and set up layouts"
+
+# Configuration that gets merged into config.yml
+config:
+  homebrew:
+    packages:
+      - zellij
+  
+  zellij:
+    layouts:
+      - source: "~/workspace/dotfiles/app-configs/zellij/cal.kdl"
+        target: "~/.config/zellij/layouts/cal.kdl"
+
+# Commands to execute
+up:
+  - name: "Install zellij"
+    command: "brew install zellij"
+    
+  - name: "Create zellij layouts directory"
+    command: "mkdir -p ~/.config/zellij/layouts/"
+    
+  - name: "Symlink zellij layouts"
+    command: "ln -sf ~/workspace/dotfiles/app-configs/zellij/cal.kdl ~/.config/zellij/layouts/cal.kdl"

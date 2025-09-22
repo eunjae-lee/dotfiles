@@ -1,0 +1,92 @@
+name: "Apps Install"
+description: "Install Mac App Store apps and cask applications"
+
+# Configuration that gets merged into config.yml
+config:
+  homebrew:
+    packages:
+      - mas
+    casks:
+      - slack
+      - firefox
+      - google-chrome
+      - iterm2
+      - visual-studio-code
+      - discord
+      - iina
+      - insomnia
+      - fork
+      - google-chrome@canary
+      - raycast
+      - telegram
+      - handbrake
+      - notion
+      - zed
+      - input-source-pro
+      - whatsapp
+      - docker
+      - jordanbaird-ice
+  
+  apps:
+    mas_apps:
+      - "1487937127" # Craft
+      - "1465439395" # Dark Noise
+      - "904280696"  # Things3
+      - "869223134"  # KakaoTalk
+      - "639968404"  # Parcel
+      - "1453273600" # Data Jar
+      - "1604176982" # One Thing
+      - "1425368544" # Timery
+      - "6450279539" # Second Clock
+      - "1607635845" # Velja
+      - "1586435171" # Actions
+    
+    vscode_extensions:
+      - aaron-bond.better-comments
+      - astro-build.astro-vscode
+      - beardedbear.beardedtheme
+      - bibhasdn.unique-lines
+      - britesnow.vscode-toggle-quotes
+      - christian-kohler.path-intellisense
+      - dbaeumer.vscode-eslint
+      - donjayamanne.githistory
+      - dracula-theme.theme-dracula
+      - esbenp.prettier-vscode
+      - fabiospampinato.vscode-open-in-github
+      - formulahendry.auto-rename-tag
+      - github.copilot
+      - github.copilot-chat
+      - github.vscode-github-actions
+      - k--kato.intellij-idea-keybindings
+      - mikestead.dotenv
+      - ms-playwright.playwright
+      - pepri.subtitles-editor
+      - pomdtr.excalidraw-editor
+      - sebsojeda.vscode-svx
+      - svelte.svelte-vscode
+      - tldraw-org.tldraw-vscode
+      - vitest.explorer
+      - vue.volar
+      - wmaurer.change-case
+      - yatki.vscode-surround
+      - yoavbls.pretty-ts-errors
+
+# Commands to execute
+up:
+  - name: "Install mas (Mac App Store CLI)"
+    command: "brew install mas"
+    
+  - name: "Install Mac App Store apps"
+    command: "mas install 1487937127 1465439395 904280696 869223134 639968404 1453273600 1604176982 1425368544 6450279539 1607635845 1586435171"
+    
+  - name: "Install cask applications"
+    command: "brew install --cask slack firefox google-chrome iterm2 visual-studio-code discord iina insomnia fork google-chrome@canary raycast telegram handbrake notion zed input-source-pro whatsapp docker jordanbaird-ice"
+    
+  - name: "Install VSCode extensions"
+    command: "code --install-extension aaron-bond.better-comments --install-extension astro-build.astro-vscode --install-extension beardedbear.beardedtheme --install-extension bibhasdn.unique-lines --install-extension britesnow.vscode-toggle-quotes --install-extension christian-kohler.path-intellisense --install-extension dbaeumer.vscode-eslint --install-extension donjayamanne.githistory --install-extension dracula-theme.theme-dracula --install-extension esbenp.prettier-vscode --install-extension fabiospampinato.vscode-open-in-github --install-extension formulahendry.auto-rename-tag --install-extension github.copilot --install-extension github.copilot-chat --install-extension github.vscode-github-actions --install-extension k--kato.intellij-idea-keybindings --install-extension mikestead.dotenv --install-extension ms-playwright.playwright --install-extension pepri.subtitles-editor --install-extension pomdtr.excalidraw-editor --install-extension sebsojeda.vscode-svx --install-extension svelte.svelte-vscode --install-extension tldraw-org.tldraw-vscode --install-extension vitest.explorer --install-extension vue.volar --install-extension wmaurer.change-case --install-extension yatki.vscode-surround --install-extension yoavbls.pretty-ts-errors"
+    
+  - name: "Install one-thing CLI"
+    command: "npm install -g one-thing"
+    
+  - name: "Install atuin"
+    command: 'curl --proto "=https" --tlsv1.2 -LsSf https://setup.atuin.sh | sh'

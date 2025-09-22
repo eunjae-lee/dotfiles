@@ -1,0 +1,19 @@
+name: "Cli Tools"
+description: "Set up PM2 and CLI ecosystem"
+
+# Configuration that gets merged into config.yml
+config:
+  cli:
+    pm2: true
+    ecosystem_config: "app-configs/cli/ecosystem.config.js"
+
+# Commands to execute
+up:
+  - name: "Install PM2 globally"
+    command: "npm install pm2@latest -g"
+    
+  - name: "Start PM2 ecosystem"
+    command: "cd ~/workspace/dotfiles/app-configs/cli && pm2 start ecosystem.config.js"
+    
+  - name: "Setup PM2 startup"
+    command: "pm2 startup"

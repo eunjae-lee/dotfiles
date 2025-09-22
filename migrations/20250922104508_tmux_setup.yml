@@ -1,0 +1,23 @@
+name: "Tmux Setup"
+description: "Install tmux and set up with TPM plugin manager"
+
+# Configuration that gets merged into config.yml
+config:
+  homebrew:
+    packages:
+      - tmux
+  
+  tmux:
+    tpm: true
+    config_file: "~/workspace/dotfiles/tmux.conf"
+
+# Commands to execute
+up:
+  - name: "Install tmux"
+    command: "brew install tmux"
+    
+  - name: "Clone TPM plugin manager"
+    command: "test -d ~/.tmux/plugins/tpm || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
+    
+  - name: "Symlink tmux configuration"
+    command: "ln -sf ~/workspace/dotfiles/tmux.conf ~/.tmux.conf"

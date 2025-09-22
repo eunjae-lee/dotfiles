@@ -1,0 +1,181 @@
+---
+_applied_migrations:
+- 20250922104120_homebrew_install
+- 20250922104141_brew_packages
+- 20250922104307_apps_install
+- 20250922104342_git_setup
+- 20250922104405_dotfiles_setup
+- 20250922104428_nodejs_asdf
+- 20250922104428_python_setup
+- 20250922104429_rust_setup
+- 20250922104507_zsh_setup
+- 20250922104508_cli_tools
+- 20250922104508_tmux_setup
+- 20250922104508_zellij_setup
+homebrew:
+  install: true
+  update: true
+  packages:
+  - yarn
+  - rg
+  - lazygit
+  - wget
+  - jq
+  - m-cli
+  - switchaudio-osx
+  - rustup
+  - ffmpeg
+  - libheif
+  - imagemagick
+  - mas
+  - git
+  - gh
+  - asdf
+  - gnupg
+  - tmux
+  - zellij
+  casks:
+  - font-geist-mono
+  - font-geist-mono-nerd-font
+  - font-jetbrains-mono
+  - font-jetbrains-mono-nerd-font
+  - font-roboto
+  - font-spectral
+  - font-noto-sans-cjk
+  - font-cascadia-code
+  - font-cascadia-code-pl
+  - font-cascadia-mono
+  - font-cascadia-mono-pl
+  - font-monaspace
+  - font-fira-code
+  - qlmarkdown
+  - slack
+  - firefox
+  - google-chrome
+  - iterm2
+  - visual-studio-code
+  - discord
+  - iina
+  - insomnia
+  - fork
+  - google-chrome@canary
+  - raycast
+  - telegram
+  - handbrake
+  - notion
+  - zed
+  - input-source-pro
+  - whatsapp
+  - docker
+  - jordanbaird-ice
+  taps:
+  - joerdav/xc
+apps:
+  mas_apps:
+  - '1487937127'
+  - '1465439395'
+  - '904280696'
+  - '869223134'
+  - '639968404'
+  - '1453273600'
+  - '1604176982'
+  - '1425368544'
+  - '6450279539'
+  - '1607635845'
+  - '1586435171'
+  vscode_extensions:
+  - aaron-bond.better-comments
+  - astro-build.astro-vscode
+  - beardedbear.beardedtheme
+  - bibhasdn.unique-lines
+  - britesnow.vscode-toggle-quotes
+  - christian-kohler.path-intellisense
+  - dbaeumer.vscode-eslint
+  - donjayamanne.githistory
+  - dracula-theme.theme-dracula
+  - esbenp.prettier-vscode
+  - fabiospampinato.vscode-open-in-github
+  - formulahendry.auto-rename-tag
+  - github.copilot
+  - github.copilot-chat
+  - github.vscode-github-actions
+  - k--kato.intellij-idea-keybindings
+  - mikestead.dotenv
+  - ms-playwright.playwright
+  - pepri.subtitles-editor
+  - pomdtr.excalidraw-editor
+  - sebsojeda.vscode-svx
+  - svelte.svelte-vscode
+  - tldraw-org.tldraw-vscode
+  - vitest.explorer
+  - vue.volar
+  - wmaurer.change-case
+  - yatki.vscode-surround
+  - yoavbls.pretty-ts-errors
+git:
+  ssh_setup: true
+dotfiles:
+  workspace_dir: "~/workspace"
+  sandbox_dir: "~/sandbox"
+  repositories:
+  - url: git@github.com:eunjae-lee/dotfiles.git
+    path: "~/workspace/dotfiles"
+  - url: git@github.com:eunjae-lee/morning-routine.git
+    path: "~/workspace/morning-routine"
+  - url: git@github.com:eunjae-lee/eunjae-dev-nuxt.git
+    path: "~/workspace/eunjae-dev-nuxt"
+  - url: git@github.com:eunjae-lee/eunjae-cli.git
+    path: "~/workspace/eunjae-cli"
+  symlinks:
+  - source: "~/workspace/dotfiles/.gitconfig"
+    target: "~/.gitconfig"
+  - source: "~/workspace/dotfiles/.tool-versions"
+    target: "~/.tool-versions"
+  - source: "~/workspace/dotfiles/app-configs/raycast-scripts"
+    target: "~/workspace/raycast-scripts"
+  - source: "~/workspace/dotfiles/app-configs/lazygit/config.yml"
+    target: "~/Library/Application Support/lazygit/config.yml"
+  - source: "~/workspace/dotfiles/app-configs/zed/settings.json"
+    target: "~/.config/zed/settings.json"
+  - source: "~/workspace/dotfiles/app-configs/zed/keymap.json"
+    target: "~/.config/zed/keymap.json"
+  - source: "~/workspace/dotfiles/app-configs/vscode/keybindings.json"
+    target: "~/Library/Application Support/Code/User/keybindings.json"
+  - source: "~/workspace/dotfiles/app-configs/vscode/settings.json"
+    target: "~/Library/Application Support/Code/User/settings.json"
+asdf:
+  plugins:
+  - rust
+  nodejs_versions:
+  - latest
+  nodejs_aliases:
+  - name: '20'
+    version: 20.10.0
+  - name: '18'
+    version: 18.20.4
+  python_versions:
+  - 3.11.3
+python:
+  packages:
+  - torch
+  - torchvision
+zsh:
+  oh_my_zsh: true
+  theme: spaceship
+  plugins:
+  - zsh-z
+  dotfiles:
+  - source: "~/workspace/dotfiles/.zshrc"
+    target: "~/.zshrc"
+  - source: "~/workspace/dotfiles/.zprofile"
+    target: "~/.zprofile"
+cli:
+  pm2: true
+  ecosystem_config: app-configs/cli/ecosystem.config.js
+tmux:
+  tpm: true
+  config_file: "~/workspace/dotfiles/tmux.conf"
+zellij:
+  layouts:
+  - source: "~/workspace/dotfiles/app-configs/zellij/cal.kdl"
+    target: "~/.config/zellij/layouts/cal.kdl"

@@ -1,0 +1,61 @@
+name: "Dotfiles Setup"
+description: "Set up dotfiles repository and symlink configurations"
+
+# Configuration that gets merged into config.yml
+config:
+  dotfiles:
+    workspace_dir: "~/workspace"
+    sandbox_dir: "~/sandbox"
+    repositories:
+      - url: "git@github.com:eunjae-lee/dotfiles.git"
+        path: "~/workspace/dotfiles"
+      - url: "git@github.com:eunjae-lee/morning-routine.git"
+        path: "~/workspace/morning-routine"
+      - url: "git@github.com:eunjae-lee/eunjae-dev-nuxt.git"
+        path: "~/workspace/eunjae-dev-nuxt"
+      - url: "git@github.com:eunjae-lee/eunjae-cli.git"
+        path: "~/workspace/eunjae-cli"
+    
+    symlinks:
+      - source: "~/workspace/dotfiles/.gitconfig"
+        target: "~/.gitconfig"
+      - source: "~/workspace/dotfiles/.tool-versions"
+        target: "~/.tool-versions"
+      - source: "~/workspace/dotfiles/app-configs/raycast-scripts"
+        target: "~/workspace/raycast-scripts"
+      - source: "~/workspace/dotfiles/app-configs/lazygit/config.yml"
+        target: "~/Library/Application Support/lazygit/config.yml"
+      - source: "~/workspace/dotfiles/app-configs/zed/settings.json"
+        target: "~/.config/zed/settings.json"
+      - source: "~/workspace/dotfiles/app-configs/zed/keymap.json"
+        target: "~/.config/zed/keymap.json"
+      - source: "~/workspace/dotfiles/app-configs/vscode/keybindings.json"
+        target: "~/Library/Application Support/Code/User/keybindings.json"
+      - source: "~/workspace/dotfiles/app-configs/vscode/settings.json"
+        target: "~/Library/Application Support/Code/User/settings.json"
+
+# Commands to execute
+up:
+  - name: "Create workspace and sandbox directories"
+    command: "mkdir -p ~/workspace/ ~/sandbox/"
+    
+  - name: "Clone dotfiles repository"
+    command: "test -d ~/workspace/dotfiles || git clone git@github.com:eunjae-lee/dotfiles.git ~/workspace/dotfiles"
+    
+  - name: "Clone additional repositories"
+    command: "test -d ~/workspace/morning-routine || git clone git@github.com:eunjae-lee/morning-routine.git ~/workspace/morning-routine && test -d ~/workspace/eunjae-dev-nuxt || git clone git@github.com:eunjae-lee/eunjae-dev-nuxt.git ~/workspace/eunjae-dev-nuxt && test -d ~/workspace/eunjae-cli || git clone git@github.com:eunjae-lee/eunjae-cli.git ~/workspace/eunjae-cli"
+    
+  - name: "Symlink gitconfig and tool-versions"
+    command: "ln -sf ~/workspace/dotfiles/.gitconfig ~/.gitconfig && ln -sf ~/workspace/dotfiles/.tool-versions ~/.tool-versions"
+    
+  - name: "Symlink raycast scripts"
+    command: "ln -sf ~/workspace/dotfiles/app-configs/raycast-scripts ~/workspace/raycast-scripts"
+    
+  - name: "Symlink lazygit config"
+    command: "mkdir -p ~/Library/Application\\ Support/lazygit && rm -f ~/Library/Application\\ Support/lazygit/config.yml && ln -sf ~/workspace/dotfiles/app-configs/lazygit/config.yml ~/Library/Application\\ Support/lazygit/config.yml"
+    
+  - name: "Symlink Zed configs"
+    command: "mkdir -p ~/.config/zed && rm -f ~/.config/zed/settings.json ~/.config/zed/keymap.json && ln -sf ~/workspace/dotfiles/app-configs/zed/settings.json ~/.config/zed/settings.json && ln -sf ~/workspace/dotfiles/app-configs/zed/keymap.json ~/.config/zed/keymap.json"
+    
+  - name: "Symlink VSCode configs"
+    command: "mkdir -p ~/Library/Application\\ Support/Code/User && rm -f ~/Library/Application\\ Support/Code/User/keybindings.json ~/Library/Application\\ Support/Code/User/settings.json && ln -sf ~/workspace/dotfiles/app-configs/vscode/keybindings.json ~/Library/Application\\ Support/Code/User/keybindings.json && ln -sf ~/workspace/dotfiles/app-configs/vscode/settings.json ~/Library/Application\\ Support/Code/User/settings.json"
