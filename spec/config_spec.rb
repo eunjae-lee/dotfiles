@@ -8,6 +8,7 @@ RSpec.describe Setup::Config do
     it 'loads existing configuration when file exists' do
       # Mock file existence and content
       allow(File).to receive(:exist?).with('config.yml').and_return(true)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       allow(YAML).to receive(:load_file).with('config.yml').and_return({ 'homebrew' => { 'packages' => ['vim'] } })
       
       config = Setup::Config.new
@@ -16,16 +17,19 @@ RSpec.describe Setup::Config do
 
     it 'creates empty configuration when file does not exist' do
       allow(File).to receive(:exist?).with('config.yml').and_return(false)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       
       config = Setup::Config.new
-      expect(config.instance_variable_get(:@data)).to eq({ '_applied_migrations' => [] })
+      expect(config.instance_variable_get(:@data)).to eq({})
+      expect(config.instance_variable_get(:@local_state)).to eq({ 'applied_migrations' => [] })
     end
   end
 
   describe '#applied_migrations' do
-    it 'returns applied migrations from config' do
-      allow(File).to receive(:exist?).with('config.yml').and_return(true)
-      allow(YAML).to receive(:load_file).with('config.yml').and_return({ '_applied_migrations' => ['20250101_test'] })
+    it 'returns applied migrations from local state' do
+      allow(File).to receive(:exist?).with('config.yml').and_return(false)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(true)
+      allow(YAML).to receive(:load_file).with('.local_state.yml').and_return({ 'applied_migrations' => ['20250101_test'] })
       
       config = Setup::Config.new
       expect(config.applied_migrations).to eq(['20250101_test'])
@@ -33,6 +37,7 @@ RSpec.describe Setup::Config do
 
     it 'returns empty array when no migrations applied' do
       allow(File).to receive(:exist?).with('config.yml').and_return(false)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       
       config = Setup::Config.new
       expect(config.applied_migrations).to eq([])
@@ -41,8 +46,9 @@ RSpec.describe Setup::Config do
 
   describe '#pending_migrations' do
     it 'returns migrations not yet applied' do
-      allow(File).to receive(:exist?).with('config.yml').and_return(true)
-      allow(YAML).to receive(:load_file).with('config.yml').and_return({ '_applied_migrations' => ['20250101_test'] })
+      allow(File).to receive(:exist?).with('config.yml').and_return(false)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(true)
+      allow(YAML).to receive(:load_file).with('.local_state.yml').and_return({ 'applied_migrations' => ['20250101_test'] })
       allow(Dir).to receive(:glob).with('migrations/*.yml').and_return(['migrations/20250101_test.yml', 'migrations/20250102_test.yml'])
       
       config = Setup::Config.new
@@ -51,6 +57,7 @@ RSpec.describe Setup::Config do
 
     it 'returns all migrations when none applied' do
       allow(File).to receive(:exist?).with('config.yml').and_return(false)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       allow(Dir).to receive(:glob).with('migrations/*.yml').and_return(['migrations/20250101_test.yml', 'migrations/20250102_test.yml'])
       
       config = Setup::Config.new
@@ -59,10 +66,10 @@ RSpec.describe Setup::Config do
   end
 
   describe '#validate!' do
-    it 'validates all sections except _applied_migrations' do
+    it 'validates all configuration sections' do
       allow(File).to receive(:exist?).with('config.yml').and_return(true)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       allow(YAML).to receive(:load_file).with('config.yml').and_return({
-        '_applied_migrations' => ['test'],
         'homebrew' => { 'packages' => ['git'] },
         'apps' => { 'mas_apps' => ['123456'] }
       })
@@ -73,6 +80,7 @@ RSpec.describe Setup::Config do
 
     it 'raises error for invalid configuration' do
       allow(File).to receive(:exist?).with('config.yml').and_return(true)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       allow(YAML).to receive(:load_file).with('config.yml').and_return({ 'homebrew' => { 'packages' => 'not_an_array' } })
       
       config = Setup::Config.new
@@ -81,8 +89,9 @@ RSpec.describe Setup::Config do
   end
 
   describe '#merge_migration!' do
-    it 'merges migration configuration into existing config' do
+    it 'merges migration configuration into existing config and updates local state' do
       allow(File).to receive(:exist?).with('config.yml').and_return(true)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       allow(YAML).to receive(:load_file).with('config.yml').and_return({ 'homebrew' => { 'packages' => ['vim'] } })
       allow(File).to receive(:write)
       
@@ -90,19 +99,23 @@ RSpec.describe Setup::Config do
       config.merge_migration!('20250101_test', { 'homebrew' => { 'packages' => ['git'] } })
       
       data = config.instance_variable_get(:@data)
+      local_state = config.instance_variable_get(:@local_state)
       expect(data['homebrew']['packages']).to include('vim', 'git')
-      expect(data['_applied_migrations']).to include('20250101_test')
+      expect(local_state['applied_migrations']).to include('20250101_test')
     end
 
     it 'creates new section if it does not exist' do
       allow(File).to receive(:exist?).with('config.yml').and_return(false)
+      allow(File).to receive(:exist?).with('.local_state.yml').and_return(false)
       allow(File).to receive(:write)
       
       config = Setup::Config.new
       config.merge_migration!('20250102_test', { 'apps' => { 'mas_apps' => ['123456'] } })
       
       data = config.instance_variable_get(:@data)
+      local_state = config.instance_variable_get(:@local_state)
       expect(data['apps']['mas_apps']).to eq(['123456'])
+      expect(local_state['applied_migrations']).to include('20250102_test')
     end
   end
 end

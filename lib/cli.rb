@@ -5,7 +5,7 @@ module Setup
   def initialize(args)
     @command = args.shift
     @dry_run = args.include?('--dry-run')
-    @config_only = args.include?('--config-only')
+    @config_only = args.include?('--update-config')
     @migration_name = args.find { |arg| !arg.start_with?('--') }
     @args = args
   end
@@ -32,7 +32,7 @@ module Setup
     if @dry_run
       puts "DRY RUN MODE - No changes will be made"
     elsif @config_only
-      puts "CONFIG ONLY MODE - Only config.yml will be updated"
+      puts "UPDATE CONFIG MODE - Only config.yml will be updated"
     end
     
     puts ""
@@ -70,14 +70,14 @@ module Setup
         ./setup <command> [options]
       
       COMMANDS:
-        apply [--dry-run|--config-only]    Apply pending migrations
+        apply [--dry-run|--update-config]  Apply pending migrations
         create <name>                       Create new migration
         validate                           Validate configuration
       
       EXAMPLES:
         ./setup apply                       # Apply all pending migrations
         ./setup apply --dry-run             # Preview what would be applied
-        ./setup apply --config-only         # Update config.yml without running commands
+        ./setup apply --update-config       # Update config.yml without running commands
         ./setup create add_docker           # Create new migration
         ./setup validate                    # Validate config and migrations
     USAGE

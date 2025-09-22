@@ -11,7 +11,7 @@ This directory contains the original shell-based setup scripts that were used be
 ./setup apply --dry-run
 
 # Generate config.yml without installing
-./setup apply --config-only  
+./setup apply --update-config  
 
 # Install everything
 ./setup apply
@@ -43,7 +43,7 @@ The new system provides:
 - **Single source of truth**: All config in `config.yml`
 - **Provider-based merging**: Smart handling of package lists, configs, etc.
 - **Dry-run support**: See what would happen before running
-- **Config-only mode**: Generate config without installing
+- **Update-config mode**: Generate config without installing
 - **Validation**: Ensure configurations are valid
 - **Incremental updates**: Only run new migrations
 

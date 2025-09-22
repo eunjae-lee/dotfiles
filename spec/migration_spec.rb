@@ -121,7 +121,7 @@ RSpec.describe Setup::Migration do
         expect { Setup::Migration.apply_all }.to output(/All migrations applied successfully/).to_stdout
       end
 
-      it 'only updates config in config-only mode' do
+      it 'only updates config in update-config mode' do
         expect(config).to receive(:merge_migration!).with('test_migration', migration_data['config'])
         
         expect { Setup::Migration.apply_all(config_only: true) }.to output(/Updating config only/).to_stdout

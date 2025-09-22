@@ -14,10 +14,11 @@ module Setup
   
   def initialize
     @data = load_config
+    @local_state = load_local_state
   end
   
   def applied_migrations
-    @data['_applied_migrations'] || []
+    @local_state['applied_migrations'] || []
   end
   
   def pending_migrations
@@ -26,7 +27,6 @@ module Setup
   
   def validate!
     @data.each do |section, config|
-      next if section == '_applied_migrations'
       validate_section(section, config)
     end
   end
@@ -46,11 +46,12 @@ module Setup
       end
     end
     
-    # Track applied migration
-    @data['_applied_migrations'] ||= []
-    @data['_applied_migrations'] << migration_name
+    # Track applied migration in local state
+    @local_state['applied_migrations'] ||= []
+    @local_state['applied_migrations'] << migration_name
     
     save_config!
+    save_local_state!
   end
   
   private
@@ -59,12 +60,24 @@ module Setup
     if File.exist?('config.yml')
       YAML.load_file('config.yml') || {}
     else
-      { '_applied_migrations' => [] }
+      {}
+    end
+  end
+  
+  def load_local_state
+    if File.exist?('.local_state.yml')
+      YAML.load_file('.local_state.yml') || {}
+    else
+      { 'applied_migrations' => [] }
     end
   end
   
   def save_config!
     File.write('config.yml', @data.to_yaml)
+  end
+  
+  def save_local_state!
+    File.write('.local_state.yml', @local_state.to_yaml)
   end
   
   def all_migrations

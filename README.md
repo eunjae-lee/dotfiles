@@ -9,7 +9,7 @@ Personal dotfiles and system setup using a minimal migration-driven approach.
 ./setup apply --dry-run
 
 # Generate config.yml without installing anything
-./setup apply --config-only  
+./setup apply --update-config  
 
 # Install everything
 ./setup apply
@@ -27,7 +27,7 @@ Personal dotfiles and system setup using a minimal migration-driven approach.
 ## 🛠 Commands
 
 ```bash
-./setup apply [--dry-run|--config-only]    # Apply migrations
+./setup apply [--dry-run|--update-config]  # Apply migrations
 ./setup create <name>                       # Create new migration
 ./setup validate                           # Validate configuration
 ```
@@ -79,7 +79,7 @@ This repo uses a custom migration system that:
 
 - Tracks all changes in `config.yml`
 - Provides domain-specific configuration merging
-- Supports dry-run and config-only modes
+- Supports dry-run and update-config modes
 - Validates configurations before applying
 - Only runs new migrations (idempotent)
 

@@ -17,8 +17,8 @@ RSpec.describe Setup::CLI do
       expect(cli.instance_variable_get(:@config_only)).to be false
     end
 
-    it 'parses config-only flag' do
-      cli = Setup::CLI.new(['apply', '--config-only'])
+    it 'parses update-config flag' do
+      cli = Setup::CLI.new(['apply', '--update-config'])
       
       expect(cli.instance_variable_get(:@config_only)).to be true
       expect(cli.instance_variable_get(:@dry_run)).to be false
@@ -51,14 +51,14 @@ RSpec.describe Setup::CLI do
         expect(output).to include('DRY RUN MODE')
       end
 
-      it 'displays appropriate headers for config-only' do
+      it 'displays appropriate headers for update-config' do
         allow(Setup::Migration).to receive(:apply_all)
         
-        cli = Setup::CLI.new(['apply', '--config-only'])
+        cli = Setup::CLI.new(['apply', '--update-config'])
         cli.run
         
         output = stdout.string
-        expect(output).to include('CONFIG ONLY MODE')
+        expect(output).to include('UPDATE CONFIG MODE')
       end
     end
 
