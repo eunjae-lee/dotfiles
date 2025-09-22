@@ -1,17 +1,4 @@
 ---
-_applied_migrations:
-- 20250922104120_homebrew_install
-- 20250922104141_brew_packages
-- 20250922104307_apps_install
-- 20250922104342_git_setup
-- 20250922104405_dotfiles_setup
-- 20250922104428_nodejs_asdf
-- 20250922104428_python_setup
-- 20250922104429_rust_setup
-- 20250922104507_zsh_setup
-- 20250922104508_cli_tools
-- 20250922104508_tmux_setup
-- 20250922104508_zellij_setup
 homebrew:
   install: true
   update: true

@@ -1,0 +1,15 @@
+# Local machine state (migrations, settings, etc.)
+.local_state.yml
+
+# Ruby/Bundler
+vendor/
+.bundle/
+Gemfile.lock
+*.gem
+*.rbc
+.rspec_status
+coverage/
+spec/reports/
+tmp/
+.yardoc/
+doc/

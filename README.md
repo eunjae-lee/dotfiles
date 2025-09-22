@@ -32,6 +32,34 @@ Personal dotfiles and system setup using a minimal migration-driven approach.
 ./setup validate                           # Validate configuration
 ```
 
+## 🧪 Testing
+
+The setup system includes a comprehensive unit test suite to ensure reliability:
+
+```bash
+# Install Ruby dependencies
+bundle install --path vendor/bundle
+
+# Run all tests
+bundle exec rspec
+
+# Run specific test files
+bundle exec rspec spec/config_spec.rb
+
+# Validate setup functionality
+./setup validate
+
+# Test dry-run functionality
+./setup apply --dry-run
+```
+
+**Test Coverage:**
+- Configuration parsing and merging
+- Migration loading and execution
+- CLI command handling
+- Provider-specific logic (Homebrew, Apps, etc.)
+- Dry-run and validation modes
+
 ## 📁 Structure
 
 ```
@@ -39,8 +67,10 @@ setup                 # Main CLI script
 config.yml           # Single source of truth (generated)
 migrations/          # Migration files
 lib/                 # Migration system
+spec/                # Unit tests (RSpec)
 legacy/              # Old setup scripts (deprecated)
 app-configs/         # Application configurations
+Gemfile              # Ruby dependencies
 ```
 
 ## 🔄 Migration System
