@@ -1,0 +1,17 @@
+name: "Homebrew Install"
+description: "Install Homebrew package manager and update it"
+
+# Configuration that gets merged into config.yml
+config:
+  homebrew:
+    install: true
+    update: true
+
+# Commands to execute
+up:
+  - name: "Install Homebrew"
+    command: 'test $(which brew) || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+    check: "which brew"
+    
+  - name: "Update Homebrew"
+    command: "brew update"
