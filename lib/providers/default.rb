@@ -20,4 +20,9 @@ class DefaultProvider < BaseProvider
       raise "Conflict: Can't merge #{existing.class}(#{existing}) with #{new_config.class}(#{new_config})"
     end
   end
+  
+  def execute(config, dry_run: false)
+    puts "    No provider implementation available - config will be stored but not executed"
+    puts "    Config: #{config.inspect}" if dry_run
+  end
 end

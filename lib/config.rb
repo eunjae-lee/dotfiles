@@ -1,5 +1,7 @@
 require_relative 'providers/homebrew'
 require_relative 'providers/apps'
+require_relative 'providers/dotfiles'
+require_relative 'providers/zsh'
 require_relative 'providers/default'
 
 module Setup
@@ -7,9 +9,12 @@ module Setup
   PROVIDERS = {
     'homebrew' => HomebrewProvider,
     'apps' => AppsProvider,
+    'dotfiles' => DotfilesProvider,
+    'zsh' => ZshProvider,
     'vscode' => DefaultProvider,  # Add VSCodeProvider later
     'git' => DefaultProvider,     # Add GitProvider later
-    'dotfiles' => DefaultProvider # Add DotfilesProvider later
+    'asdf' => DefaultProvider,    # Add AsdfProvider later
+    'cli' => DefaultProvider      # Add CliProvider later
   }.freeze
   
   def initialize

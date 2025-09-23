@@ -23,4 +23,61 @@ class AppsProvider < BaseProvider
     
     result
   end
+  
+  def execute(config, dry_run: false)
+    if config['mas_apps']&.any?
+      install_mas_apps(config['mas_apps'], dry_run)
+    end
+    
+    if config['cask_apps']&.any?
+      install_cask_apps(config['cask_apps'], dry_run)
+    end
+    
+    if config['vscode_extensions']&.any?
+      install_vscode_extensions(config['vscode_extensions'], dry_run)
+    end
+  end
+  
+  private
+  
+  def install_mas_apps(apps, dry_run)
+    # Ensure mas is installed first
+    run_command(
+      "brew list mas > /dev/null 2>&1 || brew install mas",
+      "Install mas (Mac App Store CLI)",
+      dry_run: dry_run
+    )
+    
+    apps.each do |app_id|
+      run_command(
+        "mas list | grep -q '^#{app_id}' || mas install #{app_id}",
+        "Install Mac App Store app: #{app_id}",
+        dry_run: dry_run
+      )
+    end
+  end
+  
+  def install_cask_apps(apps, dry_run)
+    return if apps.empty?
+    
+    apps.each do |app|
+      run_command(
+        "brew list --cask #{app} > /dev/null 2>&1 || brew install --cask #{app}",
+        "Install cask application: #{app}",
+        dry_run: dry_run
+      )
+    end
+  end
+  
+  def install_vscode_extensions(extensions, dry_run)
+    return if extensions.empty?
+    
+    extensions.each do |extension|
+      run_command(
+        "code --list-extensions | grep -q '^#{Regexp.escape(extension)}$' || code --install-extension #{extension}",
+        "Install VSCode extension: #{extension}",
+        dry_run: dry_run
+      )
+    end
+  end
 end

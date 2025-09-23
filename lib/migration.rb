@@ -81,6 +81,34 @@ module Setup
   end
   
   def apply(dry_run: false)
+    # First execute provider-based config changes
+    execute_config_changes(dry_run)
+    
+    # Then execute any custom commands
+    execute_custom_commands(dry_run)
+  end
+  
+  private
+  
+  def execute_config_changes(dry_run)
+    return if @config_data.empty?
+    
+    puts "  → Executing configuration changes"
+    
+    @config_data.each do |section, config|
+      provider_class = Config::PROVIDERS[section] || DefaultProvider
+      provider = provider_class.new
+      
+      if provider.respond_to?(:execute)
+        puts "    Processing #{section} configuration..."
+        provider.execute(config, dry_run: dry_run)
+      else
+        puts "    Skipping #{section} (no execution implemented)"
+      end
+    end
+  end
+  
+  def execute_custom_commands(dry_run)
     @commands.each do |step|
       puts "  → #{step['name']}"
       
