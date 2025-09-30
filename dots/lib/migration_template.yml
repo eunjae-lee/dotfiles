@@ -1,5 +1,3 @@
-# Migration: __NAME__
-#
 # This file can contain either:
 # 1. A single migration (one provider block)
 # 2. Multiple migrations (array of provider blocks)
@@ -58,10 +56,10 @@ command: |
 # command: |
 #   # Create symlinks
 #   ln -sf "$HOME/.dotfiles/.zshrc" "$HOME/.zshrc"
-#   
+#
 #   # Configure git
 #   git config --global user.name "Your Name"
-#   
+#
 #   # Create directories
 #   mkdir -p ~/.config/nvim
 

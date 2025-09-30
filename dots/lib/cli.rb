@@ -7,8 +7,41 @@ module Dots
       true
     end
 
+    class << self
+      def handle_argument_error(task, error, args, arity)
+        if args.include?('--help') || args.include?('-h') || (args.empty? && error.message.include?('no arguments'))
+          new.invoke(:help, [task.name])
+        else
+          super
+        end
+      end
+
+      def handle_no_command_error(command, has_namespace = $thor_runner)
+        if command == '--help' || command == '-h'
+          help
+        else
+          super
+        end
+      end
+    end
+
     desc "migration NAME", "Create a new migration file"
+    long_desc <<-LONGDESC
+      Create a new migration file with the given NAME.
+
+      The migration file will be created in the migrations/ directory with a timestamp prefix.
+
+      Example:
+      $ dots migration install-vim
+
+      This will create a file like: migrations/20240101120000_install-vim.yml
+    LONGDESC
     def migration(name)
+      if name == '--help' || name == '-h'
+        invoke(:help, ['migration'])
+        return
+      end
+
       manager = MigrationManager.new
       filename = manager.create_migration(name)
       puts "Created: migrations/#{filename}"
@@ -18,6 +51,19 @@ module Dots
     end
 
     desc "apply", "Apply pending migrations"
+    long_desc <<-LONGDESC
+      Apply all pending migrations.
+
+      This command will show you the pending migrations and ask for confirmation before applying them.
+      Use the --dry-run flag to preview what would be applied without making any changes.
+
+      Options:
+      -d, --dry-run  Preview migrations without applying them
+
+      Example:
+      $ dots apply
+      $ dots apply --dry-run
+    LONGDESC
     option :dry_run, type: :boolean, aliases: '-d', desc: 'Preview migrations without applying them'
     def apply
       manager = MigrationManager.new
