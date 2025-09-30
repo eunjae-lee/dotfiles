@@ -160,6 +160,8 @@ alias cal="zellij attach cal"
 alias z_cal="zellij --layout ~/.config/zellij/layouts/cal.kdl"
 alias cc="opencode"
 
+export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
+
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:$PATH"

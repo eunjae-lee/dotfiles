@@ -1,5 +1,5 @@
-# Local machine state (migrations, settings, etc.)
-.local_state.yml
+# Local state
+migrations/.state.yml
 
 # Ruby/Bundler
 vendor/
@@ -12,4 +12,3 @@ coverage/
 spec/reports/
 tmp/
 .yardoc/
-doc/
