@@ -2,6 +2,40 @@
 
 This file contains example migrations for common use cases.
 
+## Migration Formats
+
+### Single Migration
+
+A single migration with one provider:
+
+```yaml
+provider: sh
+command: |
+  echo "Hello, World!"
+```
+
+### Multiple Migrations (Array)
+
+Multiple migrations in one file, executed sequentially:
+
+```yaml
+- provider: sh
+  command: |
+    echo "Step 1: Preparation"
+    mkdir -p ~/.config
+
+- provider: brew
+  packages:
+    - vim
+    - git
+
+- provider: sh
+  command: |
+    echo "Step 3: Finalization"
+```
+
+All migrations in the array are applied in order and tracked as a single unit.
+
 ## Shell Commands
 
 ### Create Symlinks
@@ -166,10 +200,13 @@ apps:
 
 ### Complete Machine Setup
 
-Create multiple migrations for better organization:
+You can organize your setup in multiple ways:
 
-#### 1. `20250930_100000_install_homebrew.yml`
+#### Option 1: Separate Migration Files
 
+Create multiple migration files for better organization:
+
+**`20250930_100000_install_homebrew.yml`:**
 ```yaml
 provider: sh
 command: |
@@ -179,8 +216,7 @@ command: |
   brew update
 ```
 
-#### 2. `20250930_100100_install_cli_tools.yml`
-
+**`20250930_100100_install_cli_tools.yml`:**
 ```yaml
 provider: brew
 packages:
@@ -192,6 +228,49 @@ packages:
   - fd
   - bat
   - jq
+```
+
+#### Option 2: Single File with Multiple Migrations
+
+Combine related steps in one file using array format:
+
+**`20250930_100000_complete_setup.yml`:**
+```yaml
+- provider: sh
+  command: |
+    if ! command -v brew &> /dev/null; then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    brew update
+
+- provider: brew
+  packages:
+    - git
+    - neovim
+    - tmux
+    - fzf
+    - ripgrep
+    - fd
+    - bat
+    - jq
+
+- provider: brew
+  casks:
+    - visual-studio-code
+    - iterm2
+    - docker
+
+- provider: sh
+  command: |
+    git config --global user.name "Your Name"
+    git config --global user.email "your@email.com"
+    git config --global core.editor "nvim"
+
+- provider: sh
+  command: |
+    ln -sf "$HOME/.dotfiles/.zshrc" "$HOME/.zshrc"
+    ln -sf "$HOME/.dotfiles/.gitconfig" "$HOME/.gitconfig"
+    echo "Setup complete!"
 ```
 
 #### 3. `20250930_100200_install_apps.yml`
@@ -236,11 +315,27 @@ apps:
     id: 497799835
 ```
 
+## When to Use Arrays vs Separate Files
+
+### Use Separate Files When:
+- Migrations are logically independent
+- You might want to apply them selectively
+- They can fail independently
+- Better for tracking in git history
+
+### Use Arrays When:
+- Steps must be executed together as a unit
+- They represent a single logical change
+- Order is critical and steps depend on each other
+- You want atomic application (all-or-nothing)
+
 ## Tips
 
-1. **Keep migrations focused**: One task per migration file
+1. **Keep migrations focused**: One logical task per migration file
 2. **Name descriptively**: Use clear names like `install-docker` not `setup`
 3. **Make idempotent**: Check if things exist before creating/installing
 4. **Test with dry-run**: Always run `dots apply --dry-run` first
 5. **Commit incrementally**: Commit each working migration
 6. **Document complex commands**: Add comments in shell commands
+7. **Use arrays for related steps**: Group tightly coupled operations in one file
+8. **Separate independent tasks**: Keep unrelated operations in different files

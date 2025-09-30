@@ -11,14 +11,12 @@ module Dots
       filename = "#{timestamp}_#{name}.yml"
       filepath = state_manager.migration_path(filename)
 
-      template = <<~YAML
-        provider: sh
-        command: |
-          # Your migration code here
-          echo "Migration: #{name}"
-      YAML
+      template_path = File.expand_path('../migration_template.yml', __FILE__)
+      template_content = File.read(template_path)
+      
+      content = template_content.gsub('__NAME__', name)
 
-      File.write(filepath, template)
+      File.write(filepath, content)
       filename
     end
 
@@ -26,26 +24,40 @@ module Dots
       filepath = state_manager.migration_path(filename)
       
       begin
-        config = YAML.load_file(filepath)
-        raise ValidationError, "Migration file is empty: #{filename}" if config.nil?
-        raise ValidationError, "Migration must be a hash: #{filename}" unless config.is_a?(Hash)
-        raise ValidationError, "Migration missing 'provider' key: #{filename}" unless config['provider']
+        content = YAML.load_file(filepath)
+        raise ValidationError, "Migration file is empty: #{filename}" if content.nil?
 
-        config
+        if content.is_a?(Array)
+          content.each_with_index do |config, index|
+            raise ValidationError, "Migration at index #{index} must be a hash: #{filename}" unless config.is_a?(Hash)
+            raise ValidationError, "Migration at index #{index} missing 'provider' key: #{filename}" unless config['provider']
+          end
+          content
+        elsif content.is_a?(Hash)
+          raise ValidationError, "Migration missing 'provider' key: #{filename}" unless content['provider']
+          [content]
+        else
+          raise ValidationError, "Migration must be a hash or array of hashes: #{filename}"
+        end
       rescue Psych::SyntaxError => e
         raise ValidationError, "Invalid YAML in #{filename}: #{e.message}"
       end
     end
 
     def validate_migration(filename)
-      config = load_migration(filename)
-      provider = Provider.for(config['provider'], config)
-      provider.validate_config
-      { filename: filename, config: config, provider: provider }
+      configs = load_migration(filename)
+      
+      migrations = configs.map.with_index do |config, index|
+        provider = Provider.for(config['provider'], config)
+        provider.validate_config
+        { filename: filename, index: index, config: config, provider: provider }
+      end
+
+      migrations
     end
 
     def apply_migration(filename, dry_run: false)
-      migration = validate_migration(filename)
+      migrations = validate_migration(filename)
       filepath = state_manager.migration_path(filename)
       current_checksum = state_manager.calculate_checksum(filepath)
       stored_checksum = state_manager.find_checksum(filename)
@@ -54,9 +66,15 @@ module Dots
         raise ValidationError, "Migration '#{filename}' has been modified since it was applied"
       end
 
-      return migration[:provider].describe if dry_run
+      if dry_run
+        descriptions = migrations.map { |m| m[:provider].describe }
+        return descriptions.length == 1 ? descriptions.first : descriptions
+      end
 
-      migration[:provider].apply
+      migrations.each do |migration|
+        migration[:provider].apply
+      end
+      
       state_manager.add_migration(filename, current_checksum)
       true
     end

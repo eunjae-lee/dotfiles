@@ -33,10 +33,18 @@ module Dots
       descriptions = {}
       pending.each do |filename|
         begin
-          migration = manager.validate_migration(filename)
-          description = migration[:provider].describe
-          descriptions[filename] = description
-          puts "  - #{filename}: #{description}"
+          migrations = manager.validate_migration(filename)
+          if migrations.length == 1
+            description = migrations.first[:provider].describe
+            descriptions[filename] = description
+            puts "  - #{filename}: #{description}"
+          else
+            descriptions[filename] = migrations.map { |m| m[:provider].describe }
+            puts "  - #{filename}: #{migrations.length} migration(s)"
+            migrations.each_with_index do |m, i|
+              puts "      #{i + 1}. #{m[:provider].describe}"
+            end
+          end
         rescue Dots::Error => e
           puts "  - #{filename}: ERROR - #{e.message}"
           exit 1
@@ -65,8 +73,10 @@ module Dots
           
           begin
             filepath = manager.state_manager.migration_path(filename)
-            migration = manager.validate_migration(filename)
-            migration[:provider].apply
+            migrations = manager.validate_migration(filename)
+            migrations.each do |migration|
+              migration[:provider].apply
+            end
             checksum = manager.state_manager.calculate_checksum(filepath)
             manager.state_manager.add_migration(filename, checksum)
             puts "✓ Applied: #{filename}"

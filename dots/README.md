@@ -62,7 +62,11 @@ dots status
 dots migration MIGRATION_NAME
 ```
 
-Creates a new migration file in `migrations/` with a timestamp prefix.
+Creates a new migration file in `migrations/` with a timestamp prefix. The file is generated from a template that includes:
+- Helpful comments and explanations
+- Examples for all three providers (sh, brew, mas)
+- Single and array format examples
+- Best practices and tips
 
 **Example:**
 ```bash
@@ -70,9 +74,46 @@ $ dots migration install-vim
 Created: migrations/20250930_143022_install-vim.yml
 ```
 
+The generated file contains:
+- A working single migration that echoes the migration name
+- Commented examples for:
+  - Array/multiple migrations format
+  - Shell command provider (sh)
+  - Homebrew provider (brew)
+  - Mac App Store provider (mas)
+- Helpful tips and best practices
+
+Simply uncomment and modify the sections you need, or replace the entire content with your own migration.
+
 ### Migration File Format
 
-Migration files are YAML files with a `provider` key and provider-specific configuration.
+Migration files are YAML files that can contain either:
+- A single migration (hash with `provider` key)
+- Multiple migrations (array of hashes, each with `provider` key)
+
+**Single Migration Format:**
+```yaml
+provider: sh
+command: |
+  echo "Single migration"
+```
+
+**Multiple Migrations Format:**
+```yaml
+- provider: sh
+  command: |
+    echo "First step"
+
+- provider: brew
+  packages:
+    - vim
+
+- provider: sh
+  command: |
+    echo "Final step"
+```
+
+All migrations in a file are applied sequentially and tracked as a single unit.
 
 #### Shell Provider
 
@@ -377,6 +418,7 @@ dots/
 │   ├── dots.rb                   # Main entry point
 │   ├── cli.rb                    # Thor-based CLI
 │   ├── migration_manager.rb      # Migration orchestration
+│   ├── migration_template.yml    # Template for new migrations
 │   ├── state_manager.rb          # State file handling
 │   ├── provider.rb               # Base provider class
 │   └── providers/
