@@ -8,7 +8,8 @@ module Dots
 
     def create_migration(name)
       timestamp = Time.now.strftime("%Y%m%d_%H%M%S")
-      filename = "#{timestamp}_#{name}.yml"
+      normalized_name = normalize_migration_name(name)
+      filename = "#{timestamp}_#{normalized_name}.yml"
       filepath = state_manager.migration_path(filename)
 
       template_path = File.expand_path('../migration_template.yml', __FILE__)
@@ -85,6 +86,18 @@ module Dots
 
     def applied_count
       state_manager.applied_migrations.length
+    end
+
+    private
+
+    def normalize_migration_name(name)
+      name
+        .strip
+        .downcase
+        .gsub(/[^a-z0-9\s_-]/, '')
+        .gsub(/[\s_]+/, '-')
+        .gsub(/-+/, '-')
+        .gsub(/^-+|-+$/, '')
     end
   end
 end

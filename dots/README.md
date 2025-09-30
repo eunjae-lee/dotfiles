@@ -72,7 +72,20 @@ Creates a new migration file in `migrations/` with a timestamp prefix. The file 
 ```bash
 $ dots migration install-vim
 Created: migrations/20250930_143022_install-vim.yml
+
+$ dots migration "Basic Setup"
+Created: migrations/20250930_143100_basic-setup.yml
+
+$ dots migration "Install Node.js & NPM"
+Created: migrations/20250930_143200_install-nodejs-npm.yml
 ```
+
+**Filename Normalization:**
+- Migration names are automatically normalized to lowercase
+- Spaces and underscores are converted to hyphens
+- Special characters are removed (except letters, numbers, hyphens)
+- Multiple consecutive separators are collapsed to single hyphens
+- Leading/trailing hyphens are trimmed
 
 The generated file contains:
 - A working single migration that echoes the migration name
