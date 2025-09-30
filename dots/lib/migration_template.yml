@@ -1,3 +1,5 @@
+# Migration: __NAME__
+#
 # This file can contain either:
 # 1. A single migration (one provider block)
 # 2. Multiple migrations (array of provider blocks)

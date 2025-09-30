@@ -45,6 +45,17 @@ module Dots
       end
     end
 
+    def extract_migration_name(filename)
+      filepath = state_manager.migration_path(filename)
+      first_line = File.open(filepath, &:readline).strip rescue nil
+      
+      if first_line && first_line.match(/^#\s*Migration:\s*(.+)/)
+        $1.strip
+      else
+        filename.sub(/^\d+_\d+_/, '').sub(/\.yml$/, '').gsub('-', ' ')
+      end
+    end
+
     def validate_migration(filename)
       configs = load_migration(filename)
       

@@ -107,11 +107,12 @@ module Dots
 
       applied_count = 0
       pending.each do |filename|
-        puts "\nApplying: #{filename}"
+        migration_name = manager.extract_migration_name(filename)
+        puts "\nApplying the migration: #{migration_name}"
         
         begin
           manager.apply_migration(filename)
-          puts "✓ Applied: #{filename}"
+          puts "✓ Applied: #{migration_name}"
           applied_count += 1
         rescue Dots::ValidationError => e
           puts "⚠ Warning: #{e.message}"
@@ -125,7 +126,7 @@ module Dots
             end
             checksum = manager.state_manager.calculate_checksum(filepath)
             manager.state_manager.add_migration(filename, checksum)
-            puts "✓ Applied: #{filename}"
+            puts "✓ Applied: #{migration_name}"
             applied_count += 1
           rescue Dots::Error => e
             puts "✗ Failed: #{e.message}"
