@@ -10,10 +10,10 @@ module Dots
   class StateError < Error; end
 end
 
-require_relative 'dots/provider'
-require_relative 'dots/providers/sh'
-require_relative 'dots/providers/brew'
-require_relative 'dots/providers/mas'
-require_relative 'dots/state_manager'
-require_relative 'dots/migration_manager'
-require_relative 'dots/cli'
+require_relative 'provider'
+require_relative 'providers/sh'
+require_relative 'providers/brew'
+require_relative 'providers/mas'
+require_relative 'state_manager'
+require_relative 'migration_manager'
+require_relative 'cli'

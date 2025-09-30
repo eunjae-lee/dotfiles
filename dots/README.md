@@ -372,35 +372,37 @@ All errors include descriptive messages to help diagnose issues.
 ```
 dots/
 ├── bin/
-│   └── dots                    # Main executable
+│   └── dots                      # Main executable
 ├── lib/
-│   ├── dots.rb                # Main entry point
-│   ├── dots/
-│   │   ├── cli.rb             # Thor-based CLI
-│   │   ├── migration_manager.rb  # Migration orchestration
-│   │   ├── state_manager.rb   # State file handling
-│   │   ├── provider.rb        # Base provider class
-│   │   └── providers/
-│   │       ├── sh.rb          # Shell command provider
-│   │       ├── brew.rb        # Homebrew provider
-│   │       └── mas.rb         # Mac App Store provider
-├── migrations/                 # Your migration files
-│   └── .state.yml             # Local state (gitignored)
+│   ├── dots.rb                   # Main entry point
+│   ├── cli.rb                    # Thor-based CLI
+│   ├── migration_manager.rb      # Migration orchestration
+│   ├── state_manager.rb          # State file handling
+│   ├── provider.rb               # Base provider class
+│   └── providers/
+│       ├── sh.rb                 # Shell command provider
+│       ├── brew.rb               # Homebrew provider
+│       └── mas.rb                # Mac App Store provider
 ├── Gemfile
-└── README.md
+├── README.md
+└── EXAMPLES.md
+
+# In your dotfiles repo root:
+migrations/                       # Your migration files (in working dir)
+└── .state.yml                    # Local state (gitignored)
 ```
 
 ## Extending with Custom Providers
 
 To add a new provider:
 
-1. Create a new file in `lib/dots/providers/`
+1. Create a new file in `lib/providers/`
 2. Inherit from `Dots::Provider`
 3. Implement three methods:
    - `validate_config`: Validate the configuration hash
    - `apply`: Execute the migration
    - `describe`: Return a human-readable description
-4. Register in `lib/dots/provider.rb` in the `self.for` method
+4. Register in `lib/provider.rb` in the `self.for` method
 
 **Example:**
 ```ruby
