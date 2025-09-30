@@ -2,25 +2,29 @@ module Dots
   module Providers
     class MasProvider < Provider
       def validate_config
+        errors = []
+
         unless config['apps'].is_a?(Array) && !config['apps'].empty?
-          raise ValidationError, "MasProvider requires 'apps' array"
+          errors << "MasProvider requires 'apps' array"
+          return errors
         end
 
         config['apps'].each_with_index do |app, index|
           unless app.is_a?(Hash)
-            raise ValidationError, "MasProvider app at index #{index} must be a hash"
+            errors << "MasProvider app at index #{index} must be a hash"
+            next
           end
 
           unless app['name'] && app['id']
-            raise ValidationError, "MasProvider app at index #{index} must have 'name' and 'id'"
+            errors << "MasProvider app at index #{index} must have 'name' and 'id'"
           end
 
-          unless app['id'].is_a?(Integer) || (app['id'].is_a?(String) && app['id'].match?(/^\d+$/))
-            raise ValidationError, "MasProvider app '#{app['name']}' must have numeric 'id'"
+          if app['id'] && !(app['id'].is_a?(Integer) || (app['id'].is_a?(String) && app['id'].match?(/^\d+$/)))
+            errors << "MasProvider app '#{app['name']}' must have numeric 'id'"
           end
         end
 
-        true
+        errors.empty? ? true : errors
       end
 
       def apply

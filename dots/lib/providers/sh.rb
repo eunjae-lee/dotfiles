@@ -2,15 +2,17 @@ module Dots
   module Providers
     class ShProvider < Provider
       def validate_config
+        errors = []
+
         unless config['command']
-          raise ValidationError, "ShProvider requires 'command' key"
+          errors << "ShProvider requires 'command' key"
         end
 
-        unless config['command'].is_a?(String) && !config['command'].strip.empty?
-          raise ValidationError, "ShProvider 'command' must be a non-empty string"
+        if config['command'] && (!config['command'].is_a?(String) || config['command'].strip.empty?)
+          errors << "ShProvider 'command' must be a non-empty string"
         end
 
-        true
+        errors.empty? ? true : errors
       end
 
       def apply

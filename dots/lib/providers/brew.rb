@@ -2,15 +2,17 @@ module Dots
   module Providers
     class BrewProvider < Provider
       def validate_config
+        errors = []
+        
         has_packages = config['packages'].is_a?(Array) && !config['packages'].empty?
         has_casks = config['casks'].is_a?(Array) && !config['casks'].empty?
         has_taps = config['taps'].is_a?(Array) && !config['taps'].empty?
 
         unless has_packages || has_casks || has_taps
-          raise ValidationError, "BrewProvider requires at least one of: 'packages', 'casks', or 'taps'"
+          errors << "BrewProvider requires at least one of: 'packages', 'casks', or 'taps'"
         end
 
-        true
+        errors.empty? ? true : errors
       end
 
       def apply

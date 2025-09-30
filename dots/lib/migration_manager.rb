@@ -48,10 +48,28 @@ module Dots
     def validate_migration(filename)
       configs = load_migration(filename)
       
-      migrations = configs.map.with_index do |config, index|
-        provider = Provider.for(config['provider'], config)
-        provider.validate_config
-        { filename: filename, index: index, config: config, provider: provider }
+      migrations = []
+      errors = []
+
+      configs.each_with_index do |config, index|
+        begin
+          provider = Provider.for(config['provider'], config)
+          validation_result = provider.validate_config
+          
+          if validation_result == true
+            migrations << { filename: filename, index: index, config: config, provider: provider }
+          else
+            prefix = configs.length > 1 ? "Migration #{index + 1}: " : ""
+            Array(validation_result).each { |err| errors << "#{prefix}#{err}" }
+          end
+        rescue ValidationError => e
+          prefix = configs.length > 1 ? "Migration #{index + 1}: " : ""
+          errors << "#{prefix}#{e.message}"
+        end
+      end
+
+      if errors.any?
+        raise ValidationError, "Validation failed for #{filename}:\n  - " + errors.join("\n  - ")
       end
 
       migrations

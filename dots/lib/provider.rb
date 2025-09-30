@@ -10,6 +10,16 @@ module Dots
       raise NotImplementedError, "#{self.class} must implement #validate_config"
     end
 
+    def valid?
+      result = validate_config
+      result == true || result.nil?
+    end
+
+    def validation_errors
+      result = validate_config
+      result == true || result.nil? ? [] : Array(result)
+    end
+
     def apply
       raise NotImplementedError, "#{self.class} must implement #apply"
     end
