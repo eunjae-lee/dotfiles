@@ -19,6 +19,7 @@ provider: sh
 command: |
   # Your migration code here
   echo "Migration: __NAME__"
+# interactive: true  # Set to true if you need to prompt for user input
 
 # ============================================================================
 # MULTIPLE MIGRATIONS EXAMPLE (uncomment to use array format)
@@ -64,6 +65,7 @@ command: |
 #
 #   # Create directories
 #   mkdir -p ~/.config/nvim
+# interactive: true  # Set to true to allow user input (read prompts)
 
 # --- Homebrew Provider (brew) ---
 # Install packages, casks, and taps

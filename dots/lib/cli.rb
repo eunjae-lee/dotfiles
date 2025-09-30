@@ -59,12 +59,15 @@ module Dots
 
       Options:
       -d, --dry-run  Preview migrations without applying them
+      -y, --yes      Skip confirmation prompt and apply all migrations
 
       Example:
       $ dots apply
       $ dots apply --dry-run
+      $ dots apply --yes
     LONGDESC
     option :dry_run, type: :boolean, aliases: '-d', desc: 'Preview migrations without applying them'
+    option :yes, type: :boolean, aliases: '-y', desc: 'Skip confirmation prompt'
     def apply
       manager = MigrationManager.new
       pending = manager.pending_migrations
@@ -102,8 +105,10 @@ module Dots
         return
       end
 
-      prompt = TTY::Prompt.new
-      return unless prompt.yes?("\nApply these migrations?", default: false)
+      unless options[:yes]
+        prompt = TTY::Prompt.new
+        return unless prompt.yes?("\nApply these migrations?", default: false)
+      end
 
       applied_count = 0
       pending.each do |filename|

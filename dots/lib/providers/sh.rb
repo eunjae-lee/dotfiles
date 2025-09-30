@@ -12,20 +12,33 @@ module Dots
           errors << "ShProvider 'command' must be a non-empty string"
         end
 
+        if config['interactive'] && !config['interactive'].is_a?(TrueClass) && !config['interactive'].is_a?(FalseClass)
+          errors << "ShProvider 'interactive' must be a boolean"
+        end
+
         errors.empty? ? true : errors
       end
 
       def apply
-        stdout, stderr, status = Open3.capture3(config['command'])
+        if config['interactive']
+          status = system(config['command'])
+          
+          unless status
+            raise ApplyError, "Shell command failed with exit code #{$?.exitstatus}"
+          end
+        else
+          stdout, stderr, status = Open3.capture3(config['command'])
 
-        unless status.success?
-          error_msg = "Shell command failed with exit code #{status.exitstatus}"
-          error_msg += "\nSTDOUT: #{stdout}" unless stdout.empty?
-          error_msg += "\nSTDERR: #{stderr}" unless stderr.empty?
-          raise ApplyError, error_msg
+          unless status.success?
+            error_msg = "Shell command failed with exit code #{status.exitstatus}"
+            error_msg += "\nSTDOUT: #{stdout}" unless stdout.empty?
+            error_msg += "\nSTDERR: #{stderr}" unless stderr.empty?
+            raise ApplyError, error_msg
+          end
+
+          puts stdout unless stdout.empty?
         end
 
-        puts stdout unless stdout.empty?
         true
       end
 
