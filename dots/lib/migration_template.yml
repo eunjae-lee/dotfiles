@@ -1,0 +1,127 @@
+# Migration: __NAME__
+#
+# This file can contain either:
+# 1. A single migration (one provider block)
+# 2. Multiple migrations (array of provider blocks)
+#
+# All migrations in this file will be executed in order and tracked as one unit.
+#
+# Available providers: sh, brew, mas, repo, symlink
+#
+# See examples below and uncomment/modify as needed.
+
+# ============================================================================
+# SINGLE MIGRATION EXAMPLE
+# ============================================================================
+
+# Shell command provider - execute any shell commands
+provider: sh
+command: |
+  # Your migration code here
+  echo "Migration: __NAME__"
+
+# interactive: true  # Set to true if you need to prompt for user input
+
+# ============================================================================
+# MULTIPLE MIGRATIONS EXAMPLE (uncomment to use array format)
+# ============================================================================
+
+# Use this format when you have multiple related steps:
+#
+# - provider: sh
+#   command: |
+#     echo "Step 1: Preparation"
+#     mkdir -p ~/.config
+#
+# - provider: brew
+#   packages:
+#     - vim
+#     - git
+#   casks:
+#     - visual-studio-code
+#
+# - provider: mas
+#   apps:
+#     - name: "Xcode"
+#       id: 497799835
+#
+# - provider: sh
+#   command: |
+#     echo "Step 4: Finalization"
+
+# ============================================================================
+# PROVIDER EXAMPLES
+# ============================================================================
+
+# --- Shell Provider (sh) ---
+# Execute shell commands with full bash support
+#
+# provider: sh
+# command: |
+#   # Create symlinks
+#   ln -sf "$HOME/.dotfiles/.zshrc" "$HOME/.zshrc"
+#
+#   # Configure git
+#   git config --global user.name "Your Name"
+#
+#   # Create directories
+#   mkdir -p ~/.config/nvim
+# interactive: true  # Set to true to allow user input (read prompts)
+
+# --- Homebrew Provider (brew) ---
+# Install packages, casks, and taps
+#
+# provider: brew
+# taps:
+#   - homebrew/cask-fonts
+# packages:
+#   - vim
+#   - neovim
+#   - tmux
+#   - fzf
+# casks:
+#   - iterm2
+#   - visual-studio-code
+
+# --- Mac App Store Provider (mas) ---
+# Install apps from the Mac App Store (requires 'mas' CLI)
+#
+# provider: mas
+# apps:
+#   - name: "Xcode"
+#     id: 497799835
+#   - name: "1Password"
+#     id: 1333542190
+#   - 409183694  # Keynote (shorthand: just the app ID)
+
+# --- Repository Provider (repo) ---
+# Clone git repositories
+#
+# provider: repo
+# repos:
+#   - url: git@github.com:user/repo.git
+#     path: "~/workspace/repo"
+#   - url: https://github.com/user/another.git
+#     path: "~/projects/another"
+
+# --- Symlink Provider (symlink) ---
+# Create symbolic links
+#
+# provider: symlink
+# links:
+#   - source: "~/workspace/dotfiles/.gitconfig"
+#     target: "~/.gitconfig"
+#   - source: "~/workspace/dotfiles/.zshrc"
+#     target: "~/.zshrc"
+#     force: true  # Delete target if it exists (file or directory)
+
+# ============================================================================
+# TIPS
+# ============================================================================
+#
+# 1. Make migrations idempotent - check if things exist before creating
+# 2. Test with: dots apply --dry-run
+# 3. Use arrays for tightly coupled operations
+# 4. Use separate files for independent operations
+# 5. Add comments to explain complex operations
+# 6. Keep migrations focused on one logical task

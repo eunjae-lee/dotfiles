@@ -1,0 +1,18 @@
+# Migration: zsh
+
+- provider: sh
+  command: |
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+
+    git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
+
+- provider: symlink
+  links:
+    - source: "~/workspace/dotfiles/.zshrc"
+      target: ~/.zshrc
+      force: true
+    - source: "~/workspace/dotfiles/.zprofile"
+      target: ~/.zprofile
+      force: true

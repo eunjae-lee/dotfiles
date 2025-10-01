@@ -1,2 +1,0 @@
-#!/bin/zsh
-cd /Users/$(whoami)/workspace/eunjae-cli && pnpm --silent dev "$@"

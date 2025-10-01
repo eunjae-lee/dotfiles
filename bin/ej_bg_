@@ -1,3 +1,0 @@
-#!/bin/zsh
-source ~/.zshrc
-cd /Users/$(whoami)/workspace/eunjae-cli && pnpm dev "$@" >> /Users/$(whoami)/Downloads/cli.log 2>&1

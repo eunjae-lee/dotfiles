@@ -1,0 +1,49 @@
+# Migration: apps
+
+- provider: mas
+  apps:
+    - 904280696 # Things3
+    - 869223134 # KakaoTalk
+    - 639968404 # Parcel
+    - 1453273600 # Data Jar
+    - 1604176982 # One Thing
+    - 6450279539 # Second Clock
+    - 1607635845 # Velja
+    - 1586435171 # Actions
+
+# Install One Thing CLI
+- provider: sh
+  command: npm install -g one-thing
+
+- provider: brew
+  casks:
+    - slack
+    - firefox
+    - google-chrome
+    - spotify
+    - iterm2
+    - discord
+    - iina
+    - fork
+    - docker
+    - google-chrome@canary
+    - raycast
+    - telegram
+    - handbrake
+    - notion
+    - zed
+    - input-source-pro # https://inputsource.pro/
+    - whatsapp
+    - docker
+    - jordanbaird-ice
+    # - keycastr
+    # - postman
+
+- provider: symlink
+  links:
+    - source: "~/workspace/dotfiles/app-configs/zed/settings.json"
+      target: "~/.config/zed/settings.json"
+      force: true
+    - source: "~/workspace/dotfiles/app-configs/zed/keymap.json"
+      target: ~/.config/zed/keymap.json
+      force: true

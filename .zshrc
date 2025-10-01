@@ -73,9 +73,6 @@ source $ZSH/oh-my-zsh.sh
 
 export LANG=en_US.UTF-8
 
-# asdf
-#. /opt/homebrew/opt/asdf/libexec/asdf.sh
-
 alias rc="vi ~/.zshrc && source ~/.zshrc"
 
 alias g="lazygit"
@@ -160,6 +157,8 @@ alias cal="zellij attach cal"
 alias z_cal="zellij --layout ~/.config/zellij/layouts/cal.kdl"
 alias cc="opencode"
 
+export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
+
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:$PATH"
@@ -173,6 +172,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Docker
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
+
+# mise-en-place
 eval "$(mise activate zsh)"
 
 # pnpm
