@@ -92,6 +92,7 @@ command: |
 #     id: 497799835
 #   - name: "1Password"
 #     id: 1333542190
+#   - 409183694  # Keynote (shorthand: just the app ID)
 
 # --- Repository Provider (repo) ---
 # Clone git repositories
