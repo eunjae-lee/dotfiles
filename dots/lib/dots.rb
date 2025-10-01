@@ -10,6 +10,7 @@ module Dots
   class StateError < Error; end
 end
 
+require_relative 'config_schema'
 require_relative 'provider'
 require_relative 'providers/sh'
 require_relative 'providers/brew'

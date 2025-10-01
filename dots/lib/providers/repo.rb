@@ -1,31 +1,21 @@
 module Dots
   module Providers
     class RepoProvider < Provider
-      def validate_config
-        errors = []
-        
-        unless config['repos'].is_a?(Array) && !config['repos'].empty?
-          errors << "RepoProvider requires 'repos' array with at least one repository"
+      def self.repo_schema
+        @repo_schema ||= begin
+          schema = ConfigSchema.new
+          schema.field :url, type: :string, required: true
+          schema.field :path, type: :string, required: true
+          schema
         end
+      end
 
-        if config['repos'].is_a?(Array)
-          config['repos'].each_with_index do |repo, index|
-            unless repo.is_a?(Hash)
-              errors << "Repository at index #{index} must be a hash"
-              next
-            end
-
-            unless repo['url'] && repo['url'].is_a?(String) && !repo['url'].strip.empty?
-              errors << "Repository at index #{index} missing or invalid 'url'"
-            end
-
-            unless repo['path'] && repo['path'].is_a?(String) && !repo['path'].strip.empty?
-              errors << "Repository at index #{index} missing or invalid 'path'"
-            end
-          end
+      def self.schema
+        @schema ||= begin
+          schema = ConfigSchema.new
+          schema.field :repos, type: :array, required: true, array_item_schema: repo_schema
+          schema
         end
-
-        errors.empty? ? true : errors
       end
 
       def apply

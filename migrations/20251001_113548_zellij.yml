@@ -6,5 +6,6 @@
 
 - provider: symlink
   links:
-    - sourcee: "~/workspace/dotfiles/app-configs/zellij/cal.kdl"
+    - source: "~/workspace/dotfiles/app-configs/zellij/cal.kdl"
+      sourceee: "sdfs"
       target: "~/.config/zellij/layouts/cal.kdl"

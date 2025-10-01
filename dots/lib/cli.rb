@@ -7,6 +7,22 @@ module Dots
       true
     end
 
+    def self.colorize(text, color_code)
+      "\e[#{color_code}m#{text}\e[0m"
+    end
+
+    def self.red(text)
+      colorize(text, 31)
+    end
+
+    def self.green(text)
+      colorize(text, 32)
+    end
+
+    def self.yellow(text)
+      colorize(text, 33)
+    end
+
     class << self
       def handle_argument_error(task, error, args, arity)
         if args.include?('--help') || args.include?('-h') || (args.empty? && error.message.include?('no arguments'))
@@ -46,7 +62,7 @@ module Dots
       filename = manager.create_migration(name)
       puts "Created: migrations/#{filename}"
     rescue Dots::Error => e
-      puts "Error: #{e.message}"
+      puts "#{self.class.red('Error')}: #{e.message}"
       exit 1
     end
 
@@ -83,6 +99,8 @@ module Dots
       puts "Found #{pending.length} pending migration(s):"
       
       descriptions = {}
+      errors = {}
+      
       pending.each do |filename|
         begin
           migrations = manager.validate_migration(filename)
@@ -98,9 +116,20 @@ module Dots
             end
           end
         rescue Dots::Error => e
-          puts "  - #{filename}: ERROR - #{e.message}"
-          exit 1
+          errors[filename] = e.message
+          puts "  - #{filename}: #{self.class.red('Has validation errors')}"
         end
+      end
+
+      if errors.any?
+        puts "\n#{self.class.red('ERRORS')}:"
+        errors.each do |filename, error_message|
+          puts "  #{filename}:"
+          error_message.split("\n").each do |line|
+            puts "    #{line}"
+          end
+        end
+        exit 1
       end
 
       if options[:dry_run]
@@ -115,7 +144,7 @@ module Dots
           filepath = manager.state_manager.migration_path(filename)
           checksum = manager.state_manager.calculate_checksum(filepath)
           manager.state_manager.add_migration(filename, checksum)
-          puts "✓ Marked as applied: #{migration_name}"
+          puts "#{self.class.green('✓')} Marked as applied: #{migration_name}"
         end
         puts "\nSuccessfully marked #{pending.length} migration(s) as applied"
         return
@@ -133,10 +162,10 @@ module Dots
         
         begin
           manager.apply_migration(filename)
-          puts "✓ Applied: #{migration_name}"
+          puts "#{self.class.green('✓')} Applied: #{migration_name}"
           applied_count += 1
         rescue Dots::ValidationError => e
-          puts "⚠ Warning: #{e.message}"
+          puts "#{self.class.yellow('⚠ Warning')}: #{e.message}"
           break unless prompt.yes?("Continue anyway?", default: false)
           
           begin
@@ -147,10 +176,10 @@ module Dots
             end
             checksum = manager.state_manager.calculate_checksum(filepath)
             manager.state_manager.add_migration(filename, checksum)
-            puts "✓ Applied: #{migration_name}"
+            puts "#{self.class.green('✓')} Applied: #{migration_name}"
             applied_count += 1
           rescue Dots::Error => e
-            puts "✗ Failed: #{e.message}"
+            puts "#{self.class.red('✗ Failed')}: #{e.message}"
             break
           end
         rescue Dots::Error => e
@@ -161,7 +190,7 @@ module Dots
 
       puts "\nSuccessfully applied #{applied_count} migration(s)"
     rescue Dots::Error => e
-      puts "Error: #{e.message}"
+      puts "#{self.class.red('Error')}: #{e.message}"
       exit 1
     end
 
@@ -185,7 +214,7 @@ module Dots
       filepath = File.expand_path(filepath)
       
       unless File.exist?(filepath)
-        puts "Error: File not found: #{filepath}"
+        puts "#{self.class.red('Error')}: File not found: #{filepath}"
         exit 1
       end
 
@@ -221,16 +250,16 @@ module Dots
           provider.apply
         end
         
-        puts "✓ Completed: #{migration_name}"
+        puts "#{self.class.green('✓')} Completed: #{migration_name}"
       rescue Psych::SyntaxError => e
-        puts "✗ Failed: Invalid YAML: #{e.message}"
+        puts "#{self.class.red('✗ Failed')}: Invalid YAML: #{e.message}"
         exit 1
       rescue Dots::Error => e
-        puts "✗ Failed: #{e.message}"
+        puts "#{self.class.red('✗ Failed')}: #{e.message}"
         exit 1
       end
     rescue Dots::Error => e
-      puts "Error: #{e.message}"
+      puts "#{self.class.red('Error')}: #{e.message}"
       exit 1
     end
 
@@ -265,7 +294,7 @@ module Dots
         end
       end
     rescue Dots::Error => e
-      puts "Error: #{e.message}"
+      puts "#{self.class.red('Error')}: #{e.message}"
       exit 1
     end
   end

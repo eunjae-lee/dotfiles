@@ -6,8 +6,17 @@ module Dots
       @config = config
     end
 
+    def self.schema
+      raise NotImplementedError, "#{self.class} must implement .schema"
+    end
+
     def validate_config
-      raise NotImplementedError, "#{self.class} must implement #validate_config"
+      # Always ignore 'provider' key since it's part of the migration config
+      schema = self.class.schema
+      schema.ignore :provider unless schema.ignored_keys.include?('provider')
+      
+      errors = schema.validate(config)
+      errors.empty? ? true : errors
     end
 
     def valid?

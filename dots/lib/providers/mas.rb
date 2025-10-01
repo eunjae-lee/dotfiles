@@ -1,31 +1,37 @@
 module Dots
   module Providers
     class MasProvider < Provider
-      def validate_config
-        errors = []
+      def self.schema
+        @schema ||= begin
+          schema = ConfigSchema.new
+          schema.field :apps, type: :array, required: true, custom_validator: ->(apps, context) {
+            errors = []
+            apps.each_with_index do |app, index|
+              if app.is_a?(Integer) || (app.is_a?(String) && app.match?(/^\d+$/))
+                next
+              elsif app.is_a?(Hash)
+                # Check for unknown keys
+                allowed_keys = ['name', 'id']
+                unknown_keys = app.keys - allowed_keys
+                if unknown_keys.any?
+                  errors << "App at index #{index} has unknown properties: #{unknown_keys.join(', ')}"
+                end
 
-        unless config['apps'].is_a?(Array) && !config['apps'].empty?
-          errors << "MasProvider requires 'apps' array"
-          return errors
-        end
+                unless app['name'] && app['id']
+                  errors << "App at index #{index} must have 'name' and 'id'"
+                end
 
-        config['apps'].each_with_index do |app, index|
-          if app.is_a?(Integer) || (app.is_a?(String) && app.match?(/^\d+$/))
-            next
-          elsif app.is_a?(Hash)
-            unless app['name'] && app['id']
-              errors << "MasProvider app at index #{index} must have 'name' and 'id'"
+                if app['id'] && !(app['id'].is_a?(Integer) || (app['id'].is_a?(String) && app['id'].match?(/^\d+$/)))
+                  errors << "App at index #{index} (#{app['name']}) must have numeric 'id'"
+                end
+              else
+                errors << "App at index #{index} must be a hash with 'name' and 'id', or a numeric id"
+              end
             end
-
-            if app['id'] && !(app['id'].is_a?(Integer) || (app['id'].is_a?(String) && app['id'].match?(/^\d+$/)))
-              errors << "MasProvider app '#{app['name']}' must have numeric 'id'"
-            end
-          else
-            errors << "MasProvider app at index #{index} must be a hash with 'name' and 'id', or a numeric id"
-          end
+            errors
+          }
+          schema
         end
-
-        errors.empty? ? true : errors
       end
 
       def apply

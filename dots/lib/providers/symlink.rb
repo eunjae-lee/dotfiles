@@ -1,35 +1,22 @@
 module Dots
   module Providers
     class SymlinkProvider < Provider
-      def validate_config
-        errors = []
-        
-        unless config['links'].is_a?(Array) && !config['links'].empty?
-          errors << "SymlinkProvider requires 'links' array with at least one symlink"
+      def self.link_schema
+        @link_schema ||= begin
+          schema = ConfigSchema.new
+          schema.field :source, type: :string, required: true
+          schema.field :target, type: :string, required: true
+          schema.field :force, type: :boolean
+          schema
         end
+      end
 
-        if config['links'].is_a?(Array)
-          config['links'].each_with_index do |link, index|
-            unless link.is_a?(Hash)
-              errors << "Link at index #{index} must be a hash"
-              next
-            end
-
-            unless link['source'] && link['source'].is_a?(String) && !link['source'].strip.empty?
-              errors << "Link at index #{index} missing or invalid 'source'"
-            end
-
-            unless link['target'] && link['target'].is_a?(String) && !link['target'].strip.empty?
-              errors << "Link at index #{index} missing or invalid 'target'"
-            end
-
-            if link['force'] && !link['force'].is_a?(TrueClass) && !link['force'].is_a?(FalseClass)
-              errors << "Link at index #{index} 'force' must be a boolean"
-            end
-          end
+      def self.schema
+        @schema ||= begin
+          schema = ConfigSchema.new
+          schema.field :links, type: :array, required: true, array_item_schema: link_schema
+          schema
         end
-
-        errors.empty? ? true : errors
       end
 
       def apply

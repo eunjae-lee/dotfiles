@@ -1,22 +1,13 @@
 module Dots
   module Providers
     class ShProvider < Provider
-      def validate_config
-        errors = []
-
-        unless config['command']
-          errors << "ShProvider requires 'command' key"
+      def self.schema
+        @schema ||= begin
+          schema = ConfigSchema.new
+          schema.field :command, type: :string, required: true
+          schema.field :interactive, type: :boolean
+          schema
         end
-
-        if config['command'] && (!config['command'].is_a?(String) || config['command'].strip.empty?)
-          errors << "ShProvider 'command' must be a non-empty string"
-        end
-
-        if config['interactive'] && !config['interactive'].is_a?(TrueClass) && !config['interactive'].is_a?(FalseClass)
-          errors << "ShProvider 'interactive' must be a boolean"
-        end
-
-        errors.empty? ? true : errors
       end
 
       def apply

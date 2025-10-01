@@ -2,6 +2,7 @@
 
 provider: brew
 packages:
+  - ast-grep
   - ripgrep
   - gh
   - lazygit
