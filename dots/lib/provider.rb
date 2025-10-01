@@ -36,6 +36,10 @@ module Dots
         Providers::BrewProvider
       when 'mas'
         Providers::MasProvider
+      when 'repo'
+        Providers::RepoProvider
+      when 'symlink'
+        Providers::SymlinkProvider
       else
         raise ValidationError, "Unknown provider: #{provider_name}"
       end

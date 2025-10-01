@@ -6,7 +6,7 @@
 #
 # All migrations in this file will be executed in order and tracked as one unit.
 #
-# Available providers: sh, brew, mas
+# Available providers: sh, brew, mas, repo, symlink
 #
 # See examples below and uncomment/modify as needed.
 
@@ -91,6 +91,26 @@ command: |
 #     id: 497799835
 #   - name: "1Password"
 #     id: 1333542190
+
+# --- Repository Provider (repo) ---
+# Clone git repositories
+#
+# provider: repo
+# repos:
+#   - url: git@github.com:user/repo.git
+#     path: "~/workspace/repo"
+#   - url: https://github.com/user/another.git
+#     path: "~/projects/another"
+
+# --- Symlink Provider (symlink) ---
+# Create symbolic links
+#
+# provider: symlink
+# links:
+#   - source: "~/workspace/dotfiles/.gitconfig"
+#     target: "~/.gitconfig"
+#   - source: "~/workspace/dotfiles/.zshrc"
+#     target: "~/.zshrc"
 
 # ============================================================================
 # TIPS

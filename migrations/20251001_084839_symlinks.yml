@@ -1,0 +1,18 @@
+# Migration: symlinks
+
+provider: symlink
+links:
+  - source: "~/workspace/dotfiles/.gitconfig"
+    target: "~/.gitconfig"
+  - source: "~/workspace/dotfiles/.tool-versions"
+    target: "~/.tool-versions"
+  - source: "~/workspace/dotfiles/app-configs/raycast-scripts"
+    target: "~/workspace/raycast-scripts"
+
+provider: sh
+command: "rm -f ~/Library/Application Support/lazygit/config.yml"
+
+provider: symlink
+links:
+  - source: "~/workspace/dotfiles/app-configs/lazygit/config.yml"
+    target: "~/Library/Application Support/lazygit/config.yml"
