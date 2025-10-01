@@ -9,6 +9,7 @@ packages:
   - m-cli # https://github.com/rgcr/m-cli
   - switchaudio-osx # https://github.com/deweller/switchaudio-osx
   - ffmpeg
+  - imagemagick
   - libheif # heif-convert
   - mas
 casks:
@@ -25,3 +26,4 @@ casks:
   - font-cascadia-mono-pl
   - font-monaspace
   - font-fira-code
+  - qlmarkdown # markdown quick look
