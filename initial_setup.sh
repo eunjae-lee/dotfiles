@@ -17,4 +17,5 @@ cd ~/workspace
 git clone git@github.com:eunjae-lee/dotfiles.git
 
 cd dotfiles
+bundle install --path vendor/bundle
 ./dots/bin/dots apply --yes

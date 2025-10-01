@@ -4,10 +4,10 @@ provider: symlink
 links:
   - source: "~/workspace/dotfiles/.gitconfig"
     target: "~/.gitconfig"
-  - source: "~/workspace/dotfiles/.tool-versions"
-    target: "~/.tool-versions"
   - source: "~/workspace/dotfiles/app-configs/raycast-scripts"
     target: "~/workspace/raycast-scripts"
+  # - source: "~/workspace/dotfiles/app-configs/asdf/.tool-versions"
+  #   target: "~/.tool-versions"
 
 provider: symlink
 links:

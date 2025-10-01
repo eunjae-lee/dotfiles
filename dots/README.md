@@ -5,9 +5,12 @@ A Ruby CLI tool for managing dotfiles migrations across multiple machines using 
 ## Features
 
 - **Migration-based approach**: Track configuration changes over time with timestamped migration files
-- **Multiple providers**: Support for shell commands, Homebrew, and Mac App Store
+- **Multiple providers**: Support for shell commands, Homebrew, Mac App Store, git repositories, and symlinks
+- **Declarative schema validation**: Expressive DSL for configuration validation with helpful error messages
 - **Idempotency**: Migrations are tracked and checksummed to prevent duplicate applications
 - **Dry-run mode**: Preview changes before applying them
+- **Fake mode**: Mark migrations as applied without executing them
+- **Interactive commands**: Support for user input during migrations
 - **Version controlled**: Migration files are committed to git while state is kept local
 
 ## Installation
@@ -36,8 +39,8 @@ The `dots` command will automatically use bundler to load the required gems.
 # Navigate to your dotfiles directory
 cd ~/dotfiles
 
-# Create your first migration (this creates the migrations/ directory)
-dots migration setup-vim
+# Create your first migration
+dots create_migration setup-vim
 
 # Edit the generated migration file
 vim migrations/20250930_143022_setup-vim.yml
@@ -48,89 +51,104 @@ dots apply --dry-run
 # Apply migrations
 dots apply
 
+# Apply without confirmation prompt
+dots apply --yes
+
 # Check status
 dots status
 ```
 
 **Note:** The `migrations/` directory is created in your current working directory. Run `dots` commands from your dotfiles repository root.
 
-## Usage
+## Commands
 
-### Creating Migrations
+### `dots create_migration NAME`
+
+Creates a new migration file with a timestamp prefix.
 
 ```bash
-dots migration MIGRATION_NAME
+dots create_migration install-vim
+# Created: migrations/20250930_143022_install-vim.yml
+
+dots create_migration --help  # Show help
 ```
 
-Creates a new migration file in `migrations/` with a timestamp prefix. The file is generated from a template that includes:
-- Helpful comments and explanations
-- Examples for all three providers (sh, brew, mas)
-- Single and array format examples
-- Best practices and tips
+### `dots apply [OPTIONS]`
 
-**Example:**
+Apply pending migrations.
+
+**Options:**
+- `-d, --dry-run` - Preview migrations without applying them
+- `-y, --yes` - Skip confirmation prompt
+- `-f, --fake` - Mark migrations as applied without executing them
+
 ```bash
-$ dots migration install-vim
-Created: migrations/20250930_143022_install-vim.yml
-
-$ dots migration "Basic Setup"
-Created: migrations/20250930_143100_basic-setup.yml
-
-$ dots migration "Install Node.js & NPM"
-Created: migrations/20250930_143200_install-nodejs-npm.yml
+dots apply              # Apply with confirmation
+dots apply --dry-run    # Preview only
+dots apply --yes        # Auto-confirm
+dots apply --fake       # Mark as applied without running
 ```
 
-**Filename Normalization:**
-- Migration names are automatically normalized to lowercase
-- Spaces and underscores are converted to hyphens
-- Special characters are removed (except letters, numbers, hyphens)
-- Multiple consecutive separators are collapsed to single hyphens
-- Leading/trailing hyphens are trimmed
+### `dots exec FILE`
 
-The generated file contains:
-- A working single migration that echoes the migration name
-- Commented examples for:
-  - Array/multiple migrations format
-  - Shell command provider (sh)
-  - Homebrew provider (brew)
-  - Mac App Store provider (mas)
-- Helpful tips and best practices
+Execute a single migration file without tracking it in state. Useful for testing migrations.
 
-Simply uncomment and modify the sections you need, or replace the entire content with your own migration.
+```bash
+dots exec migrations/test.yml
+dots exec /path/to/migration.yml
+```
 
-### Migration File Format
+### `dots status`
+
+Show applied and pending migration counts.
+
+```bash
+dots status
+```
+
+### `dots help [COMMAND]`
+
+Show help for a command.
+
+```bash
+dots help
+dots help apply
+dots help create_migration
+```
+
+## Migration File Format
 
 Migration files are YAML files that can contain either:
 - A single migration (hash with `provider` key)
 - Multiple migrations (array of hashes, each with `provider` key)
 
-**Single Migration Format:**
+**Single Migration:**
 ```yaml
+# Migration: Setup Vim
 provider: sh
 command: |
-  echo "Single migration"
+  echo "Setting up Vim"
 ```
 
-**Multiple Migrations Format:**
+**Multiple Migrations:**
 ```yaml
+# Migration: Full Setup
 - provider: sh
-  command: |
-    echo "First step"
+  command: echo "Step 1"
 
 - provider: brew
   packages:
     - vim
 
 - provider: sh
-  command: |
-    echo "Final step"
+  command: echo "Done"
 ```
 
-All migrations in a file are applied sequentially and tracked as a single unit.
+## Providers
 
-#### Shell Provider
+### Shell Provider (sh)
 
-Execute arbitrary shell commands:
+Execute shell commands with full bash support.
 
 ```yaml
 provider: sh
@@ -139,9 +157,77 @@ command: |
   echo "Vim configured"
 ```
 
-#### Homebrew Provider
+**Options:**
+- `command` (required): Shell command to execute
+- `interactive: true` (optional): Allow user input (read prompts)
 
-Install Homebrew packages and casks:
+**Interactive Example:**
+```yaml
+provider: sh
+interactive: true
+command: |
+  read -p "Enter your name: " name
+  echo "Hello, $name!"
+```
+
+**Features:**
+- Tilde (`~`) expansion in paths
+- Full bash syntax support
+- Captures stdout/stderr
+- Interactive mode for user input
+
+### Symlink Provider (symlink)
+
+Create symbolic links with automatic directory creation.
+
+```yaml
+provider: symlink
+links:
+  - source: "~/workspace/dotfiles/.gitconfig"
+    target: "~/.gitconfig"
+  - source: "~/workspace/dotfiles/.zshrc"
+    target: "~/.zshrc"
+    force: true  # Delete target if it exists
+```
+
+**Options:**
+- `links` (required): Array of link objects
+  - `source` (required): Path to source file
+  - `target` (required): Path where symlink will be created
+  - `force` (optional): Delete existing target file/directory
+
+**Features:**
+- Tilde (`~`) expansion
+- Automatic parent directory creation
+- Detects if symlink already exists
+- `force` option to replace existing files
+
+### Repository Provider (repo)
+
+Clone git repositories with automatic parent directory creation.
+
+```yaml
+provider: repo
+repos:
+  - url: git@github.com:user/dotfiles.git
+    path: "~/workspace/dotfiles"
+  - url: https://github.com/user/project.git
+    path: "~/projects/project"
+```
+
+**Options:**
+- `repos` (required): Array of repository objects
+  - `url` (required): Git repository URL
+  - `path` (required): Local path to clone to
+
+**Features:**
+- Skips if repository already exists
+- Creates parent directories automatically
+- Supports SSH and HTTPS URLs
+
+### Homebrew Provider (brew)
+
+Install Homebrew packages, casks, and taps.
 
 ```yaml
 provider: brew
@@ -156,14 +242,20 @@ casks:
   - visual-studio-code
 ```
 
+**Options:**
+- `taps` (optional): Array of tap names
+- `packages` (optional): Array of package names
+- `casks` (optional): Array of cask names
+- At least one of the above is required
+
 **Features:**
-- Automatically checks if packages are already installed (idempotent)
-- Supports taps, packages, and casks
-- Skips already installed items
+- Checks if already installed (idempotent)
+- Skips installed packages
+- Installs in order: taps → packages → casks
 
-#### Mac App Store Provider
+### Mac App Store Provider (mas)
 
-Install Mac App Store applications using the `mas` CLI:
+Install Mac App Store applications.
 
 ```yaml
 provider: mas
@@ -172,254 +264,206 @@ apps:
     id: 497799835
   - name: "1Password"
     id: 1333542190
+  - 409183694  # Keynote (shorthand format)
 ```
+
+**Options:**
+- `apps` (required): Array of apps (two formats supported)
+  - Full format: `{ name: "App Name", id: 123456 }`
+  - Shorthand format: Just the numeric ID
 
 **Requirements:**
-- `mas` CLI must be installed: `brew install mas`
-- You must be signed into the Mac App Store
+- `mas` CLI: `brew install mas`
+- Signed into Mac App Store
 
-### Applying Migrations
-
+**Finding App IDs:**
 ```bash
-# Apply all pending migrations
-dots apply
-
-# Preview without applying (dry-run)
-dots apply --dry-run
+mas search Xcode
+mas list
 ```
 
-**Apply process:**
-1. Finds all unapplied migrations
-2. Validates each migration
-3. Shows confirmation prompt
-4. Applies migrations in order
-5. Updates state file with checksums
-6. Stops on first error
+## Error Handling
 
-**Example output:**
+The tool provides helpful, colored error messages with:
+
+- **Red errors** for failures
+- **Yellow warnings** for non-critical issues
+- **Green success** messages
+- **Unknown property detection** catches typos
+- **Separate error section** groups all validation errors together
+
+**Example Error Output:**
 ```
 Found 2 pending migration(s):
-  - 20250930_143022_install-vim.yml: Install Homebrew 1 package(s)
-  - 20250930_150145_configure-git.yml: Run shell command: git config --global user.name "John Doe"
+  - valid.yml: Install Homebrew 2 package(s)
+  - invalid.yml: Has validation errors
 
-Apply these migrations? (y/N) y
-
-Applying: 20250930_143022_install-vim.yml
-Installing package: vim
-✓ Applied: 20250930_143022_install-vim.yml
-
-Applying: 20250930_150145_configure-git.yml
-✓ Applied: 20250930_150145_configure-git.yml
-
-Successfully applied 2 migration(s)
-```
-
-### Checking Status
-
-```bash
-dots status
-```
-
-Shows count of applied and pending migrations:
-
-```
-Applied migrations: 5
-Pending migrations: 2
-
-Pending:
-  - 20250930_163000_add-neovim.yml
-  - 20250930_164500_install-fonts.yml
+ERRORS:
+  invalid.yml:
+    Validation failed for invalid.yml:
+      - Link at index 0: Unknown properties: sourceee
+      - Link at index 0: Missing or invalid 'source'
 ```
 
 ## State Management
 
 - **State file**: `migrations/.state.yml` (in your working directory)
-- **Automatically gitignored**: Added to `.gitignore` automatically
+- **Automatically gitignored**: Added to `.gitignore`
 - **Machine-specific**: Each machine tracks its own applied migrations
-- **Contains**: List of applied migrations with checksums
-- **Format**:
-  ```yaml
-  - migration: 20250930_143022_install-vim.yml
-    checksum: abc123def456...
-  - migration: 20250930_150145_configure-git.yml
-    checksum: def789ghi012...
-  ```
+- **Checksums**: Detects if migrations are modified after being applied
 
-### Checksum Validation
+**State file format:**
+```yaml
+---
+- migration: 20250930_143022_install-vim.yml
+  checksum: abc123def456...
+```
 
-When applying migrations, checksums are compared to detect modifications:
-
-- If a migration file has been modified since it was applied, you'll see a warning
-- You can choose to continue or abort
-- This prevents accidental re-application of changed migrations
-
-## Workflow Example
+## Workflow Examples
 
 ### Initial Setup on Primary Machine
 
 ```bash
-# Navigate to your dotfiles directory
 cd ~/dotfiles
 
-# Create first migration
-dots migration install-homebrew
+# Create migrations
+dots create_migration symlinks
 ```
 
-Edit `migrations/20250930_120000_install-homebrew.yml`:
+Edit `migrations/20250930_120000_symlinks.yml`:
 ```yaml
-provider: brew
-packages:
-  - vim
-  - tmux
-  - git
+# Migration: Setup Symlinks
+provider: symlink
+links:
+  - source: "~/workspace/dotfiles/.gitconfig"
+    target: "~/.gitconfig"
+  - source: "~/workspace/dotfiles/.zshrc"
+    target: "~/.zshrc"
 ```
 
 ```bash
-# Apply
+# Apply and commit
 dots apply
-
-# Commit (state file is auto-gitignored)
 git add migrations/
-git commit -m "Add Homebrew installation migration"
+git commit -m "Add symlink migration"
 git push
 ```
 
 ### Setup on New Machine
 
 ```bash
-# Clone your dotfiles
-git clone <your-dotfiles-repo> ~/dotfiles
+# Clone dotfiles
+git clone <your-repo> ~/dotfiles
 cd ~/dotfiles
 
-# Install dots dependencies
-cd dots
-bundle install --path vendor/bundle
-cd ..
+# Install dependencies
+cd dots && bundle install --path vendor/bundle && cd ..
 
 # Apply all migrations
-dots apply
+dots apply --yes
 
-# All your tools are now installed!
+# Everything is now set up!
 ```
 
-### Adding New Tools
+### Testing a Migration
 
 ```bash
-# From your dotfiles directory
-cd ~/dotfiles
+# Test without adding to state
+dots exec migrations/test.yml
 
-# Create migration
-dots migration add-neovim
-
-# Edit migration file
-vim migrations/20250930_160000_add-neovim.yml
+# If it works, apply normally
+dots apply
 ```
+
+### Manual Setup Already Done
+
+If you've already set things up manually and want to track them:
+
+```bash
+# Mark migrations as applied without running them
+dots apply --fake
+```
+
+## Advanced Features
+
+### Interactive Migrations
 
 ```yaml
-provider: brew
-packages:
-  - neovim
-  - ripgrep
-  - fd
+provider: sh
+interactive: true
+command: |
+  read -p "Enter your email: " email
+  git config --global user.email "$email"
+  echo "Git configured with $email"
 ```
+
+### Force Symlink Replacement
+
+```yaml
+provider: symlink
+links:
+  - source: "~/dotfiles/.zshrc"
+    target: "~/.zshrc"
+    force: true  # Replaces existing file
+```
+
+### Multiple Providers in One Migration
+
+```yaml
+# Migration: Complete Setup
+- provider: repo
+  repos:
+    - url: git@github.com:user/config.git
+      path: "~/config"
+
+- provider: symlink
+  links:
+    - source: "~/config/.vimrc"
+      target: "~/.vimrc"
+
+- provider: brew
+  packages:
+    - vim
+    - tmux
+
+- provider: sh
+  command: echo "Setup complete!"
+```
+
+## Schema Validation
+
+All providers use declarative schema validation with helpful error messages:
+
+```yaml
+# This will show: "Unknown properties: sourceee"
+provider: symlink
+links:
+  - source: "/path/to/file"
+    sourceee: "typo"  # Caught!
+    target: "/dest"
+```
+
+**Validation features:**
+- Required field checking
+- Type validation (string, integer, boolean, array, hash)
+- Unknown property detection
+- Nested schema validation
+- Clear, contextual error messages
+
+## Testing
+
+Run the comprehensive test suite:
 
 ```bash
-# Apply locally
-dots apply
+cd dots
+bundle exec rspec
 
-# Commit and push
-git add migrations/
-git commit -m "Add Neovim and related tools"
-git push
-
-# On other machines
-git pull
-dots apply
+# 82 examples covering:
+# - ConfigSchema validation
+# - All 5 providers
+# - StateManager
+# - MigrationManager
 ```
-
-## Provider Details
-
-### Shell Provider (sh)
-
-**Configuration:**
-- `command` (required): Shell command(s) to execute
-
-**Behavior:**
-- Executes command using system shell
-- Captures stdout and stderr
-- Fails if exit code is non-zero
-- Prints stdout after successful execution
-
-**Use cases:**
-- Creating symlinks
-- Configuring git settings
-- Running custom setup scripts
-- File operations
-
-### Homebrew Provider (brew)
-
-**Configuration:**
-- `taps` (optional): Array of Homebrew taps
-- `packages` (optional): Array of formula names
-- `casks` (optional): Array of cask names
-
-**Behavior:**
-- Checks if Homebrew is installed
-- Skips already installed taps/packages/casks
-- Installs in order: taps → packages → casks
-- Idempotent: safe to run multiple times
-
-**Use cases:**
-- Installing CLI tools
-- Installing GUI applications
-- Adding third-party taps
-
-### Mac App Store Provider (mas)
-
-**Configuration:**
-- `apps` (required): Array of app objects with `name` and `id`
-
-**Behavior:**
-- Requires `mas` CLI to be installed
-- Checks if apps are already installed
-- Uses App Store account credentials
-- Skips already installed apps
-
-**Use cases:**
-- Installing App Store applications
-- Automating app installations across machines
-
-**Finding App IDs:**
-```bash
-# Search for an app
-mas search Xcode
-
-# List installed apps
-mas list
-```
-
-## Error Handling
-
-The tool handles various error scenarios:
-
-- **Missing provider**: Error if provider is not recognized
-- **Invalid YAML**: Clear error message for syntax errors
-- **Validation errors**: Provider-specific validation failures
-- **Apply errors**: Command execution failures with details
-- **Corrupted state**: Detection and error reporting
-- **Permission errors**: File system operation failures
-
-All errors include descriptive messages to help diagnose issues.
-
-## Best Practices
-
-1. **Small, focused migrations**: Each migration should do one thing
-2. **Descriptive names**: Use clear names like `install-vim` not `update`
-3. **Test before committing**: Run `dots apply --dry-run` first
-4. **Commit migration files**: But not the state file
-5. **Pull before applying**: Get latest migrations from remote
-6. **Document complex migrations**: Add comments in YAML files
-7. **Use appropriate providers**: Don't use `sh` when `brew` would work
 
 ## Project Structure
 
@@ -428,6 +472,7 @@ dots/
 ├── bin/
 │   └── dots                      # Main executable
 ├── lib/
+│   ├── config_schema.rb          # Declarative validation DSL
 │   ├── dots.rb                   # Main entry point
 │   ├── cli.rb                    # Thor-based CLI
 │   ├── migration_manager.rb      # Migration orchestration
@@ -435,78 +480,67 @@ dots/
 │   ├── state_manager.rb          # State file handling
 │   ├── provider.rb               # Base provider class
 │   └── providers/
-│       ├── sh.rb                 # Shell command provider
-│       ├── brew.rb               # Homebrew provider
-│       └── mas.rb                # Mac App Store provider
+│       ├── sh.rb                 # Shell commands
+│       ├── brew.rb               # Homebrew
+│       ├── mas.rb                # Mac App Store
+│       ├── repo.rb               # Git repositories
+│       └── symlink.rb            # Symbolic links
+├── spec/                         # RSpec tests (82 examples)
 ├── Gemfile
-├── README.md
-└── EXAMPLES.md
+└── README.md
 
 # In your dotfiles repo root:
-migrations/                       # Your migration files (in working dir)
+migrations/                       # Your migration files
 └── .state.yml                    # Local state (gitignored)
 ```
 
-## Extending with Custom Providers
+## Best Practices
 
-To add a new provider:
-
-1. Create a new file in `lib/providers/`
-2. Inherit from `Dots::Provider`
-3. Implement three methods:
-   - `validate_config`: Validate the configuration hash
-   - `apply`: Execute the migration
-   - `describe`: Return a human-readable description
-4. Register in `lib/provider.rb` in the `self.for` method
-
-**Example:**
-```ruby
-module Dots
-  module Providers
-    class CustomProvider < Provider
-      def validate_config
-        unless config['required_key']
-          raise ValidationError, "CustomProvider requires 'required_key'"
-        end
-        true
-      end
-
-      def apply
-        # Your implementation
-        true
-      end
-
-      def describe
-        "Custom provider: #{config['required_key']}"
-      end
-    end
-  end
-end
-```
+1. **Small, focused migrations**: One logical task per migration
+2. **Descriptive names**: Use `install-vim` not `update`
+3. **Test before committing**: Use `--dry-run` first
+4. **Commit migration files**: But not `.state.yml`
+5. **Pull before applying**: Get latest migrations
+6. **Use appropriate providers**: Don't use `sh` when `symlink` would work
+7. **Add comments**: Use `# Migration: Description` at the top
+8. **Make idempotent**: Safe to run multiple times
+9. **Test migrations**: Use `dots exec` for testing
 
 ## Troubleshooting
 
 **Migrations directory not found:**
 ```bash
-dots migration init
+dots create_migration init
 ```
 
 **State file corrupted:**
-Delete `migrations/.state.yml` and re-apply all migrations.
+Delete `migrations/.state.yml` and re-apply:
+```bash
+rm migrations/.state.yml
+dots apply
+```
 
 **Migration modified warning:**
-This means a migration file changed after it was applied. Either:
+The migration file changed after being applied. Either:
 - Revert the change
-- Create a new migration for the changes
+- Create a new migration
 - Continue at your own risk
 
 **Homebrew not found:**
-Install Homebrew from https://brew.sh
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 **mas not found:**
 ```bash
 brew install mas
 ```
+
+**Permission errors:**
+Make sure you have write access to the migrations directory and target paths.
+
+**Unknown property errors:**
+Check for typos in your YAML keys. The error message will tell you which properties are unknown.
 
 ## License
 
