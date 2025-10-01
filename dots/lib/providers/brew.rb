@@ -2,13 +2,12 @@ module Dots
   module Providers
     class BrewProvider < Provider
       def self.schema
-        @schema ||= begin
-          schema = ConfigSchema.new
-          schema.field :packages, type: :array
-          schema.field :casks, type: :array
-          schema.field :taps, type: :array
+        @schema ||= ConfigSchema.new do
+          optional(:packages).array(:string)
+          optional(:casks).array(:string)
+          optional(:taps).array(:string)
           
-          schema.validate_with do |config|
+          validate_with do |config|
             has_packages = config['packages'].is_a?(Array) && !config['packages'].empty?
             has_casks = config['casks'].is_a?(Array) && !config['casks'].empty?
             has_taps = config['taps'].is_a?(Array) && !config['taps'].empty?
@@ -19,8 +18,6 @@ module Dots
               []
             end
           end
-          
-          schema
         end
       end
 

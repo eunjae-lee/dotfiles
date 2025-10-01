@@ -1,36 +1,21 @@
 module Dots
   module Providers
     class MasProvider < Provider
+      def self.app_schema
+        @app_schema ||= ConfigSchema.new do
+          required(:name).filled(:string)
+          required(:id).value(:integer)
+        end
+      end
+
       def self.schema
         @schema ||= begin
-          schema = ConfigSchema.new
-          schema.field :apps, type: :array, required: true, custom_validator: ->(apps, context) {
-            errors = []
-            apps.each_with_index do |app, index|
-              if app.is_a?(Integer) || (app.is_a?(String) && app.match?(/^\d+$/))
-                next
-              elsif app.is_a?(Hash)
-                # Check for unknown keys
-                allowed_keys = ['name', 'id']
-                unknown_keys = app.keys - allowed_keys
-                if unknown_keys.any?
-                  errors << "App at index #{index} has unknown properties: #{unknown_keys.join(', ')}"
-                end
-
-                unless app['name'] && app['id']
-                  errors << "App at index #{index} must have 'name' and 'id'"
-                end
-
-                if app['id'] && !(app['id'].is_a?(Integer) || (app['id'].is_a?(String) && app['id'].match?(/^\d+$/)))
-                  errors << "App at index #{index} (#{app['name']}) must have numeric 'id'"
-                end
-              else
-                errors << "App at index #{index} must be a hash with 'name' and 'id', or a numeric id"
-              end
-            end
-            errors
-          }
-          schema
+          app_schema_ref = app_schema
+          ConfigSchema.new do
+            required(:apps).value(:array).each(
+              ConfigSchema.or(:integer, app_schema_ref)
+            )
+          end
         end
       end
 

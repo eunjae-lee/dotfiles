@@ -1,21 +1,13 @@
 module Dots
   module Providers
     class SymlinkProvider < Provider
-      def self.link_schema
-        @link_schema ||= begin
-          schema = ConfigSchema.new
-          schema.field :source, type: :string, required: true
-          schema.field :target, type: :string, required: true
-          schema.field :force, type: :boolean
-          schema
-        end
-      end
-
       def self.schema
-        @schema ||= begin
-          schema = ConfigSchema.new
-          schema.field :links, type: :array, required: true, array_item_schema: link_schema
-          schema
+        @schema ||= ConfigSchema.new do
+          required(:links).value(:array) do
+            required(:source).filled(:string)
+            required(:target).filled(:string)
+            optional(:force).value(:boolean)
+          end
         end
       end
 

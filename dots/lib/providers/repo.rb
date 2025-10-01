@@ -1,20 +1,12 @@
 module Dots
   module Providers
     class RepoProvider < Provider
-      def self.repo_schema
-        @repo_schema ||= begin
-          schema = ConfigSchema.new
-          schema.field :url, type: :string, required: true
-          schema.field :path, type: :string, required: true
-          schema
-        end
-      end
-
       def self.schema
-        @schema ||= begin
-          schema = ConfigSchema.new
-          schema.field :repos, type: :array, required: true, array_item_schema: repo_schema
-          schema
+        @schema ||= ConfigSchema.new do
+          required(:repos).value(:array) do
+            required(:url).filled(:string)
+            required(:path).filled(:string)
+          end
         end
       end
 

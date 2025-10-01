@@ -2,11 +2,9 @@ module Dots
   module Providers
     class ShProvider < Provider
       def self.schema
-        @schema ||= begin
-          schema = ConfigSchema.new
-          schema.field :command, type: :string, required: true
-          schema.field :interactive, type: :boolean
-          schema
+        @schema ||= ConfigSchema.new do
+          required(:command).filled(:string)
+          optional(:interactive).value(:boolean)
         end
       end
 
