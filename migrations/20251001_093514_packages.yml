@@ -3,6 +3,7 @@
 provider: brew
 packages:
   - ripgrep
+  - gh
   - lazygit
   - wget
   - jq

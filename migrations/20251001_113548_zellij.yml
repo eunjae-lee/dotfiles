@@ -1,0 +1,10 @@
+# Migration: zellij
+
+- provider: brew
+  packages:
+    - zellij
+
+- provider: symlink
+  links:
+    - sourcee: "~/workspace/dotfiles/app-configs/zellij/cal.kdl"
+      target: "~/.config/zellij/layouts/cal.kdl"
