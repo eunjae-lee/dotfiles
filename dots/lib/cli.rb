@@ -165,6 +165,90 @@ module Dots
       exit 1
     end
 
+    desc "exec FILE", "Execute a single migration file without tracking state"
+    long_desc <<-LONGDESC
+      Execute a single migration file without adding it to the state file.
+
+      This is useful for testing migrations during development without affecting
+      the migration state.
+
+      Example:
+      $ dots exec migrations/20240101_test.yml
+      $ dots exec /path/to/test-migration.yml
+    LONGDESC
+    def exec(filepath)
+      if filepath == '--help' || filepath == '-h'
+        invoke(:help, ['exec'])
+        return
+      end
+
+      filepath = File.expand_path(filepath)
+      
+      unless File.exist?(filepath)
+        puts "Error: File not found: #{filepath}"
+        exit 1
+      end
+
+      filename = File.basename(filepath)
+      migration_name = extract_name_from_file(filepath)
+
+      puts "Running migration: #{migration_name}"
+
+      begin
+        content = YAML.load_file(filepath)
+        raise Dots::ValidationError, "Migration file is empty: #{filename}" if content.nil?
+
+        configs = if content.is_a?(Array)
+          content
+        elsif content.is_a?(Hash)
+          [content]
+        else
+          raise Dots::ValidationError, "Migration must be a hash or array of hashes"
+        end
+
+        configs.each_with_index do |config, index|
+          raise Dots::ValidationError, "Migration at index #{index} must be a hash" unless config.is_a?(Hash)
+          raise Dots::ValidationError, "Migration at index #{index} missing 'provider' key" unless config['provider']
+          
+          provider = Provider.for(config['provider'], config)
+          validation_result = provider.validate_config
+          
+          unless validation_result == true
+            errors = Array(validation_result).join("\n  - ")
+            raise Dots::ValidationError, "Validation failed:\n  - #{errors}"
+          end
+          
+          provider.apply
+        end
+        
+        puts "✓ Completed: #{migration_name}"
+      rescue Psych::SyntaxError => e
+        puts "✗ Failed: Invalid YAML: #{e.message}"
+        exit 1
+      rescue Dots::Error => e
+        puts "✗ Failed: #{e.message}"
+        exit 1
+      end
+    rescue Dots::Error => e
+      puts "Error: #{e.message}"
+      exit 1
+    end
+
+    private
+
+    def extract_name_from_file(filepath)
+      first_line = File.open(filepath, &:readline).strip rescue nil
+      
+      if first_line && first_line.match(/^#\s*Migration:\s*(.+)/)
+        $1.strip
+      else
+        filename = File.basename(filepath)
+        filename.sub(/^\d+_\d+_/, '').sub(/\.yml$/, '').gsub('-', ' ')
+      end
+    end
+
+    public
+
     desc "status", "Show migration status"
     def status
       manager = MigrationManager.new
