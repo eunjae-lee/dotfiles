@@ -25,20 +25,20 @@ module Dots
       end
     end
 
-    desc "migration NAME", "Create a new migration file"
+    desc "create_migration NAME", "Create a new migration file"
     long_desc <<-LONGDESC
       Create a new migration file with the given NAME.
 
       The migration file will be created in the migrations/ directory with a timestamp prefix.
 
       Example:
-      $ dots migration install-vim
+      $ dots create_migration install-vim
 
       This will create a file like: migrations/20240101120000_install-vim.yml
     LONGDESC
-    def migration(name)
+    def create_migration(name)
       if name == '--help' || name == '-h'
-        invoke(:help, ['migration'])
+        invoke(:help, ['create_migration'])
         return
       end
 
