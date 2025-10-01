@@ -60,14 +60,17 @@ module Dots
       Options:
       -d, --dry-run  Preview migrations without applying them
       -y, --yes      Skip confirmation prompt and apply all migrations
+      -f, --fake     Mark migrations as applied without executing them
 
       Example:
       $ dots apply
       $ dots apply --dry-run
       $ dots apply --yes
+      $ dots apply --fake
     LONGDESC
     option :dry_run, type: :boolean, aliases: '-d', desc: 'Preview migrations without applying them'
     option :yes, type: :boolean, aliases: '-y', desc: 'Skip confirmation prompt'
+    option :fake, type: :boolean, aliases: '-f', desc: 'Mark as applied without executing'
     def apply
       manager = MigrationManager.new
       pending = manager.pending_migrations
@@ -102,6 +105,19 @@ module Dots
 
       if options[:dry_run]
         puts "\nNo migrations applied (dry-run mode)"
+        return
+      end
+
+      if options[:fake]
+        puts "\nMarking migrations as applied without executing (fake mode)"
+        pending.each do |filename|
+          migration_name = manager.extract_migration_name(filename)
+          filepath = manager.state_manager.migration_path(filename)
+          checksum = manager.state_manager.calculate_checksum(filepath)
+          manager.state_manager.add_migration(filename, checksum)
+          puts "✓ Marked as applied: #{migration_name}"
+        end
+        puts "\nSuccessfully marked #{pending.length} migration(s) as applied"
         return
       end
 
