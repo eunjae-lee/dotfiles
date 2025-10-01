@@ -111,6 +111,7 @@ command: |
 #     target: "~/.gitconfig"
 #   - source: "~/workspace/dotfiles/.zshrc"
 #     target: "~/.zshrc"
+#     force: true  # Delete target if it exists (file or directory)
 
 # ============================================================================
 # TIPS
