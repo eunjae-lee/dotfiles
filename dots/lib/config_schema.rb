@@ -32,6 +32,21 @@ module Dots
       @config_validators << block
     end
 
+    def at_least_one_of(*field_names)
+      validate_with do |config|
+        has_any = field_names.any? do |field|
+          config[field.to_s].is_a?(Array) && !config[field.to_s].empty?
+        end
+        
+        unless has_any
+          field_list = field_names.map { |f| "'#{f}'" }.join(', ')
+          ["Requires at least one of: #{field_list}"]
+        else
+          []
+        end
+      end
+    end
+
     # Internal method called by FieldBuilder
     def add_field(name, config)
       @fields[name] = config

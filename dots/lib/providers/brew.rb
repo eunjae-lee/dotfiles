@@ -7,17 +7,7 @@ module Dots
           optional(:casks).array(:string)
           optional(:taps).array(:string)
           
-          validate_with do |config|
-            has_packages = config['packages'].is_a?(Array) && !config['packages'].empty?
-            has_casks = config['casks'].is_a?(Array) && !config['casks'].empty?
-            has_taps = config['taps'].is_a?(Array) && !config['taps'].empty?
-
-            unless has_packages || has_casks || has_taps
-              ["BrewProvider requires at least one of: 'packages', 'casks', or 'taps'"]
-            else
-              []
-            end
-          end
+          at_least_one_of :packages, :casks, :taps
         end
       end
 
