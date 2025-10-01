@@ -1,19 +1,16 @@
 module Dots
   module Providers
     class MasProvider < Provider
-      def self.app_schema
-        @app_schema ||= ConfigSchema.new do
-          required(:name).filled(:string)
-          required(:id).value(:integer)
-        end
-      end
-
       def self.schema
         @schema ||= begin
-          app_schema_ref = app_schema
+          app_hash_schema = ConfigSchema.new do
+            required(:name).filled(:string)
+            required(:id).value(:integer)
+          end
+          
           ConfigSchema.new do
             required(:apps).value(:array).each(
-              ConfigSchema.or(:integer, app_schema_ref)
+              ConfigSchema.or(:integer, app_hash_schema)
             )
           end
         end
