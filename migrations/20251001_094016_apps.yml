@@ -1,4 +1,4 @@
-# Migration: __NAME__
+# Migration: apps
 #
 # This file can contain either:
 # 1. A single migration (one provider block)
@@ -18,8 +18,7 @@
 provider: sh
 command: |
   # Your migration code here
-  echo "Migration: __NAME__"
-
+  echo "Migration: apps"
 # interactive: true  # Set to true if you need to prompt for user input
 
 # ============================================================================

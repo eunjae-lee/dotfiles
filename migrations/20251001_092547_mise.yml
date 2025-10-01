@@ -1,0 +1,16 @@
+# Migration: mise-en-place
+
+- provider: brew
+  packages:
+    - mise
+
+- provider: sh
+  command: |
+    mise use --global node@22
+    mise use --global pnpm@9
+    mise use --global python@3.11.3
+
+#
+# ↓ already applied to .zshrc
+# - provider: sh
+#   command: echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
