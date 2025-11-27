@@ -1,0 +1,8 @@
+- provider: sh
+  command: brew install opencode
+
+- provider: symlink
+  links:
+    - source: "~/workspace/dotfiles/app-configs/opencode/plugin"
+      target: "~/.config/opencode/plugin"
+      force: true # Delete target if it exists (file or directory)

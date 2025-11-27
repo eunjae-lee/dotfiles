@@ -65,13 +65,20 @@ ZSH_THEME="spaceship"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(zsh-z git)
+export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
+
+export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
+
+
+plugins=(zsh-z git auto-notify)
 
 zstyle ':omz:plugins:git' aliases no
 
 source $ZSH/oh-my-zsh.sh
 
 export LANG=en_US.UTF-8
+
+export EDITOR=vi
 
 alias rc="vi ~/.zshrc && source ~/.zshrc"
 
@@ -115,7 +122,6 @@ function y() {
     ni
   fi
 }
-alias yr="nun"
 alias yd="npm_install_if_branch_changed && nr dev"
 alias ya="ni"
 alias yt="nr test"
@@ -151,15 +157,11 @@ alias cal_dir="cd ~/workspace/cal.com"
 alias c1="cal_dir && y && yd"
 alias c2="cal_dir && g"
 alias c3="cal_dir"
-alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights && yarn workspace @calcom/prisma seed-pbac"
+alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
 alias cal="zellij attach cal"
-alias z_cal="zellij --layout ~/.config/zellij/layouts/cal.kdl"
+alias z_cal="brew upgrade opencode && cal_dir && zellij --layout ~/.config/zellij/layouts/cal.kdl"
 alias cc="opencode"
-
-export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
-
-export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:$PATH"
 

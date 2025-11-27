@@ -1,0 +1,5 @@
+- provider: symlink
+  links:
+    - source: "~/workspace/dotfiles/app-configs/zsh/plugins/auto-notify"
+      target: "/Users/eunjae/.oh-my-zsh/custom/plugins/auto-notify"
+      force: true

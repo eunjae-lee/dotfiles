@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-afplay /System/Library/Sounds/Purr.aiff
+afplay --volume 2.5 /System/Library/Sounds/Purr.aiff
 
 # # Default value for description
 # DESCRIPTION="Ding"

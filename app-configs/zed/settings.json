@@ -20,8 +20,55 @@
   "project_panel": {
     "dock": "right"
   },
+  "profiles": {
+    "Focus": {
+      "centered_layout": {
+        "left_padding": 0.1,
+        "right_padding": 0.1
+      },
+      "ui_font_size": 16,
+      "buffer_font_size": 18,
+      "buffer_line_height": { "custom": 2.0 },
+      "tab_bar": {
+        "show": false,
+        "show_nav_history_buttons": false
+      },
+      "toolbar": {
+        "breadcrumbs": false,
+        "quick_actions": false
+      },
+      "gutter": {
+        "line_numbers": false,
+        "folds": false,
+        "breakpoints": false,
+        "runnables": false,
+        "min_line_number_digits": 0
+      },
+      "indent_guides": {
+        "enabled": false
+      },
+      "current_line_highlight": "none",
+      "scrollbar": {
+        "show": "never",
+        "cursors": false,
+        "git_diff": false,
+        "diagnostics": "none",
+        "search_results": false,
+        "selected_symbol": false
+      },
+      "experimental.theme_overrides": {
+        "background.appearance": "blurred"
+      }
+    }
+  },
   "agent": {
     "profiles": {
+      "minimal": {
+        "name": "Minimal",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      },
       "test": {
         "name": "Test",
         "tools": {},
