@@ -193,3 +193,9 @@ eval "$(atuin init zsh)"
 alias things="/Users/eunjae/.local/share/mise/installs/node/22.14.0/bin/things"
 export PATH="$PATH:/Users/eunjae/workspace/vchange"
 alias rvc="/Users/eunjae/workspace/vchange/rvc"
+
+export NOTES_ROOT="$HOME/workspace/notes"
+
+
+
+
