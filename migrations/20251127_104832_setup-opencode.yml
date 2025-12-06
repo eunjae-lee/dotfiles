@@ -6,3 +6,6 @@
     - source: "~/workspace/dotfiles/app-configs/opencode/plugin"
       target: "~/.config/opencode/plugin"
       force: true # Delete target if it exists (file or directory)
+    - source: "~/workspace/dotfiles/app-configs/opencode/agent"
+      target: "~/.config/opencode/agent"
+      force: true # Delete target if it exists (file or directory)
