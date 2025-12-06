@@ -24,7 +24,7 @@ layout {
     tab name="dev" cwd="~/workspace/cal.com" {
         pane split_direction="vertical" {
             pane command="sh" {
-                args ["-c", "yarn && yarn dev"]
+                args "-c" "yarn && yarn dev"
             }
             pane // empty pane
         }
