@@ -1,0 +1,5 @@
+- provider: symlink
+  links:
+    - source: "~/workspace/dotfiles/.gitignore_global"
+      target: "~/.gitignore_global"
+      force: true

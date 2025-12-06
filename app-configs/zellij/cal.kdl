@@ -12,7 +12,9 @@ layout {
 
     // Tab 1: opencode - runs "opencode" command in ~/workspace/cal.com
     tab name="opencode" cwd="~/workspace/cal.com" {
-        pane command="opencode"
+        pane name="opencode" command="sh" {
+            args "-c" "opencode upgrade && opencode"
+        }
     }
 
     // Tab 2: git - runs "lazygit" command in ~/workspace/cal.com
@@ -23,7 +25,7 @@ layout {
     // Tab 3: dev - left pane runs "yarn dev", right pane empty in ~/workspace/cal.com
     tab name="dev" cwd="~/workspace/cal.com" {
         pane split_direction="vertical" {
-            pane command="sh" {
+            pane name="dev" command="sh" {
                 args "-c" "yarn && yarn dev"
             }
             pane // empty pane
