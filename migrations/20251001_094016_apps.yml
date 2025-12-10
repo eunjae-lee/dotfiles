@@ -44,6 +44,9 @@
     - source: "~/workspace/dotfiles/app-configs/zed/settings.json"
       target: "~/.config/zed/settings.json"
       force: true
+    - source: "~/workspace/dotfiles/app-configs/zed/tasks.json"
+    target: "~/.config/zed/tasks.json"
+      force: true
     - source: "~/workspace/dotfiles/app-configs/zed/keymap.json"
       target: ~/.config/zed/keymap.json
       force: true
