@@ -18,6 +18,7 @@
     'htop'
     'ssh'
     'nano'
+    'z_cal'
 )
 
 function _is_auto_notify_ignored() {
