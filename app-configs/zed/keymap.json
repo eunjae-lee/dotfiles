@@ -24,14 +24,17 @@
     "context": "Editor",
     "bindings": {
       // "j k": ["workspace::SendKeystrokes", "escape"]
-      "cmd-e": "projects::OpenRecent"
-      // "alt-cmd-c": "workspace::CopyRelativePath"
+      "cmd-e": "projects::OpenRecent",
+      "alt-cmd-c": "workspace::CopyRelativePath"
     }
   },
   {
     "context": "Editor",
     "bindings": {
-      "alt-cmd-c": ["task::Spawn", { "task_name": "Copy: Relative Path:Line" }]
+      "ctrl-alt-cmd-c": [
+        "task::Spawn",
+        { "task_name": "Copy: Relative Path:Line" }
+      ]
     }
   },
   {
