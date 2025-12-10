@@ -1,22 +1,12 @@
 [
   {
-    "label": "Copy: File:Line",
-    "command": "echo '${ZED_FILE}:${ZED_ROW}' | pbcopy",
-    "hide": "always"
-  },
-  {
-    "label": "Copy: File:Line:Column",
-    "command": "echo '${ZED_FILE}:${ZED_ROW}:${ZED_COLUMN}' | pbcopy",
-    "hide": "always"
-  },
-  {
-    "label": "Copy: Filename:Line",
-    "command": "echo '$(basename ${ZED_FILE}):${ZED_ROW}' | pbcopy",
-    "hide": "always"
-  },
-  {
     "label": "Copy: Relative Path:Line",
-    "command": "~/.config/zed/scripts/copy-relative-path-line.rb",
+    "command": "echo -n '${ZED_RELATIVE_FILE}:${ZED_ROW}' | pbcopy",
+    "hide": "always"
+  },
+  {
+    "label": "Copy: Relative Path:Lines",
+    "command": "lines=$(echo \"${ZED_SELECTED_TEXT}\" | wc -l | tr -d ' '); end_line=$((${ZED_ROW} + lines - 1)); echo \"${ZED_RELATIVE_FILE}:${ZED_ROW}-${end_line}\" | pbcopy",
     "hide": "always"
   }
 ]
