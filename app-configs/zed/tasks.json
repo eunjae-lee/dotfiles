@@ -1,12 +1,12 @@
 [
   {
     "label": "Copy: Relative Path:Line",
-    "command": "echo -n '${ZED_RELATIVE_FILE}:${ZED_ROW}' | pbcopy",
+    "command": "ruby /Users/eunjae/workspace/dotfiles/app-configs/zed/copy_relative_path_line.rb | pbcopy",
     "hide": "always"
   },
   {
-    "label": "Copy: Relative Path:Lines",
-    "command": "lines=$(echo \"${ZED_SELECTED_TEXT}\" | wc -l | tr -d ' '); end_line=$((${ZED_ROW} + lines - 1)); echo \"${ZED_RELATIVE_FILE}:${ZED_ROW}-${end_line}\" | pbcopy",
+    "label": "Copy: Relative Path:Line + Code",
+    "command": "ruby /Users/eunjae/workspace/dotfiles/app-configs/zed/copy_relative_path_line.rb --include-code | pbcopy",
     "hide": "always"
   }
 ]
