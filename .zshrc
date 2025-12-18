@@ -160,7 +160,7 @@ alias c3="cal_dir"
 alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
 alias cal="zellij attach cal"
-alias z_cal="brew upgrade opencode && cal_dir && zellij --layout ~/.config/zellij/layouts/cal.kdl"
+alias z_cal="cal_dir && zellij --layout ~/.config/zellij/layouts/cal.kdl"
 alias cc="opencode"
 
 export PATH="/opt/homebrew/bin:$PATH"

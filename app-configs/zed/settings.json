@@ -77,8 +77,8 @@
       }
     },
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4"
+      "provider": "ollama",
+      "model": "gemma3:12b"
     },
     "version": "2"
   },

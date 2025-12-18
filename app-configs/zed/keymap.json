@@ -24,7 +24,8 @@
     "context": "Editor",
     "bindings": {
       // "j k": ["workspace::SendKeystrokes", "escape"]
-      "cmd-e": "projects::OpenRecent"
+      "cmd-e": "projects::OpenRecent",
+      "shift-cmd-n": "workspace::NewWindow"
       // "alt-cmd-c": "workspace::CopyRelativePath"
     }
   },
@@ -35,6 +36,10 @@
       "ctrl-alt-cmd-c": [
         "task::Spawn",
         { "task_name": "Copy: Relative Path:Line + Code" }
+      ],
+      "shift-cmd-t": [
+        "task::Spawn",
+        { "task_name": "[calcom] Run test for this file" }
       ]
     }
   },

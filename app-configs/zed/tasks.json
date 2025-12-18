@@ -8,5 +8,11 @@
     "label": "Copy: Relative Path:Line + Code",
     "command": "ruby /Users/eunjae/workspace/dotfiles/app-configs/zed/copy_relative_path_line.rb --include-code | pbcopy",
     "hide": "always"
+  },
+  {
+    "label": "[calcom] Run test for this file",
+    "command": "ruby /Users/eunjae/workspace/dotfiles/app-configs/zed/run_test.rb",
+    "reveal": "always",
+    "hide": "never"
   }
 ]
