@@ -49,5 +49,17 @@
       // "j k": ["workspace::SendKeystrokes", "escape"]
       "cmd-e": "projects::OpenRecent"
     }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-n": null
+    }
+  },
+  {
+    "context": "!Terminal",
+    "bindings": {
+      "cmd-n": "workspace::NewFile"
+    }
   }
 ]

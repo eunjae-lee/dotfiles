@@ -1,11 +1,13 @@
+- provider: repo
+  repos:
+    - url: git@github.com:eunjae-lee/opencode-config.git
+      path: "~/workspace/opencode-config"
+
 - provider: sh
   command: brew install opencode
 
 - provider: symlink
   links:
-    - source: "~/workspace/dotfiles/app-configs/opencode/plugin"
-      target: "~/.config/opencode/plugin"
-      force: true # Delete target if it exists (file or directory)
-    - source: "~/workspace/dotfiles/app-configs/opencode/agent"
-      target: "~/.config/opencode/agent"
+    - source: "~/workspace/opencode-config"
+      target: "~/.config/opencode"
       force: true # Delete target if it exists (file or directory)
