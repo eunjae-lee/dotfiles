@@ -105,7 +105,7 @@ function gcl() {
   git clone "$1"
   local repo_name=$(basename "$1" .git)
   cd "$repo_name"
-  cursor .
+  zed .
 }
 alias gbranch="git rev-parse --abbrev-ref HEAD"
 function gupstream() {
@@ -192,4 +192,5 @@ eval "$(atuin init zsh)"
 
 alias things="/Users/eunjae/.local/share/mise/installs/node/22.14.0/bin/things"
 
-export NOTES_ROOT="$HOME/workspace/notes"
+export OPENCODE_CONFIG_HOME="${OPENCODE_CONFIG_HOME:-$HOME/.config/opencode}"
+export NOTES_PATH="$HOME/workspace/notes"
