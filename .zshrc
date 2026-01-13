@@ -160,7 +160,7 @@ alias c3="cal_dir"
 alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
 alias cal="zellij attach cal"
-alias z_cal="cal_dir && zellij --layout ~/.config/zellij/layouts/cal.kdl"
+alias zcal="cal_dir && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2.kdl"
 alias cc="opencode"
 
 export PATH="/opt/homebrew/bin:$PATH"
@@ -192,5 +192,9 @@ eval "$(atuin init zsh)"
 
 alias things="/Users/eunjae/.local/share/mise/installs/node/22.14.0/bin/things"
 
-export OPENCODE_CONFIG_HOME="${OPENCODE_CONFIG_HOME:-$HOME/.config/opencode}"
-export NOTES_PATH="$HOME/workspace/notes"
+# Added by Antigravity
+export PATH="/Users/eunjae/.antigravity/antigravity/bin:$PATH"
+
+
+# OpenCode Config - add bin directory to PATH
+export PATH="$HOME/.config/opencode/bin:$PATH"

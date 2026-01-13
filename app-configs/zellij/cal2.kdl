@@ -17,23 +17,32 @@ layout {
         }
     }
 
-    // Tab 2: git - runs "lazygit" command in ~/workspace/cal.com
-    tab name="git" cwd="~/workspace/cal.com" {
+    // Tab 2: git + dev - runs "lazygit" and floating "yarn dev"
+    tab name="git + dev" cwd="~/workspace/cal.com" hide_floating_panes=true {
         pane command="lazygit"
-    }
-
-    // Tab 3: dev - left pane runs "yarn dev", right pane empty in ~/workspace/cal.com
-    tab name="dev" cwd="~/workspace/cal.com" {
-        pane split_direction="vertical" {
+        floating_panes {
             pane name="dev" command="sh" {
+                x "10%"
+                y "10%"
+                width "80%"
+                height "80%"
                 args "-c" "yarn && yarn dev"
             }
-            pane // empty pane
         }
     }
 
-    // Tab 4: notes
+    // Tab 3: notes
     tab name="notes" cwd="~/workspace/notes" {
-        pane command="lazygit"
+        pane split_direction="horizontal" {
+            pane command="lazygit"
+            pane name="opencode" command="sh" {
+                args "-c" "opencode upgrade && opencode"
+            }
+        }
+    }
+
+    // Tab 4: db reset - runs "cal_reset" suspended
+    tab name="db reset" {
+        pane command="cal_reset" start_suspended=true
     }
 }

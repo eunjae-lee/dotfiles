@@ -1,0 +1,10 @@
+font-family = Geist Mono
+font-style = Regular
+font-size = 20
+font-thicken = true
+
+cursor-style = block
+cursor-style-blink = false
+
+scrollback-limit = 4294967295
+keybind = shift+enter=text:\n

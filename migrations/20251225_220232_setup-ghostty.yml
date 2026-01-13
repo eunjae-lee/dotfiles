@@ -1,0 +1,8 @@
+- provider: brew
+  casks:
+    - ghostty
+
+- provider: symlink
+  links:
+    - source: "~/workspace/dotfiles/app-configs/ghostty/config"
+      target: "~/Library/Application Support/com.mitchellh.ghostty/config"

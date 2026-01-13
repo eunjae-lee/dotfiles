@@ -3,8 +3,3 @@
 - provider: brew
   packages:
     - zellij
-
-- provider: symlink
-  links:
-    - source: "~/workspace/dotfiles/app-configs/zellij/cal.kdl"
-      target: "~/.config/zellij/layouts/cal.kdl"

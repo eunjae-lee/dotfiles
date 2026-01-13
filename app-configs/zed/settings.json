@@ -7,45 +7,93 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "lsp": {
+    "biome": {
+      "settings": {
+        "require_config_file": true,
+      },
+    },
+  },
+  "languages": {
+    "JavaScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true,
+      },
+    },
+    "TypeScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true,
+      },
+    },
+    "TSX": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true,
+      },
+    },
+    "JSON": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+      },
+    },
+    "JSONC": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+      },
+    },
+    "CSS": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+      },
+    },
+  },
   "cursor_blink": false,
   "terminal": {
-    "blinking": "off"
+    "blinking": "off",
   },
   "outline_panel": {
-    "dock": "right"
+    "dock": "right",
   },
   "collaboration_panel": {
-    "dock": "right"
+    "dock": "right",
   },
   "project_panel": {
-    "dock": "right"
+    "dock": "right",
   },
   "profiles": {
     "Focus": {
       "centered_layout": {
         "left_padding": 0.1,
-        "right_padding": 0.1
+        "right_padding": 0.1,
       },
       "ui_font_size": 16,
       "buffer_font_size": 18,
       "buffer_line_height": { "custom": 2.0 },
       "tab_bar": {
         "show": false,
-        "show_nav_history_buttons": false
+        "show_nav_history_buttons": false,
       },
       "toolbar": {
         "breadcrumbs": false,
-        "quick_actions": false
+        "quick_actions": false,
       },
       "gutter": {
         "line_numbers": false,
         "folds": false,
         "breakpoints": false,
         "runnables": false,
-        "min_line_number_digits": 0
+        "min_line_number_digits": 0,
       },
       "indent_guides": {
-        "enabled": false
+        "enabled": false,
       },
       "current_line_highlight": "none",
       "scrollbar": {
@@ -54,12 +102,12 @@
         "git_diff": false,
         "diagnostics": "none",
         "search_results": false,
-        "selected_symbol": false
+        "selected_symbol": false,
       },
       "experimental.theme_overrides": {
-        "background.appearance": "blurred"
-      }
-    }
+        "background.appearance": "blurred",
+      },
+    },
   },
   "agent": {
     "profiles": {
@@ -67,22 +115,22 @@
         "name": "Minimal",
         "tools": {},
         "enable_all_context_servers": false,
-        "context_servers": {}
+        "context_servers": {},
       },
       "test": {
         "name": "Test",
         "tools": {},
         "enable_all_context_servers": false,
-        "context_servers": {}
-      }
+        "context_servers": {},
+      },
     },
     "default_model": {
       "provider": "ollama",
-      "model": "gemma3:12b"
+      "model": "gemma3:12b",
     },
-    "version": "2"
+    "version": "2",
   },
   "theme": "Atelier Cave Dark",
   "buffer_font_size": 24,
-  "base_keymap": "JetBrains"
+  "base_keymap": "JetBrains",
 }
