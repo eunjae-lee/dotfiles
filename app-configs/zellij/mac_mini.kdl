@@ -14,18 +14,18 @@ layout {
     tab name="main" {
         pane split_direction="horizontal" {
             pane split_direction="vertical" {
-                pane name="opencode serve" command="sh" {
+                pane name="opencode: serve" command="sh" {
                     args "-c" "opencode serve"
                 }
-                pane name="tailscale: clawdbot" command="sh" {
-                    args "-c" "/Applications/Tailscale.app/Contents/MacOS/Tailscale serve --http=18789 http://127.0.0.1:18789"
+                pane name="opencode: tailscale" command="sh" {
+                    args "-c" "sleep 5; /Applications/Tailscale.app/Contents/MacOS/Tailscale serve --http=4096 http://127.0.0.1:4096"
                 }
             }
             pane split_direction="vertical" {
-                pane name="tailscale: opencode" command="sh" {
-                    args "-c" "sleep 5; /Applications/Tailscale.app/Contents/MacOS/Tailscale serve --http=4096 http://127.0.0.1:4096"
+                pane name="clawdbot: tailscale" command="sh" {
+                    args "-c" "/Applications/Tailscale.app/Contents/MacOS/Tailscale serve --http=18789 http://127.0.0.1:18789"
                 }
-                pane name="restart clawdbot" command="sh" start_suspended=true {
+                pane name="clawdbot: restart" command="sh" start_suspended=true {
                     args "-c" "launchctl unload ~/Library/LaunchAgents/com.clawdbot.gateway.plist && launchctl load ~/Library/LaunchAgents/com.clawdbot.gateway.plist"
                 }
             }
