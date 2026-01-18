@@ -159,8 +159,8 @@ alias c2="cal_dir && g"
 alias c3="cal_dir"
 alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
-alias cal="zellij attach cal"
 alias zcal="cal_dir && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2.kdl"
+alias zmini="zellij --layout ~/workspace/dotfiles/app-configs/zellij/mac_mini.kdl"
 alias cc="opencode"
 
 export PATH="/opt/homebrew/bin:$PATH"
@@ -186,7 +186,7 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-. "$HOME/.atuin/bin/env"
+# . "$HOME/.atuin/bin/env"  # (disabled; brew install uses `atuin init zsh`)
 
 eval "$(atuin init zsh)"
 
@@ -198,3 +198,9 @@ export PATH="/Users/eunjae/.antigravity/antigravity/bin:$PATH"
 
 # OpenCode Config - add bin directory to PATH
 export PATH="$HOME/.config/opencode/bin:$PATH"
+
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+alias tailscale_serve="tailscale serve --http=4096 http://127.0.0.1:4096"
+
+alias cb="clawdbot"
