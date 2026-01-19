@@ -4,7 +4,7 @@ file_path = ENV['ZED_RELATIVE_FILE']
 
 command = case file_path
 when /\.integration-test\.ts$/
-  "yarn test #{file_path} -- --integrationTestsOnly"
+  "VITEST_MODE=integration yarn test #{file_path}"
 when /\.test\.ts$/
   "yarn test #{file_path}"
 when /\.e2e\.ts$/
