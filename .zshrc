@@ -204,3 +204,6 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias tailscale_serve="tailscale serve --http=4096 http://127.0.0.1:4096"
 
 alias cb="clawdbot"
+
+# opencode
+export PATH=/Users/eunjae/.opencode/bin:$PATH
