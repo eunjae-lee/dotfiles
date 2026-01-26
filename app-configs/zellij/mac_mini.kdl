@@ -20,9 +20,6 @@ layout {
                 pane name="clementine: dev" command="sh" {
                     args "-c" "cd ~/workspace/clementine && bun dev"
                 }
-                pane name="clawdbot: tailscale" command="sh" {
-                    args "-c" "/Applications/Tailscale.app/Contents/MacOS/Tailscale serve --http=18789 http://127.0.0.1:18789"
-                }
             }
             pane split_direction="vertical" {
                 pane name="opencode: tailscale" command="sh" {
@@ -30,9 +27,6 @@ layout {
                 }
                 pane name="clementine: tailscale" command="sh" {
                     args "-c" "/Applications/Tailscale.app/Contents/MacOS/Tailscale serve --http=3333 http://127.0.0.1:3333"
-                }
-                pane name="clawdbot: restart" command="sh" start_suspended=true {
-                    args "-c" "launchctl unload ~/Library/LaunchAgents/com.clawdbot.gateway.plist && launchctl load ~/Library/LaunchAgents/com.clawdbot.gateway.plist"
                 }
             }
         }
