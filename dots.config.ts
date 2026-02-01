@@ -26,20 +26,20 @@ export default defineConfig([
 			{
 				name: "Clone spaceship theme",
 				command:
-					'git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"',
-				unless: 'test -d "$ZSH_CUSTOM/themes/spaceship-prompt"',
+					'git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt"',
+				unless: 'test -d "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt"',
 			},
 			{
 				name: "Symlink spaceship theme",
 				command:
-					'ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"',
-				unless: 'test -L "$ZSH_CUSTOM/themes/spaceship.zsh-theme"',
+					'ln -s "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"',
+				unless: 'test -L "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"',
 			},
 			{
 				name: "Clone zsh-z plugin",
 				command:
-					"git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z",
-				unless: 'test -d "$ZSH_CUSTOM/plugins/zsh-z"',
+					"git clone https://github.com/agkozak/zsh-z $HOME/.oh-my-zsh/custom/plugins/zsh-z",
+				unless: 'test -d "$HOME/.oh-my-zsh/custom/plugins/zsh-z"',
 			},
 		],
 	},
