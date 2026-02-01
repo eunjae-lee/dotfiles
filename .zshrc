@@ -65,7 +65,7 @@ ZSH_THEME="spaceship"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
+#export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
 
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
@@ -201,6 +201,4 @@ export PATH="$HOME/.config/opencode/bin:$PATH"
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
-alias tailscale_serve="tailscale serve --http=4096 http://127.0.0.1:4096"
-
-alias cb="clawdbot"
+alias flowcat_upgrade="brew update && brew upgrade flowcat && open /Applications/flowcat.app"
