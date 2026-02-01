@@ -1,4 +1,4 @@
-import { defineConfig } from "../src/config";
+import { defineConfig } from '@eunjae/dots';
 
 // Array format allows precise ordering of steps
 export default defineConfig([
