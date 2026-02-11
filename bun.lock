@@ -1,0 +1,21 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 0,
+  "workspaces": {
+    "": {
+      "name": "dotfiles",
+      "devDependencies": {
+        "@eunjae/dots": "^1.2.0",
+      },
+    },
+  },
+  "packages": {
+    "@eunjae/dots": ["@eunjae/dots@1.2.0", "", { "dependencies": { "@stricli/auto-complete": "^1.2.5", "@stricli/core": "^1.2.5", "jiti": "^2.6.1" }, "bin": { "__dots_bash_complete": "dist/bin/bash-complete.js", "dots": "dist/bin/cli.js" } }, "sha512-W+oAONfeRcwiWhoOevaRkAPeKZh6kPiaellycCkySFD0zg4hauCIGv2R/YyTYMyLewJSrMTMItLPIA7Jq8q/fw=="],
+
+    "@stricli/auto-complete": ["@stricli/auto-complete@1.2.5", "", { "dependencies": { "@stricli/core": "^1.2.5" }, "bin": { "auto-complete": "dist/bin/cli.js" } }, "sha512-C6G88Hh4lUWBwiqsxbcA4I1ricSQwiLaOziTWW3NmBoX7WGTW7i7RvyooXMpZk1YMLf2olv5Odxmg127ik1DKQ=="],
+
+    "@stricli/core": ["@stricli/core@1.2.5", "", {}, "sha512-+afyztQW7fwWkqmU2WQZbdc3LjnZThWYdtE0l+hykZ1Rvy7YGxZSvsVCS/wZ/2BNv117pQ9TU1GZZRIcPnB4tw=="],
+
+    "jiti": ["jiti@2.6.1", "", { "bin": "lib/jiti-cli.mjs" }, "sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ=="],
+  }
+}

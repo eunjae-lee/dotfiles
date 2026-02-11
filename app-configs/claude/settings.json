@@ -23,7 +23,9 @@
       "Bash(pip:*)",
       "Bash(docker:*)",
       "Bash(curl:*)",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "WebSearch",
+      "Bash(open:*)"
     ]
   },
   "hooks": {
@@ -39,9 +41,7 @@
     ],
     "PostToolUse": [
       {
-        "matcher": {
-          "tool_name": "AskUserQuestion"
-        },
+        "matcher": "AskUserQuestion",
         "hooks": [
           {
             "type": "command",

@@ -224,3 +224,6 @@ psqldev() {
   psql "$DATABASE_URL"
 }
 
+alias ccc="security unlock-keychain && claude"
+
+
