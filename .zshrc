@@ -161,7 +161,7 @@ alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/pri
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
 alias zcal="cal_dir && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2.kdl"
 alias zmini="zellij --layout ~/workspace/dotfiles/app-configs/zellij/mac_mini.kdl"
-alias cc="opencode"
+alias cc="claude"
 
 export PATH="/opt/homebrew/bin:$PATH"
 
@@ -201,4 +201,22 @@ export PATH="$HOME/.config/opencode/bin:$PATH"
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
-alias flowcat_upgrade="brew update && brew upgrade flowcat && open /Applications/flowcat.app"
+alias fcu="(cd ~/workspace/flowcat && git pull && bun install:mac) && open /Applications/flowcat.app"
+
+psqldev() {
+  if [[ ! -f .env ]]; then
+    echo ".env not found"
+    return 1
+  fi
+
+  local DATABASE_URL
+
+  DATABASE_URL=$(grep -E '^DATABASE_URL=' .env | sed 's/^DATABASE_URL=//' | tr -d '"')
+
+  if [[ -z "$DATABASE_URL" ]]; then
+    echo "DATABASE_URL not found in .env"
+    return 1
+  fi
+
+  psql "$DATABASE_URL"
+}
