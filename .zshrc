@@ -207,3 +207,7 @@ alias cb="clawdbot"
 
 # opencode
 export PATH=/Users/eunjae/.opencode/bin:$PATH
+
+# ghostty
+## Add to ~/.zshrc or ~/.bashrc
+export PATH="/Applications/Ghostty.app/Contents/MacOS:$PATH"
