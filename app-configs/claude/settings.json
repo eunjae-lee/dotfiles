@@ -1,13 +1,27 @@
 {
   "permissions": {
     "allow": [
-      "Bash(yarn type-check:ci:*)",
+      "Bash(npm:*)",
+      "Bash(pnpm:*)",
+      "Bash(yarn:*)",
+      "Bash(bun:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
       "Bash(grep:*)",
-      "Bash(gh pr view:*)",
-      "Bash(gh api:*)",
+      "Bash(rg:*)",
       "Bash(ls:*)",
-      "Bash(yarn biome check:*)",
-      "Bash(gh pr diff:*)"
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(find:*)",
+      "Bash(which:*)",
+      "Bash(make:*)",
+      "Bash(cargo:*)",
+      "Bash(go:*)",
+      "Bash(python:*)",
+      "Bash(pip:*)",
+      "Bash(docker:*)"
     ]
   },
   "hooks": {
