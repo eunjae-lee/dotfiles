@@ -21,11 +21,36 @@
       "Bash(go:*)",
       "Bash(python:*)",
       "Bash(pip:*)",
-      "Bash(docker:*)"
+      "Bash(docker:*)",
+      "Bash(curl:*)",
+      "Bash(lsof:*)"
     ]
   },
   "hooks": {
     "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Hero.aiff"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": {
+          "tool_name": "AskUserQuestion"
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Hero.aiff"
+          }
+        ]
+      }
+    ],
+    "Notification": [
       {
         "hooks": [
           {
