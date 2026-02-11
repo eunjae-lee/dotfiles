@@ -1,4 +1,4 @@
-# If you come from bash you might have to change your $PATH.
+	# If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -65,7 +65,7 @@ ZSH_THEME="spaceship"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
+#export PATH="/Users/$(whoami)/workspace/dotfiles/dots/bin:$PATH"
 
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
@@ -161,7 +161,7 @@ alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/pri
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
 alias zcal="cal_dir && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2.kdl"
 alias zmini="zellij --layout ~/workspace/dotfiles/app-configs/zellij/mac_mini.kdl"
-alias cc="opencode"
+alias cc="claude"
 
 export PATH="/opt/homebrew/bin:$PATH"
 
@@ -199,15 +199,28 @@ export PATH="/Users/eunjae/.antigravity/antigravity/bin:$PATH"
 # OpenCode Config - add bin directory to PATH
 export PATH="$HOME/.config/opencode/bin:$PATH"
 
+# ghostty
+export PATH="/Applications/Ghostty.app/Contents/MacOS:$PATH"
+
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
-alias tailscale_serve="tailscale serve --http=4096 http://127.0.0.1:4096"
+alias fcu="(cd ~/workspace/flowcat && git pull && bun install:mac) && open /Applications/flowcat.app"
 
-alias cb="clawdbot"
+psqldev() {
+  if [[ ! -f .env ]]; then
+    echo ".env not found"
+    return 1
+  fi
 
-# opencode
-export PATH=/Users/eunjae/.opencode/bin:$PATH
+  local DATABASE_URL
 
-# ghostty
-## Add to ~/.zshrc or ~/.bashrc
-export PATH="/Applications/Ghostty.app/Contents/MacOS:$PATH"
+  DATABASE_URL=$(grep -E '^DATABASE_URL=' .env | sed 's/^DATABASE_URL=//' | tr -d '"')
+
+  if [[ -z "$DATABASE_URL" ]]; then
+    echo "DATABASE_URL not found in .env"
+    return 1
+  fi
+
+  psql "$DATABASE_URL"
+}
+

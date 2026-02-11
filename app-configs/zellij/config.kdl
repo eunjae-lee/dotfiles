@@ -7,9 +7,12 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift Super Enter" {
             ToggleFocusFullscreen;
         }
+
+        unbind "Ctrl g"
+        bind "Super g" { SwitchToMode "Locked"; }
     }
     locked {
-        bind "Ctrl g" { SwitchToMode "normal"; }
+        bind "Super g" { SwitchToMode "normal"; }
     }
     pane {
         bind "left" { MoveFocus "left"; }

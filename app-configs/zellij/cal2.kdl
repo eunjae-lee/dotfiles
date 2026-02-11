@@ -11,10 +11,8 @@ layout {
     }
 
     // Tab 1: opencode - runs "opencode" command in ~/workspace/cal.com
-    tab name="opencode" cwd="~/workspace/cal.com" {
-        pane name="opencode" command="sh" {
-            args "-c" "opencode upgrade && opencode"
-        }
+    tab name="claude" cwd="~/workspace/cal.com" {
+        pane command="claude" start_suspended=true
     }
 
     // Tab 2: git + dev - runs "lazygit" and floating "yarn dev"
@@ -34,14 +32,12 @@ layout {
     // Tab 3: notes
     tab name="notes" cwd="~/workspace/notes" {
         pane split_direction="horizontal" {
-            pane command="lazygit"
+            pane command="claude"
             pane split_direction="vertical" {
-                pane name="opencode" command="sh" {
-                    args "-c" "opencode upgrade && opencode"
-                }
                 pane name="update" command="sh" start_suspended=true {
                     args "-c" "git pull && git add . && git commit -m update && git push"
                 }
+                pane command="lazygit"
             }
         }
     }

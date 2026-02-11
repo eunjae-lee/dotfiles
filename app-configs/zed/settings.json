@@ -128,7 +128,6 @@
       "provider": "ollama",
       "model": "gemma3:12b",
     },
-    "version": "2",
   },
   "theme": "Atelier Cave Dark",
   "buffer_font_size": 24,
