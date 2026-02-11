@@ -105,7 +105,9 @@ export default defineConfig([
 			"font-monaspace",
 			"font-fira-code",
 			// Quick Look plugins
-			"qlmarkdown",
+      "qlmarkdown",
+			// Claude Code
+			"claude-code",
 		],
 		mas: [
 			904280696, // Things 3
@@ -166,6 +168,21 @@ export default defineConfig([
 			{
 				src: "~/workspace/dotfiles/app-configs/mise.toml",
 				dest: "~/.config/mise/config.toml",
+				force: true,
+      },
+      {
+				src: "~/workspace/dotfiles/app-configs/claude/settings.json",
+				dest: "~/.claude/settings.json",
+				force: true,
+			},
+      {
+				src: "~/workspace/dotfiles/app-configs/claude/CLAUDE.md",
+				dest: "~/.claude/CLAUDE.md",
+				force: true,
+			},
+      {
+				src: "~/workspace/dotfiles/app-configs/claude/keybindings.json",
+				dest: "~/.claude/keybindings.json",
 				force: true,
 			},
 		],

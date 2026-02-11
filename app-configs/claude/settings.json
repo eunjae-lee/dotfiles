@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn type-check:ci:*)",
+      "Bash(grep:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh api:*)",
+      "Bash(ls:*)",
+      "Bash(yarn biome check:*)",
+      "Bash(gh pr diff:*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Hero.aiff"
+          }
+        ]
+      }
+    ]
+  }
+}
