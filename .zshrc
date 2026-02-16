@@ -153,13 +153,14 @@ alias ngrok_5173="ngrok http http://localhost:5173 --region=eu --hostname=eunjae
 alias ngrok_semrush="ngrok http --region=us --hostname=semrushtest2.ngrok.io 3000"
 alias ngrok_smartling="ngrok http --hostname=smartling2.ngrok.app 3000"
 
-alias cal_dir="cd ~/workspace/cal.com"
+alias cal_dir="cd ~/workspace/cal"
 alias c1="cal_dir && y && yd"
 alias c2="cal_dir && g"
 alias c3="cal_dir"
 alias cal_reset="y && yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
 alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
-alias zcal="cal_dir && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2.kdl"
+alias zcal_old="cd ~/workspace/cal.com && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2_old.kdl"
+alias zcal="cd ~/workspace/cal && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2_new.kdl"
 alias zmini="zellij --layout ~/workspace/dotfiles/app-configs/zellij/mac_mini.kdl"
 alias cc="claude"
 
@@ -225,5 +226,3 @@ psqldev() {
 }
 
 alias ccc="security unlock-keychain && claude"
-
-
