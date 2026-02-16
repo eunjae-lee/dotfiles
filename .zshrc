@@ -226,3 +226,5 @@ psqldev() {
 }
 
 alias ccc="security unlock-keychain && claude"
+
+export PATH="$HOME/.local/bin:$PATH"
