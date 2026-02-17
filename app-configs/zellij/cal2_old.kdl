@@ -1,0 +1,72 @@
+layout {
+    // Default template for all tabs - includes Zellij UI
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    // Tab 1: opencode - runs "opencode" command in ~/workspace/cal
+    tab name="claude" cwd="~/workspace/cal" {
+        pane command="claude" start_suspended=true
+    }
+
+    // Tab 2: git
+    tab name="git" cwd="~/workspace/cal" {
+        pane command="lazygit"
+    }
+
+    // Tab 3
+    tab name="runs" cwd="~/workspace/cal" {
+        pane split_direction="vertical" {
+            pane name="dev" command="sh" start_suspended=true {
+                args "-c" "yarn && yarn dev"
+            }
+            pane split_direction="horizontal" {
+                pane name="stripe:listen" command="sh" start_suspended=true {
+                    args "-c" "yarn workspace @calcom/prisma stripe:listen"
+                }
+                pane name="trigger.dev" command="sh" cwd="~/workspace/cal/packages/features" start_suspended=true {
+                    args "-c" "npx trigger.dev@latest dev --analyze"
+                }
+            }
+        }
+    }
+
+    // Tab 4: notes
+    tab name="notes" cwd="~/workspace/notes" {
+        pane split_direction="horizontal" {
+            pane command="claude"
+            pane split_direction="vertical" {
+                pane name="update" command="sh" start_suspended=true {
+                    args "-c" "git pull && git add . && git commit -m update && git push"
+                }
+                pane command="lazygit"
+            }
+        }
+    }
+
+    // Tab 5: commands - db reset + kill 3000
+    tab name="clean up" hide_floating_panes=true {
+        pane split_direction="vertical" {
+            pane name="db reset" command="sh" start_suspended=true {
+                args "-c" "yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
+            }
+            pane name="kill 3000" command="sh" start_suspended=true {
+                args "-c" "pids=$(lsof -ti tcp:3000); if [ -n \"$pids\" ]; then kill -9 $pids; fi"
+            }
+        }
+        floating_panes {
+            pane {
+                x "10%"
+                y "10%"
+                width "80%"
+                height "80%"
+            }
+        }
+    }
+}

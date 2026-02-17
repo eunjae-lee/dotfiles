@@ -25,7 +25,9 @@
       "Bash(curl:*)",
       "Bash(lsof:*)",
       "WebSearch",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(npx vitest:*)",
+      "Bash(TZ=UTC npx vitest:*)"
     ]
   },
   "hooks": {
