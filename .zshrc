@@ -228,3 +228,44 @@ psqldev() {
 alias ccc="security unlock-keychain && claude"
 
 export PATH="$HOME/.local/bin:$PATH"
+
+alias tc="tinyclaw"
+
+ztc() {
+  local sessions
+  sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
+
+  if echo "$sessions" | grep -q '^pi.*EXITED'; then
+    zellij delete-session pi
+    zellij -s pi -n ~/workspace/dotfiles/app-configs/zellij/pi.kdl
+  elif echo "$sessions" | grep -q '^pi'; then
+    zellij attach pi
+  else
+    zellij -s pi -n ~/workspace/dotfiles/app-configs/zellij/pi.kdl
+  fi
+}
+
+ztc2() {
+  local sessions
+  sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
+
+  if echo "$sessions" | grep -q '^ios.*EXITED'; then
+    zellij delete-session ios
+    zellij -s ios -n ~/workspace/dotfiles/app-configs/zellij/tinyclaw.kdl
+  elif echo "$sessions" | grep -q '^ios'; then
+    zellij attach ios
+  else
+    zellij -s ios -n ~/workspace/dotfiles/app-configs/zellij/tinyclaw.kdl
+  fi
+}
+
+ztc3() {
+  cd ~/workspace/tinyclaw
+  # -A: attach if exists, create if not
+  abduco -A ios-claude sh -c 'security unlock-keychain && claude'
+}
+
+ztc4() {
+  cd ~/workspace/tinyclaw
+  security unlock-keychain && claude --resume
+}

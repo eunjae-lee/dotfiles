@@ -1,0 +1,7 @@
+layout {
+    tab name="claude" cwd="~/workspace/tinyclaw" {
+        pane command="sh" {
+            args "-c" "security unlock-keychain && claude"
+        }
+    }
+}
