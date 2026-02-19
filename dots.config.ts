@@ -61,7 +61,8 @@ export default defineConfig([
 			"switchaudio-osx",
 			"ffmpeg",
 			"imagemagick",
-			"libheif",
+      "libheif",
+			"git-delta",
 		],
 		brewCask: [
 			// Editors & Dev tools
