@@ -25,3 +25,7 @@ customCommands:
         key: "PRNumber"
     command: "/Users/eunjae/workspace/dotfiles/bin/gpr {{.Form.PRNumber}}"
     loadingText: "Checking out PR..."
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
