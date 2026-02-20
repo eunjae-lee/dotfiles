@@ -38,7 +38,7 @@ layout {
     }
 
     // Tab 4: notes
-    tab name="notes" cwd="~/workspace/everything" {
+    tab name="notes" cwd="~/workspace/notes" {
         pane split_direction="horizontal" {
             pane command="claude"
             pane split_direction="vertical" {
