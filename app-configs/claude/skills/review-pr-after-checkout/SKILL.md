@@ -1,6 +1,7 @@
 ---
 name: review-pr-after-checkout
 description: Review pull requests and provide feedback
+context: fork
 ---
 
 Check out to the branch of this PR and review it: $ARGUMENTS

@@ -1,6 +1,7 @@
 ---
 name: review-pr
 description: Review pull requests and provide feedback
+context: fork
 ---
 
 Review a PR.
