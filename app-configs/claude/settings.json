@@ -1,6 +1,10 @@
 {
   "permissions": {
     "allow": [
+      "Read(//Users/eunjae/.glowcat-workspace/**)",
+      "Edit(//Users/eunjae/.glowcat-workspace/**)",
+      "Write(//Users/eunjae/.glowcat-workspace/**)",
+      "WebSearch",
       "Bash(npm:*)",
       "Bash(pnpm:*)",
       "Bash(yarn:*)",
@@ -24,10 +28,13 @@
       "Bash(docker:*)",
       "Bash(curl:*)",
       "Bash(lsof:*)",
-      "WebSearch",
       "Bash(open:*)",
       "Bash(npx vitest:*)",
-      "Bash(TZ=UTC npx vitest:*)"
+      "Bash(npx prisma:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr:*)"
     ]
   },
   "hooks": {
@@ -63,5 +70,8 @@
       }
     ]
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  }
 }

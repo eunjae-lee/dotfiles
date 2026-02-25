@@ -181,9 +181,14 @@ export default defineConfig([
 				dest: "~/.claude/CLAUDE.md",
 				force: true,
 			},
+			{
+       	src: "~/workspace/dotfiles/app-configs/claude/keybindings.json",
+       	dest: "~/.claude/keybindings.json",
+       	force: true,
+      },
       {
-				src: "~/workspace/dotfiles/app-configs/claude/keybindings.json",
-				dest: "~/.claude/keybindings.json",
+				src: "~/workspace/dotfiles/app-configs/claude/skills",
+				dest: "~/.claude/skills",
 				force: true,
 			},
 		],

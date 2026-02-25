@@ -28,4 +28,4 @@ customCommands:
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
+    pager: delta --dark --color-only --paging=never
