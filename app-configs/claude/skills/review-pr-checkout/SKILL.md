@@ -1,6 +1,6 @@
 ---
-name: review-pr-after-checkout
-description: Review pull requests and provide feedback
+name: review-pr-checkout
+description: Check out a PR branch locally and review it
 context: fork
 ---
 

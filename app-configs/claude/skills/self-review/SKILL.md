@@ -1,6 +1,6 @@
 ---
-name: pre-review
-description: Self pre-review a PR before requesting review from teammates
+name: self-review
+description: Self-review your own PR before requesting review from teammates
 ---
 
 Self pre-review a PR before requesting human review.
