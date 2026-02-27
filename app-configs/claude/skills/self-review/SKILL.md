@@ -23,6 +23,7 @@ If the given input includes a PR number or repo, use that. Otherwise, work with 
    - **PR hygiene**: Does the description match the changes? Is the PR focused on a single concern? Should large changes be split?
    - **Simplicity**: Over-engineering, unnecessary abstractions, cleverness over clarity, magic numbers
    - **Test coverage**: Are new code paths tested? Are tests meaningful?
+   - **Observability**: Server-side code should use `logger` (not `console.log`) for relevant info. Meaningful user-facing actions should be tracked with PostHog events.
 5. Output a concise report in markdown (no preamble):
 
 ```markdown
