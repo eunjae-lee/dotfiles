@@ -46,6 +46,16 @@ If the given input includes a PR number or repo, use that. Otherwise, work with 
 ## Verdict: <✅ Ready for Review / 🟡 Minor Issues / 🔴 Needs Work>
 
 <One sentence: what's the #1 thing to address>
+
+⏳ **Reminder**: Make sure CI passes before requesting review.
 ```
 
 Keep the report short. Skip empty sections. Don't repeat what the agents rules compliance section already covers.
+
+## Post-Report Actions
+
+After outputting the report, use `AskUserQuestion` to prompt next steps based on what was found:
+
+- **If PR description doesn't match the diff** (PR hygiene issue): Ask whether to update the PR description to reflect the actual changes.
+- **If there are "Must Fix" or "Should Fix" issues**: Ask whether to auto-fix the issues now or leave them for manual fixing.
+- **Always ask as a final step**: "Mark PR as ready for review?", "Fix issues first", or "Leave as draft?". Before offering "Mark PR as ready for review", run `gh pr checks` — if any checks are still pending or failing, do NOT offer that option and instead warn the user that CI must pass first.
