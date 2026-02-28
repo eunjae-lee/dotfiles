@@ -176,8 +176,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Docker
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 
-# mise-en-place
-eval "$(mise activate zsh)"
+# mise-en-place (now in .zprofile for login shell compatibility)
+# eval "$(mise activate zsh)"
 
 # pnpm
 export PNPM_HOME="/Users/eunjae/Library/pnpm"
@@ -245,27 +245,17 @@ ztc() {
   fi
 }
 
-ztc2() {
+zfc() {
   local sessions
   sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
 
-  if echo "$sessions" | grep -q '^ios.*EXITED'; then
-    zellij delete-session ios
-    zellij -s ios -n ~/workspace/dotfiles/app-configs/zellij/tinyclaw.kdl
-  elif echo "$sessions" | grep -q '^ios'; then
-    zellij attach ios
+  if echo "$sessions" | grep -q '^flowcat.*EXITED'; then
+    zellij delete-session flowcat
+    zellij -s flowcat -n ~/workspace/dotfiles/app-configs/zellij/flowcat.kdl
+  elif echo "$sessions" | grep -q '^flowcat'; then
+    zellij attach flowcat
   else
-    zellij -s ios -n ~/workspace/dotfiles/app-configs/zellij/tinyclaw.kdl
+    zellij -s flowcat -n ~/workspace/dotfiles/app-configs/zellij/flowcat.kdl
   fi
 }
 
-ztc3() {
-  cd ~/workspace/tinyclaw
-  # -A: attach if exists, create if not
-  abduco -A ios-claude sh -c 'security unlock-keychain && claude'
-}
-
-ztc4() {
-  cd ~/workspace/tinyclaw
-  security unlock-keychain && claude --resume
-}
