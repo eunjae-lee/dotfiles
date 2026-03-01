@@ -259,3 +259,5 @@ zfc() {
   fi
 }
 
+
+alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem/10.5.2/scripts/worker-service.cjs"'
