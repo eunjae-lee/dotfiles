@@ -96,8 +96,9 @@
       }
     ]
   },
-  "skipDangerousModePermissionPrompt": true,
   "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true
-  }
+    "swift-lsp@claude-plugins-official": true,
+    "claude-mem@thedotmack": true
+  },
+  "skipDangerousModePermissionPrompt": true
 }
