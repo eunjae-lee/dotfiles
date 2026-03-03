@@ -81,10 +81,20 @@ projects:
     tabs:
       - name: Claude
         command: |
+          CLAUDE_SESSION_ID=$GLOWCAT_INSTANCE_UUID
+          SESSION_EXISTS=$(ls ~/.claude/projects/*/${CLAUDE_SESSION_ID}.jsonl 2>/dev/null)
           if [ "$GLOWCAT_WORKFLOW_NAME" = "Review" ]; then
-            claude --resume $GLOWCAT_INSTANCE_UUID >/dev/null 2>&1 || (echo "/review-pr" | claude --session-id $GLOWCAT_INSTANCE_UUID)
+            if [ -n "$SESSION_EXISTS" ]; then
+              claude --resume $CLAUDE_SESSION_ID
+            else
+              echo "/review-pr" | claude --session-id $CLAUDE_SESSION_ID
+            fi
           else
-            claude --resume $GLOWCAT_INSTANCE_UUID >/dev/null 2>&1 || claude --session-id $GLOWCAT_INSTANCE_UUID
+            if [ -n "$SESSION_EXISTS" ]; then
+              claude --resume $CLAUDE_SESSION_ID
+            else
+              claude --session-id $CLAUDE_SESSION_ID
+            fi
           fi
       - name: Git
         command: "lazygit"

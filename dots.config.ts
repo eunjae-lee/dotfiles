@@ -62,7 +62,8 @@ export default defineConfig([
 			"ffmpeg",
 			"imagemagick",
       "libheif",
-			"git-delta",
+      "git-delta",
+			"glow"
 		],
 		brewCask: [
 			// Editors & Dev tools
