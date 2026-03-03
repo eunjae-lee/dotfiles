@@ -99,7 +99,8 @@
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true,
     "claude-mem@thedotmack": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "planning-with-files@planning-with-files": true
   },
   "skipDangerousModePermissionPrompt": true
 }

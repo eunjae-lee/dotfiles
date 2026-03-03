@@ -98,6 +98,9 @@ projects:
           fi
       - name: Git
         command: "lazygit"
+      - name: Dev Web
+        url: "http://app.cal.local:$GLOWCAT_PORT"
+        wait_for: "http://app.cal.local:$GLOWCAT_PORT"
       - name: Dev Server
         command: "yarn workspace @calcom/web dev -p $GLOWCAT_PORT"
         output_file: "/Users/eunjae/Downloads/dev-${GLOWCAT_PORT}.log"
