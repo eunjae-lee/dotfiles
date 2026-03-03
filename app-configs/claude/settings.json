@@ -69,7 +69,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Hero.aiff"
+            "command": "if [ -n \"$GLOWCAT_NOTIFY_FILE\" ]; then echo 'Task complete' > \"$GLOWCAT_NOTIFY_FILE\"; else afplay /System/Library/Sounds/Hero.aiff; fi"
           }
         ]
       }
@@ -80,7 +80,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Hero.aiff"
+            "command": "if [ -n \"$GLOWCAT_NOTIFY_FILE\" ]; then echo 'Input needed' > \"$GLOWCAT_NOTIFY_FILE\"; else afplay /System/Library/Sounds/Hero.aiff; fi"
           }
         ]
       }
@@ -90,7 +90,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Hero.aiff"
+            "command": "if [ -n \"$GLOWCAT_NOTIFY_FILE\" ]; then echo 'Notification' > \"$GLOWCAT_NOTIFY_FILE\"; else afplay /System/Library/Sounds/Hero.aiff; fi"
           }
         ]
       }

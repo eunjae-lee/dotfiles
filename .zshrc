@@ -261,3 +261,7 @@ zfc() {
 
 
 alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem/10.5.2/scripts/worker-service.cjs"'
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
