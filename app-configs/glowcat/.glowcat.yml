@@ -58,6 +58,7 @@ projects:
     urls:
       - label: Web
         url: http://app.cal.local:$GLOWCAT_PORT
+    worktree_pools: 3
     workflows:
       - name: Blank
       - name: Existing PR
@@ -100,7 +101,7 @@ projects:
         command: "lazygit"
       - name: Dev Web
         url: "http://app.cal.local:$GLOWCAT_PORT"
-        wait_for: "http://app.cal.local:$GLOWCAT_PORT"
+        wait_for: "http://app.cal.local:$GLOWCAT_PORT/event-types"
       - name: Dev Server
         command: "yarn workspace @calcom/web dev -p $GLOWCAT_PORT"
         output_file: "/Users/eunjae/Downloads/dev-${GLOWCAT_PORT}.log"
