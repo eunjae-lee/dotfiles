@@ -63,7 +63,8 @@
       "WebFetch(domain:ghostty.org)",
       "WebFetch(domain:deepwiki.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:api.github.com)"
+      "WebFetch(domain:api.github.com)",
+      "mcp__plugin_claude-mem_mcp-search__*"
     ]
   },
   "hooks": {

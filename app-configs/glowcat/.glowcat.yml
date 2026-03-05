@@ -83,7 +83,7 @@ projects:
       - name: Claude
         command: |
           CLAUDE_SESSION_ID=$GLOWCAT_INSTANCE_UUID
-          SESSION_EXISTS=$(ls ~/.claude/projects/*/${CLAUDE_SESSION_ID}.jsonl 2>/dev/null)
+          SESSION_EXISTS=$(setopt +o nomatch 2>/dev/null; ls ~/.claude/projects/*/${CLAUDE_SESSION_ID}.jsonl 2>/dev/null)
           if [ "$GLOWCAT_WORKFLOW_NAME" = "Review" ]; then
             if [ -n "$SESSION_EXISTS" ]; then
               claude --resume $CLAUDE_SESSION_ID
@@ -100,7 +100,7 @@ projects:
       - name: Git
         command: "lazygit"
       - name: Dev Web
-        url: "http://app.cal.local:$GLOWCAT_PORT"
+        url: "http://app.cal.local:$GLOWCAT_PORT/event-types"
         wait_for: "http://app.cal.local:$GLOWCAT_PORT/event-types"
       - name: Dev Server
         command: "yarn workspace @calcom/web dev -p $GLOWCAT_PORT"
@@ -117,96 +117,6 @@ projects:
           - name: Trigger.dev
             command: "(cd ./packages/features && npx trigger.dev@latest dev --analyze)"
             suspended: true
-      - name: Reset DB
-        command: "yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
-        suspended: true
-      - name: Playground
-  - id: cal.com
-    name: Cal.com (old)
-    path: /Users/eunjae/workspace/cal.com
-    worktree: true
-    setup: |
-      cp /Users/eunjae/workspace/cal.com/.env .env
-      SUFFIX_LEN="8"
-
-      random_hex() {
-        if command -v openssl >/dev/null 2>&1; then
-          # hex length = bytes*2
-          local bytes=$(( (SUFFIX_LEN + 1) / 2 ))
-          openssl rand -hex "$bytes" | cut -c1-"$SUFFIX_LEN"
-        else
-          # Fallback: /dev/urandom
-          tr -dc 'a-f0-9' </dev/urandom | head -c "$SUFFIX_LEN"
-        fi
-      }
-
-      DB_NAME="calendso_$(random_hex)"
-      createdb -h localhost -p 5432 -U postgres "$DB_NAME"
-      echo "Created database: $DB_NAME"
-
-      sed -i '' -E "s|^(DATABASE_URL=\"postgresql://[^/]+/)[^\"]+\"|\1${DB_NAME}\"|" .env
-
-      sed -i '' -E "s|^(DATABASE_DIRECT_URL=\"postgresql://[^/]+/)[^\"]+\"|\1${DB_NAME}\"|" .env
-
-      sed -i.bak "s/:3000/:${GLOWCAT_PORT}/g" .env
-
-      yarn install
-      yarn workspace @calcom/prisma db-deploy
-      yarn workspace @calcom/prisma db-migrate
-      yarn workspace @calcom/prisma db-seed
-    cleanup: |
-      DATABASE_URL="$(
-        awk -F= '
-          $1 == "DATABASE_URL" {
-            sub(/^"/, "", $2);
-            sub(/"$/, "", $2);
-            print $2;
-            exit
-          }
-        ' .env
-      )"
-
-      DB_NAME="${DATABASE_URL##*/}"
-
-      dropdb -U postgres -h localhost -p 5432 "$DB_NAME"
-      echo "Deleted database: $DB_NAME"
-    urls:
-      - label: Web
-        url: http://app.cal.local:$GLOWCAT_PORT
-    workflows:
-      - name: Blank
-      - name: Existing PR
-        branch_from: pr_url
-        inputs:
-          - name: pr_url
-            label: PR URL
-            required: true
-      - name: Review
-        branch_from: pr_url
-        inputs:
-          - name: pr_url
-            label: PR URL
-            required: true
-    tabs:
-      - name: Claude
-        command: |
-          if [ "$GLOWCAT_WORKFLOW_NAME" = "Review" ]; then
-            claude --resume $GLOWCAT_INSTANCE_UUID || (echo "/review-pr" | claude --session-id $GLOWCAT_INSTANCE_UUID)
-          else
-            claude --resume $GLOWCAT_INSTANCE_UUID || claude --session-id $GLOWCAT_INSTANCE_UUID
-          fi
-      - name: Git
-        command: "lazygit"
-      - name: Dev Server
-        command: "yarn workspace @calcom/web dev -p $GLOWCAT_PORT"
-        suspended: true
-        output_file: "/Users/eunjae/Downloads/dev-${GLOWCAT_PORT}.log"
-      - name: Stripe Webhook Listener
-        command: "yarn stripe listen --forward-to http://localhost:${GLOWCAT_PORT}/api/stripe/webhook"
-        suspended: true
-      - name: Trigger.dev
-        command: "(cd ./packages/features && npx trigger.dev@latest dev --analyze)"
-        suspended: true
       - name: Reset DB
         command: "yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
         suspended: true
