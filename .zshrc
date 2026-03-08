@@ -115,21 +115,46 @@ function gupstream() {
 alias prview="gh pr view --web"
 alias repoview="gh repo view --web"
 
-function y() {
-  if [[ -n $1 ]]; then
-    nr "$@"
+function _detect_pm() {
+  local dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    [[ -f "$dir/bun.lockb" || -f "$dir/bun.lock" ]] && echo "bun" && return
+    [[ -f "$dir/pnpm-lock.yaml" ]] && echo "pnpm" && return
+    [[ -f "$dir/yarn.lock" ]] && echo "yarn" && return
+    [[ -f "$dir/package-lock.json" ]] && echo "npm" && return
+    dir="$(dirname "$dir")"
+  done
+  echo "npm"
+}
+
+function _pm_install() {
+  $(_detect_pm) install "$@"
+}
+
+function _pm_run() {
+  local pm="$(_detect_pm)"
+  if [[ "$pm" == "npm" ]]; then
+    npm run "$@"
   else
-    ni
+    $pm run "$@"
   fi
 }
-alias yd="npm_install_if_branch_changed && nr dev"
-alias ya="ni"
-alias yt="nr test"
-alias ytw="nr test --watch"
-alias yl="nr lint"
-alias ytc="nr type-check"
-alias yb="nr build"
-alias ys="nr start"
+
+function y() {
+  if [[ -n $1 ]]; then
+    _pm_run "$@"
+  else
+    _pm_install
+  fi
+}
+alias yd="_pm_run dev"
+alias ya="_pm_install"
+alias yt="_pm_run test"
+alias ytw="_pm_run test --watch"
+alias yl="_pm_run lint"
+alias ytc="_pm_run type-check"
+alias yb="_pm_run build"
+alias ys="_pm_run start"
 alias yw="yarn workspace"
 
 alias amend="git commit --amend --no-edit"
@@ -164,6 +189,7 @@ alias zcal="cd ~/workspace/cal && zellij --layout ~/workspace/dotfiles/app-confi
 alias zmini="zellij --layout ~/workspace/dotfiles/app-configs/zellij/mac_mini.kdl"
 alias cc="claude"
 alias oc="openclaw"
+alias zl="zellij"
 
 export PATH="/opt/homebrew/bin:$PATH"
 

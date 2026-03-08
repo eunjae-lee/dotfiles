@@ -7,6 +7,9 @@
       "Read(//Users/eunjae/workspace/plans/**)",
       "Edit(//Users/eunjae/workspace/plans/**)",
       "Write(//Users/eunjae/workspace/plans/**)",
+      "Read(//Users/eunjae/workspace/tests/**)",
+      "Edit(//Users/eunjae/workspace/tests/**)",
+      "Write(//Users/eunjae/workspace/tests/**)",
       "WebSearch",
       "Bash(bun:*)",
       "Bash(cargo:*)",
@@ -60,7 +63,8 @@
       "WebFetch(domain:ghostty.org)",
       "WebFetch(domain:deepwiki.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:api.github.com)"
+      "WebFetch(domain:api.github.com)",
+      "mcp__plugin_claude-mem_mcp-search__*"
     ]
   },
   "hooks": {
@@ -100,7 +104,7 @@
     "swift-lsp@claude-plugins-official": true,
     "claude-mem@thedotmack": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
+    "planning-with-files@planning-with-files": true
   },
   "skipDangerousModePermissionPrompt": true
 }
