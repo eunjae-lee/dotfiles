@@ -163,6 +163,7 @@ alias zcal_old="cd ~/workspace/cal.com && zellij --layout ~/workspace/dotfiles/a
 alias zcal="cd ~/workspace/cal && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2_new.kdl"
 alias zmini="zellij --layout ~/workspace/dotfiles/app-configs/zellij/mac_mini.kdl"
 alias cc="claude"
+alias oc="openclaw"
 
 export PATH="/opt/homebrew/bin:$PATH"
 
@@ -259,9 +260,26 @@ zfc() {
   fi
 }
 
+znc() {
+  local sessions
+  sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
+
+  if echo "$sessions" | grep -q '^nanoclaw.*EXITED'; then
+    zellij delete-session nanoclaw
+    zellij -s nanoclaw -n ~/workspace/dotfiles/app-configs/zellij/nanoclaw.kdl
+  elif echo "$sessions" | grep -q '^nanoclaw'; then
+    zellij attach nanoclaw
+  else
+    zellij -s nanoclaw -n ~/workspace/dotfiles/app-configs/zellij/nanoclaw.kdl
+  fi
+}
+
 
 alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem/10.5.2/scripts/worker-service.cjs"'
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# OpenClaw Completion
+source "/Users/eunjae/.openclaw/completions/openclaw.zsh"
