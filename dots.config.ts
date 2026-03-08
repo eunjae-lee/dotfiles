@@ -173,22 +173,22 @@ export default defineConfig([
 				force: true,
       },
       {
-				src: "~/workspace/dotfiles/app-configs/claude/settings.json",
+				src: "~/workspace/claude-code-config/settings.json",
 				dest: "~/.claude/settings.json",
 				force: true,
 			},
       {
-				src: "~/workspace/dotfiles/app-configs/claude/CLAUDE.md",
+				src: "~/workspace/claude-code-config/CLAUDE.md",
 				dest: "~/.claude/CLAUDE.md",
 				force: true,
 			},
 			{
-       	src: "~/workspace/dotfiles/app-configs/claude/keybindings.json",
+       	src: "~/workspace/claude-code-config/keybindings.json",
        	dest: "~/.claude/keybindings.json",
        	force: true,
       },
       {
-				src: "~/workspace/dotfiles/app-configs/claude/skills",
+				src: "~/workspace/claude-code-config/skills",
 				dest: "~/.claude/skills",
 				force: true,
 			},

@@ -1,7 +1,7 @@
 layout {
     tab name="claude" cwd="~/workspace/everything" {
         pane command="sh" {
-            args "-c" "pi"
+            args "-c" "security unlock-keychain && claude"
         }
     }
 }

@@ -262,13 +262,13 @@ ztc() {
   local sessions
   sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
 
-  if echo "$sessions" | grep -q '^pi.*EXITED'; then
-    zellij delete-session pi
-    zellij -s pi -n ~/workspace/dotfiles/app-configs/zellij/pi.kdl
-  elif echo "$sessions" | grep -q '^pi'; then
-    zellij attach pi
+  if echo "$sessions" | grep -q '^everything.*EXITED'; then
+    zellij delete-session everything
+    zellij -s everything -n ~/workspace/dotfiles/app-configs/zellij/everything.kdl
+  elif echo "$sessions" | grep -q '^everything'; then
+    zellij attach everything
   else
-    zellij -s pi -n ~/workspace/dotfiles/app-configs/zellij/pi.kdl
+    zellij -s everything -n ~/workspace/dotfiles/app-configs/zellij/everything.kdl
   fi
 }
 
