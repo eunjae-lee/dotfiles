@@ -6,26 +6,13 @@ settings:
 
 projects:
   - id: cal
-    name: Cal (new)
+    name: Cal
     path: /Users/eunjae/workspace/cal
     worktree: true
-    #worktree_pools: 2
     setup: |
       cp /Users/eunjae/workspace/cal/.env .env
-      SUFFIX_LEN="8"
 
-      random_hex() {
-        if command -v openssl >/dev/null 2>&1; then
-          # hex length = bytes*2
-          local bytes=$(( (SUFFIX_LEN + 1) / 2 ))
-          openssl rand -hex "$bytes" | cut -c1-"$SUFFIX_LEN"
-        else
-          # Fallback: /dev/urandom
-          tr -dc 'a-f0-9' </dev/urandom | head -c "$SUFFIX_LEN"
-        fi
-      }
-
-      DB_NAME="calendso_$(random_hex)"
+      DB_NAME=$GLOWCAT_INSTANCE_ID
       createdb -h localhost -p 5432 -U postgres "$DB_NAME"
       echo "Created database: $DB_NAME"
 
@@ -40,18 +27,7 @@ projects:
       yarn workspace @calcom/prisma db-migrate
       yarn workspace @calcom/prisma db-seed
     cleanup: |
-      DATABASE_URL="$(
-        awk -F= '
-          $1 == "DATABASE_URL" {
-            sub(/^"/, "", $2);
-            sub(/"$/, "", $2);
-            print $2;
-            exit
-          }
-        ' .env
-      )"
-
-      DB_NAME="${DATABASE_URL##*/}"
+      DB_NAME=$GLOWCAT_INSTANCE_ID
 
       dropdb -U postgres -h localhost -p 5432 "$DB_NAME"
       echo "Deleted database: $DB_NAME"
@@ -108,15 +84,24 @@ projects:
       - name: psql
         command: 'source .env && psql "$DATABASE_URL"'
         suspended: true
-      - name: Extra
+      - name: Extra stuff
         split: horizontal
         panes:
-          - name: Stripe Webhook Listener
-            command: "/opt/homebrew/bin/stripe listen --forward-to http://localhost:${GLOWCAT_PORT}/api/stripe/webhook"
-            suspended: true
-          - name: Trigger.dev
-            command: "(cd ./packages/features && npx trigger.dev@latest dev --analyze)"
-            suspended: true
+          - split: vertical
+            panes:
+              - name: Stripe Webhook Listener
+                command: "/opt/homebrew/bin/stripe listen --forward-to http://localhost:${GLOWCAT_PORT}/api/stripe/webhook"
+                suspended: true
+              - name: Trigger.dev
+                command: "(cd ./packages/features && npx trigger.dev@latest dev --analyze)"
+                suspended: true
+          - split: vertical
+            panes:
+              - name: Email
+                command: yarn workspace @calcom/emails dx
+                suspended: true
+              - name: Empty
+                command:
       - name: Reset DB
         command: "yarn prisma migrate reset -f && yarn workspace @calcom/prisma seed-insights"
         suspended: true
