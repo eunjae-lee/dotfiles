@@ -63,7 +63,8 @@ export default defineConfig([
 			"imagemagick",
       "libheif",
       "git-delta",
-			"glow"
+      "glow",
+			"difftastic"
 		],
 		brewCask: [
 			// Editors & Dev tools
