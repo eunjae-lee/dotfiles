@@ -297,6 +297,20 @@ znc() {
   fi
 }
 
+zgc() {
+  local sessions
+  sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
+
+  if echo "$sessions" | grep -q '^glowcat.*EXITED'; then
+    zellij delete-session glowcat
+    zellij -s glowcat -n ~/workspace/dotfiles/app-configs/zellij/glowcat.kdl
+  elif echo "$sessions" | grep -q '^glowcat'; then
+    zellij attach glowcat
+  else
+    zellij -s glowcat -n ~/workspace/dotfiles/app-configs/zellij/glowcat.kdl
+  fi
+}
+
 
 alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem/10.5.2/scripts/worker-service.cjs"'
 
