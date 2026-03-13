@@ -232,6 +232,7 @@ export PATH="/Applications/Ghostty.app/Contents/MacOS:$PATH"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 alias fcu="(cd ~/workspace/flowcat && git pull && bun install:mac) && open /Applications/flowcat.app"
+alias gcu="(cd ~/workspace/flowcat && git pull && bun install:glowcat) && open /Applications/glowcat.app"
 
 psqldev() {
   if [[ ! -f .env ]]; then
@@ -327,6 +328,8 @@ zgc() {
 
 
 alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem/10.5.2/scripts/worker-service.cjs"'
+
+alias mini="ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
