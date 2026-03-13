@@ -283,6 +283,20 @@ zfc() {
   fi
 }
 
+zpc() {
+  local sessions
+  sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
+
+  if echo "$sessions" | grep -q '^pi_workspace.*EXITED'; then
+    zellij delete-session pi_workspace
+    zellij -s pi_workspace -n ~/workspace/dotfiles/app-configs/zellij/pi_workspace.kdl
+  elif echo "$sessions" | grep -q '^pi_workspace'; then
+    zellij attach pi_workspace
+  else
+    zellij -s pi_workspace -n ~/workspace/dotfiles/app-configs/zellij/pi_workspace.kdl
+  fi
+}
+
 znc() {
   local sessions
   sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
