@@ -192,12 +192,6 @@ alias zl="zellij"
 
 export PATH="/opt/homebrew/bin:$PATH"
 
-# bun completions
-[ -s "/Users/$(whoami)/.bun/_bun" ] && source "/Users/$(whoami)/.bun/_bun"
-
-# Bun
-export BUN_INSTALL="/Users/$(whoami)/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Docker
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
@@ -331,6 +325,3 @@ alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem
 
 alias mini="ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"

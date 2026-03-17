@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "npm:@tmustier/pi-tab-status",
+    "npm:@tmustier/pi-raw-paste",
+    "npm:pi-subagents"
+  ],
+  "lastChangelogVersion": "0.58.3"
+}
