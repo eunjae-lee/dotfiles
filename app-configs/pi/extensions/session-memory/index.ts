@@ -137,53 +137,94 @@ export default function (pi: ExtensionAPI) {
   log(`Loaded config: ${config.sources.length} sources, memoryPath=${config.memoryPath}`);
   ensureDirs(config.memoryPath);
 
-  // Register the summarize tool (called by scheduled prompts)
+  // Register the summarize tool (called by scheduled prompts or launchd wrapper)
   pi.registerTool({
     name: "session_memory_summarize",
     label: "Session Memory Summarize",
     description:
-      "Process new session data from a configured source and generate summaries. Called by scheduled jobs.",
+      "Process new session data from a configured source and generate summaries. Accepts either a sourceName (runs preprocessing internally) or a preprocessedFile (reads pre-processed JSON from disk).",
     parameters: {
       type: "object" as const,
       properties: {
         sourceName: {
           type: "string" as const,
-          description: "Name of the source to process (from config)",
+          description: "Name of the source to process (from config). Required if preprocessedFile is not provided.",
+        },
+        preprocessedFile: {
+          type: "string" as const,
+          description: "Path to a pre-processed JSON file (output of preprocess.mjs). If provided, skips internal preprocessing.",
         },
       },
-      required: ["sourceName"],
+      required: [],
     },
-    async execute(_toolCallId, params: { sourceName: string }, _signal, _onUpdate, ctx) {
-      const source = config.sources.find((s) => s.name === params.sourceName);
-      if (!source) {
-        return {
-          content: [{ type: "text" as const, text: `Unknown source: ${params.sourceName}` }],
-          details: {},
-        };
-      }
-
-      log(`Processing source: ${source.name} (path=${source.path}, weight=${source.weight})`);
-
-      if (!existsSync(source.path)) {
-        log(`Source path does not exist: ${source.path} — skipping`);
-        return {
-          content: [{ type: "text" as const, text: `Source path does not exist: ${source.path} — skipping.` }],
-          details: {},
-        };
-      }
-
-      // Run pre-processing script
+    async execute(_toolCallId, params: { sourceName?: string; preprocessedFile?: string }, _signal, _onUpdate, ctx) {
       let preprocessResult: any;
-      try {
-        const raw = execSync(
-          `node "${scriptPath}" "${source.path}" "${source.name}"`,
-          { encoding: "utf-8", timeout: 30_000 }
-        );
-        preprocessResult = JSON.parse(raw);
-      } catch (e: any) {
-        log(`Pre-processing failed: ${e.message}`);
+      let source: Source;
+
+      if (params.preprocessedFile) {
+        // Read pre-processed data from file
+        const filePath = expandHome(params.preprocessedFile);
+        if (!existsSync(filePath)) {
+          return {
+            content: [{ type: "text" as const, text: `Preprocessed file not found: ${filePath}` }],
+            details: {},
+          };
+        }
+        try {
+          preprocessResult = JSON.parse(readFileSync(filePath, "utf-8"));
+        } catch (e: any) {
+          return {
+            content: [{ type: "text" as const, text: `Failed to parse preprocessed file: ${e.message}` }],
+            details: {},
+          };
+        }
+        const sourceName = preprocessResult.sourceName;
+        const found = config.sources.find((s) => s.name === sourceName);
+        if (!found) {
+          return {
+            content: [{ type: "text" as const, text: `Unknown source in preprocessed data: ${sourceName}` }],
+            details: {},
+          };
+        }
+        source = found;
+        log(`Processing pre-processed data for source: ${source.name} (${preprocessResult.sessions.length} sessions)`);
+      } else if (params.sourceName) {
+        // Run preprocessing internally
+        const found = config.sources.find((s) => s.name === params.sourceName);
+        if (!found) {
+          return {
+            content: [{ type: "text" as const, text: `Unknown source: ${params.sourceName}` }],
+            details: {},
+          };
+        }
+        source = found;
+
+        log(`Processing source: ${source.name} (path=${source.path}, weight=${source.weight})`);
+
+        if (!existsSync(source.path)) {
+          log(`Source path does not exist: ${source.path} — skipping`);
+          return {
+            content: [{ type: "text" as const, text: `Source path does not exist: ${source.path} — skipping.` }],
+            details: {},
+          };
+        }
+
+        try {
+          const raw = execSync(
+            `node "${scriptPath}" "${source.path}" "${source.name}"`,
+            { encoding: "utf-8", timeout: 30_000 }
+          );
+          preprocessResult = JSON.parse(raw);
+        } catch (e: any) {
+          log(`Pre-processing failed: ${e.message}`);
+          return {
+            content: [{ type: "text" as const, text: `Pre-processing failed: ${e.message}` }],
+            details: {},
+          };
+        }
+      } else {
         return {
-          content: [{ type: "text" as const, text: `Pre-processing failed: ${e.message}` }],
+          content: [{ type: "text" as const, text: "Either sourceName or preprocessedFile is required." }],
           details: {},
         };
       }
