@@ -1,0 +1,25 @@
+{
+  "memoryPath": "~/workspace/notes/memory",
+  "model": "anthropic/claude-sonnet-4",
+  "shortTerm": {
+    "maxSummaries": 10,
+    "retentionDays": 14
+  },
+  "sources": [
+    {
+      "path": "~/.pi/agent/sessions",
+      "schedule": "0 0 2 * * *",
+      "weight": 0.3
+    },
+    {
+      "name": "bridge",
+      "path": "~/workspace/pi_workspace/.pi/bridge-sessions",
+      "schedule": "0 0 */4 * * *",
+      "weight": 0.7
+    }
+  ],
+  "promoter": {
+    "schedule": "0 0 0 * * 0"
+  },
+  "autoCommit": true
+}
