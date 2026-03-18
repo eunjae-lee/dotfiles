@@ -57,7 +57,7 @@ for entry in "${SOURCES[@]}"; do
 
   log "Found $session_count session(s) for $name — invoking pi"
 
-  pi -p "Call the session_memory_summarize tool with preprocessedFile \"$output_file\". For each session returned, read the summarization prompt carefully, write a summary (or respond SKIP if below the importance threshold), then call session_memory_save with the sessionId and your summary." --allowedTools "session_memory_summarize,session_memory_save,Read" 2>&1 | while read -r line; do
+  pi --tools none -p "Call the session_memory_summarize tool with preprocessedFile \"$output_file\". For each session returned, read the summarization prompt carefully, write a summary (or respond SKIP if below the importance threshold), then call session_memory_save with the sessionId and your summary." 2>&1 | while read -r line; do
     log "[pi:$name] $line"
   done
 
@@ -68,7 +68,7 @@ done
 # Run promoter on Sundays
 if [ "$(date +%u)" = "7" ] && [ "$(date +%H)" = "00" ]; then
   log "Sunday midnight — running promoter"
-  pi -p "Call the session_memory_promote tool. Read the returned prompt, generate updated long-term memory, then call session_memory_save_long_term with the result." --allowedTools "session_memory_promote,session_memory_save_long_term,Read" 2>&1 | while read -r line; do
+  pi --tools none -p "Call the session_memory_promote tool. Read the returned prompt, generate updated long-term memory, then call session_memory_save_long_term with the result." 2>&1 | while read -r line; do
     log "[pi:promoter] $line"
   done
   log "Done promoting"
