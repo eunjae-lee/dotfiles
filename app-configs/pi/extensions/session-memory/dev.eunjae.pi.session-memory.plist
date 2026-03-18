@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.eunjae.session-memory</string>
+    <string>dev.eunjae.pi.session-memory</string>
 
     <key>ProgramArguments</key>
     <array>
