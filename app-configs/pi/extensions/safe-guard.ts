@@ -37,12 +37,12 @@ export default function (pi: ExtensionAPI) {
         const patternKey = match.source;
         if (allowedDangerousPatterns.has(patternKey)) return;
 
-        const choice = await ctx.ui.select("⚠️ Dangerous Command", `Execute: ${cmd}?`, [
-          { value: "once", label: "Allow once" },
-          { value: "session", label: "Allow during this session" },
-          { value: "block", label: "Block" },
+        const choice = await ctx.ui.select(`⚠️ Dangerous Command\nExecute: ${cmd}?`, [
+          "Allow once",
+          "Allow during this session",
+          "Block",
         ]);
-        if (choice === "session") {
+        if (choice === "Allow during this session") {
           allowedDangerousPatterns.add(patternKey);
           return;
         }
