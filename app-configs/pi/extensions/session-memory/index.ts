@@ -435,8 +435,33 @@ export default function (pi: ExtensionAPI) {
       properties: {},
     },
     async execute() {
-      const shortTermPath = join(config.memoryPath, "short-term.md");
-      const longTermPath = join(config.memoryPath, "long-term.md");
+      // Promote all slugs: gather short-term from each, promote into each slug's long-term
+      // For now, promote each slug independently
+      let allPrompts = "";
+      const slugsToPromote: string[] = [];
+
+      for (const source of config.sources) {
+        const slugDir = join(config.memoryPath, source.slug);
+        const stPath = join(slugDir, "short-term.md");
+        if (existsSync(stPath) && readFileSync(stPath, "utf-8").trim()) {
+          slugsToPromote.push(source.slug);
+        }
+      }
+
+      if (slugsToPromote.length === 0) {
+        return {
+          content: [{ type: "text" as const, text: "No short-term memory to promote in any category." }],
+          details: {},
+        };
+      }
+
+      // Use first slug with content (TODO: iterate all slugs in separate turns)
+      const slug = slugsToPromote[0];
+      const slugDir = join(config.memoryPath, slug);
+      const shortTermPath = join(slugDir, "short-term.md");
+      const longTermPath = join(slugDir, "long-term.md");
+
+      pendingPromoteSlug = slug;
 
       const shortTerm = existsSync(shortTermPath)
         ? readFileSync(shortTermPath, "utf-8")
