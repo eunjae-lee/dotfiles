@@ -610,40 +610,39 @@ function saveSummary(config: Config, source: Source, session: any, summary: stri
 }
 
 function archiveOldShortTerm(config: Config) {
-  const shortTermPath = join(config.memoryPath, "short-term.md");
-  if (!existsSync(shortTermPath)) return;
+  // Archive old entries in each slug's memory directory
+  for (const source of config.sources) {
+    const slugDir = join(config.memoryPath, source.slug);
+    const shortTermPath = join(slugDir, "short-term.md");
+    if (!existsSync(shortTermPath)) continue;
 
-  const content = readFileSync(shortTermPath, "utf-8");
-  const sections = content.split(/\n---\n/).filter((s) => s.trim());
+    const content = readFileSync(shortTermPath, "utf-8");
+    const sections = content.split(/\n---\n/).filter((s) => s.trim());
 
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - config.shortTerm.retentionDays);
-  const cutoffStr = cutoff.toISOString().slice(0, 10);
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - config.shortTerm.retentionDays);
+    const cutoffStr = cutoff.toISOString().slice(0, 10);
 
-  const keep: string[] = [];
-  const archive: string[] = [];
+    const keep: string[] = [];
+    const archive: string[] = [];
 
-  for (const section of sections) {
-    // Try to extract date from section header
-    const dateMatch = section.match(/\((\d{4}-\d{2}-\d{2})\)/);
-    if (dateMatch && dateMatch[1] < cutoffStr) {
-      archive.push(section);
-    } else {
-      keep.push(section);
+    for (const section of sections) {
+      const dateMatch = section.match(/\((\d{4}-\d{2}-\d{2})\)/);
+      if (dateMatch && dateMatch[1] < cutoffStr) {
+        archive.push(section);
+      } else {
+        keep.push(section);
+      }
     }
-  }
 
-  if (archive.length > 0) {
-    // Save archived entries
-    const archivePath = join(
-      config.memoryPath,
-      "archive",
-      `archived_${cutoffStr}.md`
-    );
-    writeFileSync(archivePath, archive.join("\n---\n") + "\n");
+    if (archive.length > 0) {
+      const archiveDir = join(slugDir, "archive");
+      if (!existsSync(archiveDir)) mkdirSync(archiveDir, { recursive: true });
+      const archivePath = join(archiveDir, `archived_${cutoffStr}.md`);
+      writeFileSync(archivePath, archive.join("\n---\n") + "\n");
 
-    // Rewrite short-term with only kept entries
-    const header = "# Short-Term Memory\n\n";
-    writeFileSync(shortTermPath, header + keep.join("\n---\n") + "\n");
+      const header = "# Short-Term Memory\n\n";
+      writeFileSync(shortTermPath, header + keep.join("\n---\n") + "\n");
+    }
   }
 }
