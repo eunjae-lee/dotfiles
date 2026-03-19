@@ -133,12 +133,13 @@ function saveIndex(index: Record<string, { lastTimestamp: string }>) {
   writeFileSync(INDEX_PATH, JSON.stringify(index, null, 2) + "\n");
 }
 
-function ensureDirs(memoryPath: string) {
-  for (const dir of [
-    join(memoryPath, "archive"),
-    join(INDEX_DIR, "sessions"),
-  ]) {
-    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+function ensureDirs(config: Config) {
+  if (!existsSync(join(INDEX_DIR, "sessions"))) mkdirSync(join(INDEX_DIR, "sessions"), { recursive: true });
+  for (const source of config.sources) {
+    const slugDir = join(config.memoryPath, source.slug);
+    for (const sub of [slugDir, join(slugDir, "archive")]) {
+      if (!existsSync(sub)) mkdirSync(sub, { recursive: true });
+    }
   }
 }
 
