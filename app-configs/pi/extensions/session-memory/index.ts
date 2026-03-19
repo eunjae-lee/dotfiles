@@ -197,8 +197,8 @@ export default function (pi: ExtensionAPI) {
   const scriptPath = join(dirname(new URL(import.meta.url).pathname), "preprocess.mjs");
   const log = (msg: string) => console.error(`[session-memory] ${msg}`);
 
-  log(`Loaded config: ${config.sources.length} sources, memoryPath=${config.memoryPath}`);
-  ensureDirs(config.memoryPath);
+  log(`Loaded config: ${config.sources.length} sources (${config.sources.map(s => s.slug).join(", ")}), memoryPath=${config.memoryPath}`);
+  ensureDirs(config);
 
   // Register the summarize tool (called by scheduled prompts or launchd wrapper)
   pi.registerTool({
