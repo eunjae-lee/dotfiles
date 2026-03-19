@@ -10,9 +10,9 @@ layout {
         }
     }
 
-    // Tab 1: opencode - runs "opencode" command in ~/workspace/cal
-    tab name="claude" cwd="~/workspace/cal" {
-        pane command="claude" start_suspended=true
+    // Tab 1: pi
+    tab name="pi" cwd="~/workspace/cal" {
+        pane command="pi"
     }
 
     // Tab 2: git
