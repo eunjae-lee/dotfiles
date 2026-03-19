@@ -1,6 +1,6 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
+import { join, dirname, resolve } from "node:path";
 import { execSync } from "node:child_process";
 
 function expandHome(p: string): string {
@@ -9,8 +9,9 @@ function expandHome(p: string): string {
 
 interface Source {
   name: string;
+  slug: string;
   path: string;
-  schedule: string;
+  model: string;
   weight: number;
 }
 
@@ -23,28 +24,89 @@ interface Config {
   autoCommit: boolean;
 }
 
+/**
+ * Expand targetPaths globs (only supports trailing /*) and discover memory.json files.
+ */
+function discoverSources(targetPaths: string[], defaultModel: string): Source[] {
+  const sources: Source[] = [];
+  for (const pattern of targetPaths) {
+    const expanded = expandHome(pattern);
+    if (expanded.endsWith("/*")) {
+      // Glob: scan subdirectories
+      const parentDir = expanded.slice(0, -2);
+      if (!existsSync(parentDir)) continue;
+      for (const entry of readdirSync(parentDir, { withFileTypes: true })) {
+        if (!entry.isDirectory()) continue;
+        const memoryJsonPath = join(parentDir, entry.name, "memory.json");
+        const source = loadMemoryJson(memoryJsonPath, parentDir, entry.name, defaultModel);
+        if (source) sources.push(source);
+      }
+    } else {
+      // Exact path
+      const memoryJsonPath = join(expanded, "memory.json");
+      const dirName = expanded.split("/").filter(Boolean).pop() || "unknown";
+      const source = loadMemoryJson(memoryJsonPath, expanded, dirName, defaultModel);
+      if (source) sources.push(source);
+    }
+  }
+  return sources;
+}
+
+function loadMemoryJson(memoryJsonPath: string, baseDir: string, fallbackName: string, defaultModel: string): Source | null {
+  if (!existsSync(memoryJsonPath)) return null;
+  try {
+    const raw = JSON.parse(readFileSync(memoryJsonPath, "utf-8"));
+    const slug = raw.slug || fallbackName;
+    const sessionsPath = raw.sessionsPath
+      ? resolve(dirname(memoryJsonPath), expandHome(raw.sessionsPath))
+      : join(baseDir, "sessions");
+    return {
+      name: slug,
+      slug,
+      path: sessionsPath,
+      model: raw.model || defaultModel,
+      weight: raw.weight ?? 1.0,
+    };
+  } catch {
+    return null;
+  }
+}
+
 function loadConfig(): Config | null {
   const configPath = expandHome("~/.pi/agent/session-memory.json");
   if (!existsSync(configPath)) return null;
   try {
     const raw = JSON.parse(readFileSync(configPath, "utf-8"));
-    return {
-      memoryPath: expandHome(raw.memoryPath),
-      model: raw.model || "anthropic/claude-sonnet-4",
-      shortTerm: {
-        maxSummaries: raw.shortTerm?.maxSummaries ?? 10,
-        retentionDays: raw.shortTerm?.retentionDays ?? 14,
-      },
-      sources: (raw.sources || []).map((s: any) => {
+    const memoryPath = expandHome(raw.memoryPath);
+    const defaultModel = raw.model || "anthropic/claude-sonnet-4";
+
+    // New format: auto-discover from targetPaths
+    let sources: Source[];
+    if (raw.targetPaths) {
+      sources = discoverSources(raw.targetPaths, defaultModel);
+    } else {
+      // Legacy format: explicit sources array
+      sources = (raw.sources || []).map((s: any) => {
         const resolvedPath = expandHome(s.path);
         const inferredName = resolvedPath.split("/").filter(Boolean).pop() || "unknown";
         return {
           name: s.name || inferredName,
+          slug: s.name || inferredName,
           path: resolvedPath,
-          schedule: s.schedule,
+          model: defaultModel,
           weight: s.weight ?? 1.0,
         };
-      }),
+      });
+    }
+
+    return {
+      memoryPath,
+      model: defaultModel,
+      shortTerm: {
+        maxSummaries: raw.shortTerm?.maxSummaries ?? 10,
+        retentionDays: raw.shortTerm?.retentionDays ?? 14,
+      },
+      sources,
       promoter: { schedule: raw.promoter?.schedule || "0 0 0 * * 0" },
       autoCommit: raw.autoCommit ?? true,
     };
