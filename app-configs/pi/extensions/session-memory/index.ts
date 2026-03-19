@@ -366,6 +366,7 @@ export default function (pi: ExtensionAPI) {
 
   // Pending sessions awaiting LLM summarization
   const pendingSessions = new Map<string, { session: any; source: Source }>();
+  let pendingPromoteSlug: string | null = null;
 
   // Tool for the LLM to save a summary after processing
   pi.registerTool({
