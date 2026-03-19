@@ -596,8 +596,10 @@ function saveSummary(config: Config, source: Source, session: any, summary: stri
     writeFileSync(filepath, content);
   }
 
-  // Also append to short-term.md
-  const shortTermPath = join(config.memoryPath, "short-term.md");
+  // Append to slug-specific short-term.md
+  const slugMemoryDir = join(config.memoryPath, source.slug);
+  if (!existsSync(slugMemoryDir)) mkdirSync(slugMemoryDir, { recursive: true });
+  const shortTermPath = join(slugMemoryDir, "short-term.md");
   const shortTermEntry = `### ${source.name} / ${idPrefix} (${date})\n\n${summary}\n\n---\n`;
   if (existsSync(shortTermPath)) {
     const existing = readFileSync(shortTermPath, "utf-8");
