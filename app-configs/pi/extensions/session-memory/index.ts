@@ -519,19 +519,23 @@ export default function (pi: ExtensionAPI) {
       required: ["content"],
     },
     async execute(_toolCallId, params: { content: string }) {
-      const longTermPath = join(config.memoryPath, "long-term.md");
+      const slug = pendingPromoteSlug || "main";
+      const slugDir = join(config.memoryPath, slug);
+      if (!existsSync(slugDir)) mkdirSync(slugDir, { recursive: true });
+      const longTermPath = join(slugDir, "long-term.md");
       writeFileSync(longTermPath, params.content + "\n");
-      log("Updated long-term memory");
+      log(`Updated long-term memory for ${slug}`);
+      pendingPromoteSlug = null;
 
       // Archive old short-term entries
       archiveOldShortTerm(config);
 
       if (config.autoCommit) {
-        gitCommitAndPush(config.memoryPath, "session-memory: promote to long-term");
+        gitCommitAndPush(config.memoryPath, `session-memory: promote ${slug} to long-term`);
       }
 
       return {
-        content: [{ type: "text" as const, text: "Long-term memory updated." }],
+        content: [{ type: "text" as const, text: `Long-term memory updated for ${slug}.` }],
         details: {},
       };
     },
