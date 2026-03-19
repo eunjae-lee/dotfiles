@@ -37,20 +37,7 @@ layout {
         }
     }
 
-    // Tab 4: notes
-    tab name="notes" cwd="~/workspace/notes" {
-        pane split_direction="horizontal" {
-            pane command="claude"
-            pane split_direction="vertical" {
-                pane name="update" command="sh" start_suspended=true {
-                    args "-c" "git pull && git add . && git commit -m update && git push"
-                }
-                pane command="lazygit"
-            }
-        }
-    }
-
-    // Tab 5: commands - db reset + kill 3000
+    // Tab 4: commands - db reset + kill 3000
     tab name="clean up" hide_floating_panes=true {
         pane split_direction="vertical" {
             pane name="db reset" command="sh" start_suspended=true {
