@@ -543,17 +543,25 @@ export default function (pi: ExtensionAPI) {
   });
 
   // Inject short-term memory into sessions
+  // In multi-bot mode, inject the bot's own memory. On host, inject main + host.
   pi.on("before_agent_start", async (event) => {
-    const shortTermPath = join(config.memoryPath, "short-term.md");
-    if (!existsSync(shortTermPath)) return;
+    const botSlug = process.env.PI_BOT_SLUG;
+    const slugsToInject = botSlug ? [botSlug] : ["main", "host"];
 
-    const shortTerm = readFileSync(shortTermPath, "utf-8").trim();
-    if (!shortTerm) return;
+    const allSections: string[] = [];
+    for (const slug of slugsToInject) {
+      const shortTermPath = join(config.memoryPath, slug, "short-term.md");
+      if (!existsSync(shortTermPath)) continue;
+      const content = readFileSync(shortTermPath, "utf-8").trim();
+      if (!content) continue;
+      const sections = content.split(/\n---\n/).filter((s) => s.trim());
+      allSections.push(...sections);
+    }
 
-    // Trim to maxSummaries (take last N sections separated by ---)
-    const sections = shortTerm.split(/\n---\n/).filter((s) => s.trim());
+    if (allSections.length === 0) return;
+
     const maxSections = config.shortTerm.maxSummaries;
-    const trimmed = sections.slice(-maxSections).join("\n---\n");
+    const trimmed = allSections.slice(-maxSections).join("\n---\n");
 
     return {
       systemPrompt:
