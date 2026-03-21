@@ -274,7 +274,7 @@ for (const target of targets) {
   const sessionFiles = findSessionFiles(target.sessionsPath);
   console.log(`  Found ${sessionFiles.length} session files`);
 
-  const apiKey = getApiKey(target.model.split("/")[0]);
+  const apiKey = await getApiKey(target.model.split("/")[0]);
   if (!apiKey) {
     console.error(`  No API key for ${target.model.split("/")[0]} — skipping`);
     continue;
@@ -383,7 +383,7 @@ if (config.autoCommit && totalProcessed > 0 && !dryRun) {
 async function runPromoter(config) {
   console.log("Running memory promoter...");
 
-  const apiKey = getApiKey("anthropic");
+  const apiKey = await getApiKey("anthropic");
   if (!apiKey) {
     console.error("No API key for promoter");
     return;
