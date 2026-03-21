@@ -146,21 +146,39 @@ function findSessionFiles(sessionsPath) {
 
 // ── API Key ───────────────────────────────────────────────
 
-function getApiKey(provider) {
+async function getApiKey(provider) {
   // Check env var first
   const envKey = `${provider.toUpperCase()}_API_KEY`;
   if (process.env[envKey]) return process.env[envKey];
 
-  // Try auth.json (OAuth tokens)
+  // Try auth.json with OAuth refresh
   const authPath = join(homedir(), ".pi/agent/auth.json");
-  if (existsSync(authPath)) {
+  if (existsSync(authPath) && getOAuthApiKey) {
     try {
       const auth = JSON.parse(readFileSync(authPath, "utf-8"));
+
       // Direct API key
       if (auth[provider]?.apiKey) return auth[provider].apiKey;
-      // OAuth access token (used by pi's Claude Code OAuth)
+
+      // OAuth — use pi-ai's refresh logic
+      if (auth[provider]?.type === "oauth") {
+        const result = await getOAuthApiKey(provider, auth);
+        if (result) {
+          // Save refreshed credentials back to auth.json
+          if (result.newCredentials) {
+            const updated = { ...auth, [provider]: { type: "oauth", ...result.newCredentials } };
+            writeFileSync(authPath, JSON.stringify(updated, null, 2));
+            console.log(`  Refreshed OAuth token for ${provider}`);
+          }
+          return result.apiKey;
+        }
+      }
+
+      // Fallback: raw access token
       if (auth[provider]?.access) return auth[provider].access;
-    } catch {}
+    } catch (err) {
+      console.error(`  Auth error for ${provider}: ${err.message}`);
+    }
   }
 
   return null;
