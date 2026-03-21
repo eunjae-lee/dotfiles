@@ -35,13 +35,16 @@ function findPiAi() {
 }
 
 const PI_AI_MODELS_PATH = PI_AI_PATH?.replace("stream.js", "models.js");
-let completeSimple, getModel;
+const PI_AI_OAUTH_PATH = PI_AI_PATH?.replace("stream.js", "oauth.js");
+let completeSimple, getModel, getOAuthApiKey;
 
 if (PI_AI_PATH) {
   const stream = await import(PI_AI_PATH);
   const models = await import(PI_AI_MODELS_PATH);
+  const oauth = await import(PI_AI_OAUTH_PATH);
   completeSimple = stream.completeSimple;
   getModel = models.getModel;
+  getOAuthApiKey = oauth.getOAuthApiKey;
 }
 
 // ── Config ────────────────────────────────────────────────
