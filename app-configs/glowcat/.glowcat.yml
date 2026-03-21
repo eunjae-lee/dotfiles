@@ -56,23 +56,36 @@ projects:
           yarn install
           yarn prisma migrate dev
     tabs:
-      - name: Claude
+      - name: Pi
         command: |
-          CLAUDE_SESSION_ID=$GLOWCAT_INSTANCE_UUID
-          SESSION_EXISTS=$(setopt +o nomatch 2>/dev/null; ls ~/.claude/projects/*/${CLAUDE_SESSION_ID}.jsonl 2>/dev/null)
-          if [ "$GLOWCAT_WORKFLOW_NAME" = "Review" ]; then
-            if [ -n "$SESSION_EXISTS" ]; then
-              claude --resume $CLAUDE_SESSION_ID
-            else
-              echo "/review-pr" | claude --session-id $CLAUDE_SESSION_ID
-            fi
+          SESSION_DIR="$HOME/.pi/agent/sessions/--$(pwd | sed 's|^/||; s|[/\\:]|-|g')--"
+
+          if [ -d "$SESSION_DIR" ] && [ -n "$(ls -A "$SESSION_DIR" 2>/dev/null)" ]; then
+            pi --continue
           else
-            if [ -n "$SESSION_EXISTS" ]; then
-              claude --resume $CLAUDE_SESSION_ID
+            if [ "$GLOWCAT_WORKFLOW_NAME" = "Review" ]; then
+              pi "/review-pr"
             else
-              claude --session-id $CLAUDE_SESSION_ID
+              pi
             fi
           fi
+      # - name: Claude
+      #   command: |
+      #     CLAUDE_SESSION_ID=$GLOWCAT_INSTANCE_UUID
+      #     SESSION_EXISTS=$(setopt +o nomatch 2>/dev/null; ls ~/.claude/projects/*/${CLAUDE_SESSION_ID}.jsonl 2>/dev/null)
+      #     if [ "$GLOWCAT_WORKFLOW_NAME" = "Review" ]; then
+      #       if [ -n "$SESSION_EXISTS" ]; then
+      #         claude --resume $CLAUDE_SESSION_ID
+      #       else
+      #         echo "/review-pr" | claude --session-id $CLAUDE_SESSION_ID
+      #       fi
+      #     else
+      #       if [ -n "$SESSION_EXISTS" ]; then
+      #         claude --resume $CLAUDE_SESSION_ID
+      #       else
+      #         claude --session-id $CLAUDE_SESSION_ID
+      #       fi
+      #     fi
       - name: Git
         command: "lazygit"
       - name: Dev Web
