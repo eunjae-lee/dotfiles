@@ -153,15 +153,10 @@ function getApiKey(provider) {
   if (existsSync(authPath)) {
     try {
       const auth = JSON.parse(readFileSync(authPath, "utf-8"));
-      // auth.json format varies — try common patterns
-      if (auth.anthropic?.apiKey) return auth.anthropic.apiKey;
-      if (auth.apiKey) return auth.apiKey;
-      // OAuth token format
-      for (const [key, val] of Object.entries(auth)) {
-        if (key.includes(provider) && typeof val === "object" && val.token) {
-          return val.token;
-        }
-      }
+      // Direct API key
+      if (auth[provider]?.apiKey) return auth[provider].apiKey;
+      // OAuth access token (used by pi's Claude Code OAuth)
+      if (auth[provider]?.access) return auth[provider].access;
     } catch {}
   }
 
