@@ -9,6 +9,7 @@ export type SoundName = keyof typeof SOUNDS;
 
 export function createSoundPlayer(pi: ExtensionAPI) {
   return async function playSound(name: SoundName) {
+    process.stderr.write("\x07"); // terminal bell
     try {
       await pi.exec("afplay", [SOUNDS[name]], { timeout: 5000 });
     } catch {
