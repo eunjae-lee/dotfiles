@@ -37,6 +37,7 @@ export default function (pi: ExtensionAPI) {
         const patternKey = match.source;
         if (allowedDangerousPatterns.has(patternKey)) return;
 
+        process.stderr.write("\x07"); // terminal bell
         const choice = await ctx.ui.select(`⚠️ Dangerous Command\nExecute: ${cmd}?`, [
           "Allow once",
           "Allow during this session",
@@ -60,6 +61,7 @@ export default function (pi: ExtensionAPI) {
         if (ctx.hasUI) {
           if (allowedProtectedPaths.has(hit)) return;
 
+          process.stderr.write("\x07"); // terminal bell
           const choice = await ctx.ui.select(`🛡️ Protected Path\nAllow write to ${path}?`, [
             "Allow once",
             "Allow during this session",
