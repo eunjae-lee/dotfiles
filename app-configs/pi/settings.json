@@ -3,7 +3,8 @@
     "npm:@tmustier/pi-tab-status",
     "npm:@tmustier/pi-raw-paste",
     "npm:pi-subagents",
-    "npm:pi-schedule-prompt"
+    "npm:pi-schedule-prompt",
+    "npm:shitty-clipboard-extension"
   ],
   "lastChangelogVersion": "0.59.0"
 }
