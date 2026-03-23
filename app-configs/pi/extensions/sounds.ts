@@ -17,3 +17,11 @@ export function createSoundPlayer(pi: ExtensionAPI) {
     }
   };
 }
+
+export default function (pi: ExtensionAPI) {
+  const playSound = createSoundPlayer(pi);
+
+  pi.on("agent_end", async () => {
+    await playSound("complete");
+  });
+}
