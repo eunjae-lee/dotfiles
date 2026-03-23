@@ -11,8 +11,6 @@ layout {
     }
 
     tab name="pi" cwd="~/workspace/glowcat-cli" {
-        pane command="sh" {
-            args "-c" "security unlock-keychain && run pi"
-        }
+        pane command="pi"
     }
 }
