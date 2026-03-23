@@ -1,9 +1,10 @@
 /**
  * oh-pi Safe Guard Extension
- * 
+ *
  * Combines destructive command confirmation + protected paths in one extension.
  */
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import { createSoundPlayer } from "./sounds.ts";
 
 export const DANGEROUS_PATTERNS = [
   /\brm\s+(-[a-zA-Z]*f[a-zA-Z]*\s+|.*-rf\b|.*--force\b)/,
@@ -18,6 +19,8 @@ export const DANGEROUS_PATTERNS = [
 export const PROTECTED_PATHS = [".env", ".git/", "node_modules/", ".pi/", "id_rsa", ".ssh/"];
 
 export default function (pi: ExtensionAPI) {
+  const playSound = createSoundPlayer(pi);
+
   // Session-wide allowances
   const allowedDangerousPatterns = new Set<string>();
   const allowedProtectedPaths = new Set<string>();
@@ -37,7 +40,7 @@ export default function (pi: ExtensionAPI) {
         const patternKey = match.source;
         if (allowedDangerousPatterns.has(patternKey)) return;
 
-        process.stderr.write("\x07"); // terminal bell
+        playSound("alert"); // don't await — let it play while the prompt shows
         const choice = await ctx.ui.select(`⚠️ Dangerous Command\nExecute: ${cmd}?`, [
           "Allow once",
           "Allow during this session",
@@ -61,7 +64,7 @@ export default function (pi: ExtensionAPI) {
         if (ctx.hasUI) {
           if (allowedProtectedPaths.has(hit)) return;
 
-          process.stderr.write("\x07"); // terminal bell
+          playSound("alert"); // don't await — let it play while the prompt shows
           const choice = await ctx.ui.select(`🛡️ Protected Path\nAllow write to ${path}?`, [
             "Allow once",
             "Allow during this session",
