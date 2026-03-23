@@ -10,9 +10,9 @@ layout {
         }
     }
 
-    tab name="claude" cwd="~/workspace/glowcat-cli" {
+    tab name="pi" cwd="~/workspace/glowcat-cli" {
         pane command="sh" {
-            args "-c" "security unlock-keychain && claude --dangerously-skip-permissions"
+            args "-c" "security unlock-keychain && run pi"
         }
     }
 }
