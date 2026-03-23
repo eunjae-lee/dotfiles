@@ -34,7 +34,7 @@ projects:
     urls:
       - label: Web
         url: http://app.cal.dev:$GLOWCAT_PORT
-    worktree_pools: 3
+    #worktree_pools: 3
     workflows:
       - name: Blank
       - name: Existing PR
