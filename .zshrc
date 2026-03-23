@@ -325,3 +325,4 @@ alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem
 
 alias mini="ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net"
 
+alias gc="glowcat"
