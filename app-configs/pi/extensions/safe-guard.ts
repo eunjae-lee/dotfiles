@@ -4,7 +4,7 @@
  * Combines destructive command confirmation + protected paths in one extension.
  */
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
-import { createSoundPlayer } from "./sounds.ts";
+import { createSoundPlayer } from "../lib/sounds.ts";
 
 export const DANGEROUS_PATTERNS = [
   /\brm\s+(-[a-zA-Z]*f[a-zA-Z]*\s+|.*-rf\b|.*--force\b)/,

@@ -1,5 +1,5 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
-import { createSoundPlayer } from "./sounds.ts";
+import { createSoundPlayer } from "../lib/sounds.ts";
 
 export default function (pi: ExtensionAPI) {
   const playSound = createSoundPlayer(pi);
