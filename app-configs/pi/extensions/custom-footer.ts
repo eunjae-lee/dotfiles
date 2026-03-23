@@ -13,7 +13,8 @@ import { truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
 export default function (pi: ExtensionAPI) {
 	function fmt(n: number): string {
 		if (n < 1000) return `${n}`;
-		return `${(n / 1000).toFixed(1)}k`;
+		if (n < 1_000_000) return `${(n / 1000).toFixed(1)}k`;
+		return `${(n / 1_000_000).toFixed(1)}M`;
 	}
 
 	pi.on("session_start", async (_event, ctx) => {
