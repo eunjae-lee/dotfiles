@@ -56,10 +56,8 @@ export default function (pi: ExtensionAPI) {
 
 					const pctColor = pct > 75 ? "error" : pct > 50 ? "warning" : "success";
 
-					const tokenStats = [
-						theme.fg("accent", `${fmt(input)}/${fmt(output)}`),
-						theme.fg(pctColor, `${pct.toFixed(0)}%`),
-					].join(" ");
+					const window = usage?.contextWindow ?? 0;
+					const tokenStats = theme.fg(pctColor, `${pct.toFixed(0)}%`) + theme.fg("dim", ` of ${fmt(window)}`);
 
 						const parts = process.cwd().split("/");
 					const short = parts.length > 2 ? parts.slice(-2).join("/") : process.cwd();
