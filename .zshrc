@@ -310,10 +310,10 @@ zgc() {
   local sessions
   sessions=$(zellij list-sessions 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')
 
-  if echo "$sessions" | grep -q '^glowcat.*EXITED'; then
+  if echo "$sessions" | grep -q '^glowcat .*EXITED'; then
     zellij delete-session glowcat
     zellij -s glowcat -n ~/workspace/dotfiles/app-configs/zellij/glowcat.kdl
-  elif echo "$sessions" | grep -q '^glowcat'; then
+  elif echo "$sessions" | grep -q '^glowcat '; then
     zellij attach glowcat
   else
     zellij -s glowcat -n ~/workspace/dotfiles/app-configs/zellij/glowcat.kdl
