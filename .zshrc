@@ -226,7 +226,7 @@ export PATH="/Applications/Ghostty.app/Contents/MacOS:$PATH"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 alias fcu="(cd ~/workspace/flowcat && git pull && bun install:mac) && open /Applications/flowcat.app"
-alias gcu="(cd ~/workspace/flowcat && git pull && bun install:glowcat) && open /Applications/glowcat.app"
+alias gcu="cd ~/workspace/glowcat-cli && git pull && bun run install-global"
 
 psqldev() {
   if [[ ! -f .env ]]; then
