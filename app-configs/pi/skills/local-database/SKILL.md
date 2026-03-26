@@ -9,16 +9,16 @@ Run SQL queries against a local PostgreSQL database whose connection string live
 
 ## Connecting and running queries
 
-**Never read or cat the `.env` file directly.** The DATABASE_URL may contain secrets. Instead, always source it inline and pass it to `psql` in a single bash command:
+**Never read or cat the `.env` file directly.** The DATABASE_URL may contain secrets. Instead, extract only `DATABASE_URL` from `.env` and pass it to `psql` in a single bash command:
 
 ```bash
-bash -c 'set -a; source .env; set +a; psql "$DATABASE_URL" -c "YOUR SQL HERE"'
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" -c "YOUR SQL HERE"'
 ```
 
 For multi-line or complex queries, use a heredoc:
 
 ```bash
-bash -c 'set -a; source .env; set +a; psql "$DATABASE_URL" <<SQL
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" <<SQL
 SELECT * FROM users LIMIT 10;
 SQL'
 ```
@@ -26,12 +26,14 @@ SQL'
 For interactive-style expanded output, add `-x`:
 
 ```bash
-bash -c 'set -a; source .env; set +a; psql "$DATABASE_URL" -x -c "SELECT * FROM users LIMIT 1"'
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" -x -c "SELECT * FROM users LIMIT 1"'
 ```
 
-## Why source instead of reading
+## Why this approach
 
-Sourcing keeps the credentials out of the conversation context. Reading the file would expose the full connection string (host, password, etc.) in plain text inside the chat history. By sourcing, the secret stays inside the shell process and is never echoed back.
+- **Only DATABASE_URL is extracted** — sourcing the entire `.env` (`set -a; source .env`) can export other PG-related env vars (like `PGSSLMODE=""`) that interfere with psql.
+- **The value is never echoed** — the secret stays inside the shell process and doesn't leak into conversation context.
+- **Quotes are stripped** — handles both `DATABASE_URL=postgres://...` and `DATABASE_URL="postgres://..."` formats.
 
 ## Common tasks
 
