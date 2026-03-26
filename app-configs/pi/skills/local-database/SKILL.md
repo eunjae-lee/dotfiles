@@ -41,11 +41,23 @@ bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/
 
 ## Common tasks
 
-- **List tables**: `\dt`
-- **Describe a table**: `\d table_name`
-- **Check row counts**: `SELECT relname, n_live_tup FROM pg_stat_user_tables ORDER BY n_live_tup DESC;`
+List tables:
 
-All of these go through the same pattern — pass them as the command string to `psql` via the sourcing one-liner above.
+```bash
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" -c "\dt"'
+```
+
+Describe a table:
+
+```bash
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" -c "\d table_name"'
+```
+
+Check row counts:
+
+```bash
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" -c "SELECT relname, n_live_tup FROM pg_stat_user_tables ORDER BY n_live_tup DESC;"'
+```
 
 ## Troubleshooting
 
