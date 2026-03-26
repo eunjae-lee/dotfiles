@@ -50,7 +50,7 @@ export default function (pi: ExtensionAPI) {
           allowedDangerousPatterns.add(patternKey);
           return;
         }
-        if (choice === "Block" || choice === undefined) {
+        if (choice === "• Block" || choice === undefined) {
           return { block: true, reason: "Blocked by user" };
         }
       }
@@ -66,15 +66,15 @@ export default function (pi: ExtensionAPI) {
 
           playSound("alert"); // don't await — let it play while the prompt shows
           const choice = await ctx.ui.select(`🛡️ Protected Path\nAllow write to ${path}?`, [
-            "Allow once",
-            `Allow all "${hit}" paths this session`,
-            "Block",
+            "• Allow once",
+            `• Allow all "${hit}" paths this session`,
+            "• Block",
           ]);
-          if (choice === `Allow all "${hit}" paths this session`) {
+          if (choice === `• Allow all "${hit}" paths this session`) {
             allowedProtectedPaths.add(hit);
             return;
           }
-          if (choice === "Block" || choice === undefined) {
+          if (choice === "• Block" || choice === undefined) {
             return { block: true, reason: `Protected path: ${hit}` };
           }
         } else {
