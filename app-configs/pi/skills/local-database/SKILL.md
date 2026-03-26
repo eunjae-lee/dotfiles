@@ -35,6 +35,10 @@ bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/
 - **The value is never echoed** — the secret stays inside the shell process and doesn't leak into conversation context.
 - **Quotes are stripped** — handles both `DATABASE_URL=postgres://...` and `DATABASE_URL="postgres://..."` formats.
 
+## Important: no interactive mode
+
+**Never run `psql` without `-c` or a heredoc.** A bare `psql "$DATABASE_URL"` opens an interactive session that will hang indefinitely since there is no TTY. Always pass a query via `-c "..."` or a `<<SQL` heredoc.
+
 ## Common tasks
 
 - **List tables**: `\dt`
