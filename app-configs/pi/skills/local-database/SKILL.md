@@ -12,21 +12,21 @@ Run SQL queries against a local PostgreSQL database whose connection string live
 **Never read or cat the `.env` file directly.** The DATABASE_URL may contain secrets. Instead, extract only `DATABASE_URL` from `.env` and pass it to `psql` in a single bash command:
 
 ```bash
-bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" -c "YOUR SQL HERE"'
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); PAGER= psql "$DATABASE_URL" -c "YOUR SQL HERE"'
 ```
 
 For multi-line or complex queries, use a heredoc:
 
 ```bash
-bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" <<SQL
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); PAGER= psql "$DATABASE_URL" <<SQL
 SELECT * FROM users LIMIT 10;
 SQL'
 ```
 
-For interactive-style expanded output, add `-x`:
+For expanded output, add `-x`:
 
 ```bash
-bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); psql "$DATABASE_URL" -x -c "SELECT * FROM users LIMIT 1"'
+bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/^\"//" | sed "s/\"$//"); PAGER= psql "$DATABASE_URL" -x -c "SELECT * FROM users LIMIT 1"'
 ```
 
 ## Why this approach
