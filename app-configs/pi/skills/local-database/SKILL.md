@@ -37,7 +37,8 @@ bash -c 'DATABASE_URL=$(grep "^DATABASE_URL=" .env | sed "s/^DATABASE_URL=//; s/
 
 ## Important: no interactive mode
 
-**Never run `psql` without `-c` or a heredoc.** A bare `psql "$DATABASE_URL"` opens an interactive session that will hang indefinitely since there is no TTY. Always pass a query via `-c "..."` or a `<<SQL` heredoc.
+- **Never run `psql` without `-c` or a heredoc.** A bare `psql "$DATABASE_URL"` opens an interactive session that will hang indefinitely since there is no TTY. Always pass a query via `-c "..."` or a `<<SQL` heredoc.
+- **Always disable the pager** by prefixing with `PAGER=`. Without this, psql opens `less` for large output, which hangs waiting for user input.
 
 ## Common tasks
 
