@@ -43,10 +43,10 @@ export default function (pi: ExtensionAPI) {
         playSound("alert"); // don't await — let it play while the prompt shows
         const choice = await ctx.ui.select(`⚠️ Dangerous Command\nExecute: ${cmd}?`, [
           "Allow once",
-          "Allow during this session",
+          `Allow all "${match.source}" commands this session`,
           "Block",
         ]);
-        if (choice === "Allow during this session") {
+        if (choice === `Allow all "${match.source}" commands this session`) {
           allowedDangerousPatterns.add(patternKey);
           return;
         }
@@ -67,10 +67,10 @@ export default function (pi: ExtensionAPI) {
           playSound("alert"); // don't await — let it play while the prompt shows
           const choice = await ctx.ui.select(`🛡️ Protected Path\nAllow write to ${path}?`, [
             "Allow once",
-            "Allow during this session",
+            `Allow all "${hit}" paths this session`,
             "Block",
           ]);
-          if (choice === "Allow during this session") {
+          if (choice === `Allow all "${hit}" paths this session`) {
             allowedProtectedPaths.add(hit);
             return;
           }
