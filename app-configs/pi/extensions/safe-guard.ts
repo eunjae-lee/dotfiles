@@ -22,16 +22,20 @@ export default function (pi: ExtensionAPI) {
   const playSound = createSoundPlayer(pi);
 
   // Session-wide allowances
+  let dangerModeEnabled = false;
   const allowedDangerousPatterns = new Set<string>();
   const allowedProtectedPaths = new Set<string>();
 
   // Reset allowances on new session
   pi.on("session_start", async () => {
+    dangerModeEnabled = false;
     allowedDangerousPatterns.clear();
     allowedProtectedPaths.clear();
   });
 
   pi.on("tool_call", async (event, ctx) => {
+    if (dangerModeEnabled) return;
+
     // Check bash commands for dangerous patterns
     if (event.toolName === "bash") {
       const cmd = (event.input as { command?: string }).command ?? "";
