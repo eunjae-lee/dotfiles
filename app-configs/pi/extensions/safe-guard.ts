@@ -48,8 +48,13 @@ export default function (pi: ExtensionAPI) {
         const choice = await ctx.ui.select(`⚠️ Dangerous Command\nExecute: ${cmd}?`, [
           "• Allow once",
           `• Allow all "${match.source}" commands this session`,
+          "• ☠️ Allow EVERYTHING this session",
           "• Block",
         ]);
+        if (choice === "• ☠️ Allow EVERYTHING this session") {
+          dangerModeEnabled = true;
+          return;
+        }
         if (choice === `• Allow all "${match.source}" commands this session`) {
           allowedDangerousPatterns.add(patternKey);
           return;
