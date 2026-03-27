@@ -77,8 +77,13 @@ export default function (pi: ExtensionAPI) {
           const choice = await ctx.ui.select(`🛡️ Protected Path\nAllow write to ${path}?`, [
             "• Allow once",
             `• Allow all "${hit}" paths this session`,
+            "• ☠️ Allow EVERYTHING this session",
             "• Block",
           ]);
+          if (choice === "• ☠️ Allow EVERYTHING this session") {
+            dangerModeEnabled = true;
+            return;
+          }
           if (choice === `• Allow all "${hit}" paths this session`) {
             allowedProtectedPaths.add(hit);
             return;
