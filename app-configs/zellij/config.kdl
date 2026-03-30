@@ -12,7 +12,11 @@ keybinds clear-defaults=true {
         bind "Super g" { SwitchToMode "Locked"; }
 
         bind "Ctrl O" {
+            Run "bash" "-c" "glowcat open";
+        }
 
+        bind "Ctrl W" {
+            Run "bash" "-c" "glowcat web";
         }
     }
     locked {
