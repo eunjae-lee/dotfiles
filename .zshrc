@@ -328,4 +328,3 @@ alias mini="ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net"
 alias gc="glowcat"
 
 
-alias cd="z"
