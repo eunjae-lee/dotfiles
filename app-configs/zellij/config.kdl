@@ -10,6 +10,10 @@ keybinds clear-defaults=true {
 
         unbind "Ctrl g"
         bind "Super g" { SwitchToMode "Locked"; }
+
+        bind "Ctrl O" {
+
+        }
     }
     locked {
         bind "Super g" { SwitchToMode "normal"; }
