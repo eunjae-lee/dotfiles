@@ -13,15 +13,10 @@ export default function (pi: ExtensionAPI) {
 
     if (isInsideCmux()) {
       try {
-        await pi.exec("cmux", ["claude-hook", "notification"], {
-          timeout: 5000,
-          stdin: JSON.stringify({
-            notification: {
-              title: "pi",
-              body: "Task complete",
-            },
-          }),
-        });
+        await pi.exec("bash", [
+          "-c",
+          `echo '{"notification":{"title":"pi","body":"Task complete"}}' | cmux claude-hook notification`,
+        ], { timeout: 5000 });
       } catch {
         // Ignore — cmux CLI might not be available
       }
