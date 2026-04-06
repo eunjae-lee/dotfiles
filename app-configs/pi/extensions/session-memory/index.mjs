@@ -58,12 +58,26 @@ function expandHome(p) {
   return p.replace(/^~/, homedir());
 }
 
+function failConfig(message) {
+  console.error(`CONFIG ERROR: ${message}`);
+  process.exit(1);
+}
+
 function loadConfig() {
   if (!existsSync(CONFIG_PATH)) {
-    console.error(`Config not found: ${CONFIG_PATH}`);
-    process.exit(1);
+    failConfig(`Config not found: ${CONFIG_PATH}`);
   }
-  return JSON.parse(readFileSync(CONFIG_PATH, "utf-8"));
+
+  const config = JSON.parse(readFileSync(CONFIG_PATH, "utf-8"));
+
+  if (!config.memoryPath || typeof config.memoryPath !== "string") {
+    failConfig(`session-memory.json is missing required string field \"memoryPath\"`);
+  }
+  if (!Array.isArray(config.targetPaths) || config.targetPaths.length === 0) {
+    failConfig(`session-memory.json must define a non-empty \"targetPaths\" array`);
+  }
+
+  return config;
 }
 
 function loadIndex() {
