@@ -114,9 +114,11 @@ function loadTarget(memJsonPath) {
   const config = JSON.parse(readFileSync(memJsonPath, "utf-8"));
   const baseDir = dirname(memJsonPath);
   const sessionsPath = resolve(baseDir, config.sessionsPath);
+  const inferredSlug = baseDir === join(homedir(), ".pi/agent") ? "host" : basename(baseDir);
   return {
-    slug: config.slug,
+    slug: config.slug || inferredSlug,
     sessionsPath,
+    memoryPath: config.memoryPath ? expandHome(config.memoryPath) : null,
     model: config.model || "anthropic/claude-sonnet-4-0",
     memJsonPath,
   };
