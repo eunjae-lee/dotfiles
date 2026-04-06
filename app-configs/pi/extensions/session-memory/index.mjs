@@ -150,6 +150,35 @@ function loadTarget(memJsonPath) {
 
 // ── Session Discovery ─────────────────────────────────────
 
+function validateTargets(config, targets) {
+  const seen = new Map();
+  const rootMemoryPath = expandHome(config.memoryPath);
+
+  if (!existsSync(rootMemoryPath)) {
+    failConfig(`memoryPath does not exist: ${rootMemoryPath}`);
+  }
+
+  if (targets.length === 0) {
+    failConfig(`No targets discovered from targetPaths in ${CONFIG_PATH}`);
+  }
+
+  for (const target of targets) {
+    if (seen.has(target.slug)) {
+      failConfig(`Duplicate target slug \"${target.slug}\" in ${relative(homedir(), seen.get(target.slug))} and ${relative(homedir(), target.memJsonPath)}`);
+    }
+    seen.set(target.slug, target.memJsonPath);
+
+    if (!target.model.includes('/')) {
+      failConfig(`${relative(homedir(), target.memJsonPath)} has invalid model \"${target.model}\"; expected provider/model`);
+    }
+
+    const effectiveMemoryPath = target.memoryPath || join(rootMemoryPath, target.slug);
+    if (!effectiveMemoryPath) {
+      failConfig(`${relative(homedir(), target.memJsonPath)} could not determine memory path`);
+    }
+  }
+}
+
 function findSessionFiles(sessionsPath) {
   if (!existsSync(sessionsPath)) return [];
   const files = [];
@@ -289,6 +318,7 @@ if (!completeSimple || !getModel) {
 }
 
 const targets = discoverTargets(config);
+validateTargets(config, targets);
 console.log(`Discovered ${targets.length} targets: ${targets.map((t) => t.slug).join(", ")}`);
 
 const index = loadIndex();
