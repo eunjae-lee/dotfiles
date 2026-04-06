@@ -398,61 +398,72 @@ async function runPromoter(config) {
     return;
   }
 
-  // Collect all short-term memories
   const memPath = expandHome(config.memoryPath);
-  let allShortTerm = "";
-  for (const entry of readdirSync(memPath)) {
-    const stPath = join(memPath, entry, "short-term.md");
-    if (existsSync(stPath)) {
-      allShortTerm += `\n## ${entry}\n\n${readFileSync(stPath, "utf-8")}\n`;
+  const targets = discoverTargets(config);
+  let updated = 0;
+
+  for (const target of targets) {
+    const targetMemDir = target.memoryPath || join(memPath, target.slug);
+    const stPath = join(targetMemDir, "short-term.md");
+    if (!existsSync(stPath)) {
+      console.log(`  ${target.slug}: no short-term.md — skipping`);
+      continue;
+    }
+
+    const shortTerm = readFileSync(stPath, "utf-8").trim();
+    if (!shortTerm) {
+      console.log(`  ${target.slug}: empty short-term.md — skipping`);
+      continue;
+    }
+
+    const ltPath = join(targetMemDir, "long-term.md");
+    const existingLongTerm = existsSync(ltPath) ? readFileSync(ltPath, "utf-8") : "";
+
+    let prompt = `# Memory Promotion\n\n`;
+    prompt += `Target: ${target.slug}\n\n`;
+    prompt += `## Current Long-Term Memory\n\n${existingLongTerm || "(empty)"}\n\n`;
+    prompt += `## Recent Short-Term Memories\n\n${shortTerm}\n\n`;
+    prompt += `## Instructions\n\n`;
+    prompt += `Review the short-term memories and update the long-term memory for this target only.\n`;
+    prompt += `- Identify recurring patterns, confirmed preferences, and important decisions\n`;
+    prompt += `- Merge with existing long-term entries — deduplicate and supersede outdated entries\n`;
+    prompt += `- Remove anything no longer relevant\n`;
+    prompt += `- Keep it organized by category (User Preferences, Architecture Decisions, Project Knowledge, Patterns & Corrections)\n`;
+    prompt += `- Output the complete updated long-term memory in markdown\n`;
+
+    try {
+      const response = await completeSimple(model, {
+        messages: [{ role: "user", content: prompt }],
+      }, { apiKey, maxTokens: 4000 });
+
+      if (response.stopReason === "error") {
+        console.error(`  ${target.slug}: promoter LLM error: ${response.errorMessage}`);
+        continue;
+      }
+
+      const text = response.content
+        .filter((c) => c.type === "text")
+        .map((c) => c.text)
+        .join("")
+        .trim();
+
+      mkdirSync(targetMemDir, { recursive: true });
+      writeFileSync(ltPath, text + "\n");
+      console.log(`  ✅ ${target.slug}: updated ${ltPath}`);
+      updated++;
+    } catch (err) {
+      console.error(`  ${target.slug}: promoter failed: ${err.message}`);
     }
   }
 
-  // Read existing long-term
-  const ltPath = join(memPath, "long-term.md");
-  const existingLongTerm = existsSync(ltPath) ? readFileSync(ltPath, "utf-8") : "";
-
-  let prompt = `# Memory Promotion\n\n`;
-  prompt += `## Current Long-Term Memory\n\n${existingLongTerm || "(empty)"}\n\n`;
-  prompt += `## Recent Short-Term Memories\n\n${allShortTerm}\n\n`;
-  prompt += `## Instructions\n\n`;
-  prompt += `Review the short-term memories and update the long-term memory.\n`;
-  prompt += `- Identify recurring patterns, confirmed preferences, and important decisions\n`;
-  prompt += `- Merge with existing long-term entries — deduplicate and supersede outdated entries\n`;
-  prompt += `- Remove anything no longer relevant\n`;
-  prompt += `- Keep it organized by category (User Preferences, Architecture Decisions, Project Knowledge, Patterns & Corrections)\n`;
-  prompt += `- Output the complete updated long-term memory in markdown\n`;
-
-  try {
-    const response = await completeSimple(model, {
-      messages: [{ role: "user", content: prompt }],
-    }, { apiKey, maxTokens: 4000 });
-
-    if (response.stopReason === "error") {
-      console.error(`Promoter LLM error: ${response.errorMessage}`);
-      return;
-    }
-
-    const text = response.content
-      .filter((c) => c.type === "text")
-      .map((c) => c.text)
-      .join("")
-      .trim();
-
-    writeFileSync(ltPath, text + "\n");
-    console.log(`✅ Updated long-term memory at ${ltPath}`);
-
-    if (config.autoCommit) {
-      try {
-        execSync(`cd "${memPath}" && git add -A && git commit -m "session-memory: promote to long-term" && git push`, {
-          encoding: "utf-8",
-          timeout: 30000,
-          stdio: "pipe",
-        });
-        console.log("Committed and pushed.");
-      } catch {}
-    }
-  } catch (err) {
-    console.error(`Promoter failed: ${err.message}`);
+  if (config.autoCommit && updated > 0) {
+    try {
+      execSync(`cd "${memPath}" && git add -A && git commit -m "session-memory: promote to long-term" && git push`, {
+        encoding: "utf-8",
+        timeout: 30000,
+        stdio: "pipe",
+      });
+      console.log("Committed and pushed.");
+    } catch {}
   }
 }
