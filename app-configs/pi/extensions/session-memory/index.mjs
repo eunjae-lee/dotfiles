@@ -338,7 +338,7 @@ for (const target of targets) {
       totalSkipped++;
     } else {
       // Write to short-term.md
-      const slugMemDir = join(memoryPath, target.slug);
+      const slugMemDir = target.memoryPath || join(memoryPath, target.slug);
       mkdirSync(slugMemDir, { recursive: true });
       const shortTermPath = join(slugMemDir, "short-term.md");
 
