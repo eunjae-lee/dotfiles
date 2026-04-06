@@ -299,6 +299,39 @@ async function summarizeSession(preprocessed, target, apiKey) {
   }
 }
 
+function pruneShortTermFile(shortTermPath, shortTermConfig = {}) {
+  if (!existsSync(shortTermPath)) return;
+
+  const maxSummaries = Number.isFinite(shortTermConfig.maxSummaries) ? shortTermConfig.maxSummaries : null;
+  const retentionDays = Number.isFinite(shortTermConfig.retentionDays) ? shortTermConfig.retentionDays : null;
+  if (!maxSummaries && !retentionDays) return;
+
+  const content = readFileSync(shortTermPath, "utf-8");
+  const header = "# Short-Term Memory\n";
+  const body = content.startsWith(header) ? content.slice(header.length) : content;
+  const rawSections = body.split(/\n(?=### )/).map((s) => s.trim()).filter(Boolean);
+
+  let entries = rawSections.map((section) => {
+    const heading = section.split("\n", 1)[0] || "";
+    const m = heading.match(/\((\d{4}-\d{2}-\d{2})\)$/);
+    const date = m ? new Date(`${m[1]}T00:00:00Z`) : null;
+    return { section, date };
+  });
+
+  if (retentionDays) {
+    const cutoff = new Date();
+    cutoff.setUTCDate(cutoff.getUTCDate() - retentionDays);
+    entries = entries.filter((entry) => !entry.date || entry.date >= cutoff);
+  }
+
+  if (maxSummaries && entries.length > maxSummaries) {
+    entries = entries.slice(-maxSummaries);
+  }
+
+  const pruned = header + (entries.length ? `\n${entries.map((e) => e.section).join("\n\n")}`.trimEnd() + "\n" : "");
+  writeFileSync(shortTermPath, pruned);
+}
+
 // ── Main ──────────────────────────────────────────────────
 
 const dryRun = process.argv.includes("--dry-run");
