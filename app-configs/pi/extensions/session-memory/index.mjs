@@ -127,10 +127,20 @@ function discoverTargets(config) {
 function loadTarget(memJsonPath) {
   const config = JSON.parse(readFileSync(memJsonPath, "utf-8"));
   const baseDir = dirname(memJsonPath);
-  const sessionsPath = resolve(baseDir, config.sessionsPath);
   const inferredSlug = baseDir === join(homedir(), ".pi/agent") ? "host" : basename(baseDir);
+
+  if (!config.sessionsPath || typeof config.sessionsPath !== "string") {
+    failConfig(`${relative(homedir(), memJsonPath)} is missing required string field \"sessionsPath\"`);
+  }
+
+  const slug = config.slug || inferredSlug;
+  if (!slug || typeof slug !== "string") {
+    failConfig(`${relative(homedir(), memJsonPath)} is missing required string field \"slug\" and it could not be inferred`);
+  }
+
+  const sessionsPath = resolve(baseDir, config.sessionsPath);
   return {
-    slug: config.slug || inferredSlug,
+    slug,
     sessionsPath,
     memoryPath: config.memoryPath ? expandHome(config.memoryPath) : null,
     model: config.model || "anthropic/claude-sonnet-4-0",
