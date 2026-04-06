@@ -437,6 +437,7 @@ for (const target of targets) {
       const date = preprocessed.startTime?.split("T")[0] || new Date().toISOString().split("T")[0];
       const entry = `\n### ${target.slug} / ${preprocessed.sessionId} (${date})\n\n${summary}\n\n---\n`;
       appendFileSync(shortTermPath, entry);
+      pruneShortTermFile(shortTermPath, config.shortTerm);
 
       console.log(`    ✅ Written to ${target.slug}/short-term.md`);
       totalProcessed++;
