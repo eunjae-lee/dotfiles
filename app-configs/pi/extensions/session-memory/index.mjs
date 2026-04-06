@@ -12,7 +12,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, appendFileSync } from "node:fs";
-import { join, resolve, dirname, relative } from "node:path";
+import { join, resolve, dirname, relative, basename } from "node:path";
 import { execFileSync, execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
@@ -54,6 +54,7 @@ const STATE_DIR = join(homedir(), ".pi/agent/session-memory");
 const INDEX_PATH = join(STATE_DIR, "index.json");
 
 function expandHome(p) {
+  if (!p) return p;
   return p.replace(/^~/, homedir());
 }
 
