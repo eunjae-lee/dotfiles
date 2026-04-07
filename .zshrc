@@ -225,9 +225,6 @@ export PATH="/Applications/Ghostty.app/Contents/MacOS:$PATH"
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
-alias fcu="(cd ~/workspace/flowcat && git pull && bun install:mac) && open /Applications/flowcat.app"
-alias gcu="cd ~/workspace/glowcat-cli && git pull && bun run install-global"
-
 psqldev() {
   if [[ ! -f .env ]]; then
     echo ".env not found"
@@ -325,6 +322,4 @@ alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem
 
 alias mini="ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net"
 
-alias gc="glowcat"
-
-
+alias update_cmux="brew tap eunjae-lee/cmux && brew install --cask cmux-fork && brew install cmux-worktree"
