@@ -320,13 +320,6 @@ zgc() {
 
 alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem/10.5.2/scripts/worker-service.cjs"'
 
-mini() {
-  if ps aux | grep -v grep | grep -q '/Library/PrivilegedHelperTools/com.nordvpn.macos.helper'; then
-    echo "mini: NordVPN appears to be running and may block Tailscale SSH. Turn it off and try again."
-    return 1
-  fi
-
-  ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net
-}
+alias mini="ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net"
 
 alias update_cmux="brew tap eunjae-lee/cmux && brew install --cask cmux-fork && brew install cmux-worktree && xattr -cr /Applications/cmux.app"
