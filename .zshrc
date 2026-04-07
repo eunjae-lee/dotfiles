@@ -322,4 +322,4 @@ alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem
 
 alias mini="ssh eunjae@eunjaes-mac-mini-3.tail93e3.ts.net"
 
-alias update_cmux='brew tap eunjae-lee/cmux && brew reinstall --cask cmux-fork && brew reinstall cmux-worktree && xattr -cr /Applications/cmux.app'
+alias update_cmux="brew untap eunjae-lee/cmux && brew tap eunjae-lee/cmux && brew reinstall --cask cmux-fork && xattr -cr /Applications/cmux.app"
