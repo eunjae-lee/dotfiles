@@ -243,7 +243,7 @@ psqldev() {
   psql "$DATABASE_URL"
 }
 
-alias ccc="security unlock-keychain && claude"
+alias ccc="security unlock-keychain && claude --allow-dangerously-skip-permissions"
 
 export PATH="$HOME/.local/bin:$PATH"
 
