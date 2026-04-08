@@ -187,7 +187,7 @@ alias cal_db="psql postgresql://postgres:@localhost:5432/calendso"
 alias zcal_old="cd ~/workspace/cal.com && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2_old.kdl"
 alias zcal="cd ~/workspace/cal && zellij --layout ~/workspace/dotfiles/app-configs/zellij/cal2_new.kdl"
 alias zmini="zellij --layout ~/workspace/dotfiles/app-configs/zellij/mac_mini.kdl"
-alias cc="claude"
+alias cc="claude --allow-dangerously-skip-permissions"
 alias zl="zellij"
 
 export PATH="/opt/homebrew/bin:$PATH"
