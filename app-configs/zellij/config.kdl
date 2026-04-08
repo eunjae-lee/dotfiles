@@ -159,6 +159,7 @@ keybinds clear-defaults=true {
         bind "Ctrl d" { Detach; }
     }
     shared_except "locked" {
+        unbind "Alt f"
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
