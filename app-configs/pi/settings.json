@@ -7,6 +7,6 @@
     "npm:shitty-clipboard-extension"
   ],
   "lastChangelogVersion": "0.64.0",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4"
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-4-6"
 }
