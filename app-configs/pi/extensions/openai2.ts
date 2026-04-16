@@ -1,6 +1,6 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
-import { loginOpenAICodex, refreshOpenAICodexToken } from "@mariozechner/pi-coding-agent/node_modules/@mariozechner/pi-ai/dist/utils/oauth/index.js";
-import { streamSimpleOpenAICodexResponses } from "@mariozechner/pi-coding-agent/node_modules/@mariozechner/pi-ai/dist/providers/openai-codex-responses.js";
+import { loginOpenAICodex, refreshOpenAICodexToken } from "@mariozechner/pi-ai/dist/utils/oauth/index.js";
+import { streamSimpleOpenAICodexResponses } from "@mariozechner/pi-ai/dist/providers/openai-codex-responses.js";
 
 export default function (pi: ExtensionAPI) {
   pi.registerProvider("openai2", {
