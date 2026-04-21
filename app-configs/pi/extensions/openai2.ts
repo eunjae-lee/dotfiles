@@ -1,10 +1,9 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
-import { realpathSync } from "node:fs";
-import { createRequire } from "node:module";
+import { existsSync, realpathSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-function createPiRequire() {
+function findPiAiDistDir() {
   const rawCandidates = [process.argv[1], process.env.npm_execpath, process.execPath].filter(
     (value): value is string => Boolean(value),
   );
@@ -19,30 +18,30 @@ function createPiRequire() {
       }),
     ),
   );
-  const probes = ["@mariozechner/pi-ai/oauth", "@mariozechner/pi-coding-agent/package.json"];
 
   for (const candidate of candidates) {
     try {
-      const candidateRequire = createRequire(candidate);
-      for (const probe of probes) {
-        try {
-          candidateRequire.resolve(probe);
-          return candidateRequire;
-        } catch {
-          // Try the next probe.
+      const packageRootCandidates = [
+        resolve(dirname(candidate), ".."),
+        resolve(dirname(candidate), "../.."),
+        resolve(dirname(candidate), "../../.."),
+      ];
+
+      for (const packageRoot of packageRootCandidates) {
+        const piAiDistDir = resolve(packageRoot, "node_modules/@mariozechner/pi-ai/dist");
+        if (existsSync(resolve(piAiDistDir, "oauth.js"))) {
+          return piAiDistDir;
         }
       }
     } catch {
-      // Try the next anchor.
+      // Try the next candidate.
     }
   }
 
-  return createRequire(import.meta.url);
+  throw new Error("Could not locate bundled @mariozechner/pi-ai files from the running pi installation");
 }
 
-const piRequire = createPiRequire();
-const piAiOauthPath = piRequire.resolve("@mariozechner/pi-ai/oauth");
-const piAiDistDir = dirname(piAiOauthPath);
+const piAiDistDir = findPiAiDistDir();
 
 const { loginOpenAICodex, refreshOpenAICodexToken } = await import(pathToFileURL(resolve(piAiDistDir, "oauth.js")).href);
 const { streamSimpleOpenAICodexResponses } = await import(
