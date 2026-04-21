@@ -26,9 +26,26 @@ function needsAttention(text: string): boolean {
 
 export default function (pi: ExtensionAPI) {
   const playSound = createSoundPlayer(pi);
+  let questionSoundPlayedThisRun = false;
+
+  pi.on("agent_start", async () => {
+    questionSoundPlayedThisRun = false;
+  });
+
+  pi.on("message_end", async (event) => {
+    if (!isAssistantMessage(event.message)) return;
+
+    const assistantText = getTextContent(event.message);
+    if (!needsAttention(assistantText)) return;
+    if (questionSoundPlayedThisRun) return;
+
+    questionSoundPlayedThisRun = true;
+    await playSound("alert");
+  });
 
   pi.on("agent_end", async (event, ctx) => {
     if (!ctx.isIdle()) return;
+    if (questionSoundPlayedThisRun) return;
 
     const assistantText = getLastAssistantText(event.messages);
     const attentionNeeded = needsAttention(assistantText);
