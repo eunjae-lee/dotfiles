@@ -95,6 +95,7 @@ async function pasteClipboard(pi: ExtensionAPI, ctx: ExtensionContext): Promise<
 
 class DictationEditor extends CustomEditor {
   private dictationMode = false;
+  private readonly kb: KeybindingsManager;
 
   constructor(
     tui: ConstructorParameters<typeof CustomEditor>[0],
@@ -102,6 +103,7 @@ class DictationEditor extends CustomEditor {
     keybindings: KeybindingsManager,
   ) {
     super(tui, theme, keybindings);
+    this.kb = keybindings;
   }
 
   handleInput(data: string): void {
@@ -111,7 +113,7 @@ class DictationEditor extends CustomEditor {
       return;
     }
 
-    if (this.dictationMode && this.keybindings.matches(data, "tui.input.submit")) {
+    if (this.dictationMode && this.kb.matches(data, "tui.input.submit")) {
       super.handleInput("\n");
       return;
     }
