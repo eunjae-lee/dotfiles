@@ -3,6 +3,8 @@ import type { AssistantMessage, TextContent } from "@mariozechner/pi-ai";
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { createSoundPlayer } from "../lib/sounds.ts";
 
+const isInsideSupersetTab = () => !!process.env.SUPERSET_TAB_ID;
+
 function isAssistantMessage(message: AgentMessage): message is AssistantMessage {
   return message.role === "assistant" && Array.isArray(message.content);
 }
@@ -25,6 +27,8 @@ function needsAttention(text: string): boolean {
 }
 
 export default function (pi: ExtensionAPI) {
+  if (isInsideSupersetTab()) return;
+
   const playSound = createSoundPlayer(pi);
   let questionSoundPlayedThisRun = false;
 
