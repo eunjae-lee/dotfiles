@@ -6,6 +6,15 @@ class MultilineEditor extends CustomEditor {
   private multilineMode = false;
   private readonly kb: KeybindingsManager;
 
+  toggleMultilineMode(): void {
+    this.multilineMode = !this.multilineMode;
+    this.tui.requestRender();
+  }
+
+  isMultilineMode(): boolean {
+    return this.multilineMode;
+  }
+
   constructor(
     tui: ConstructorParameters<typeof CustomEditor>[0],
     theme: ConstructorParameters<typeof CustomEditor>[1],
@@ -17,8 +26,7 @@ class MultilineEditor extends CustomEditor {
 
   handleInput(data: string): void {
     if (matchesKey(data, "ctrl+v")) {
-      this.multilineMode = !this.multilineMode;
-      this.tui.requestRender();
+      this.toggleMultilineMode();
       return;
     }
 
@@ -44,8 +52,22 @@ class MultilineEditor extends CustomEditor {
 }
 
 export default function (pi: ExtensionAPI) {
+  let editor: MultilineEditor | undefined;
+
   pi.on("session_start", (_event, ctx) => {
     if (!ctx.hasUI) return;
-    ctx.ui.setEditorComponent((tui, theme, keybindings) => new MultilineEditor(tui, theme, keybindings));
+    ctx.ui.setEditorComponent((tui, theme, keybindings) => {
+      editor = new MultilineEditor(tui, theme, keybindings);
+      return editor;
+    });
+  });
+
+  pi.registerCommand("multiline", {
+    description: "Toggle multiline mode for the prompt editor",
+    handler: async (_args, ctx) => {
+      if (!ctx.hasUI || !editor) return;
+      editor.toggleMultilineMode();
+      ctx.ui.notify(`Multiline mode ${editor.isMultilineMode() ? "enabled" : "disabled"}.`, "info");
+    },
   });
 }
