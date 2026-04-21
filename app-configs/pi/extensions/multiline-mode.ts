@@ -32,9 +32,9 @@ class MultilineEditor extends CustomEditor {
 
   render(width: number): string[] {
     const lines = super.render(width);
-    if (lines.length === 0) return lines;
+    if (!this.multilineMode || lines.length === 0) return lines;
 
-    const label = this.multilineMode ? " MULTILINE " : " NORMAL ";
+    const label = " MULTILINE ";
     const last = lines.length - 1;
     if (visibleWidth(lines[last]!) >= label.length) {
       lines[last] = truncateToWidth(lines[last]!, width - label.length, "") + label;
