@@ -20,8 +20,8 @@ function createPiRequire() {
 }
 
 const piRequire = createPiRequire();
-const piAiPackageJsonPath = piRequire.resolve("@mariozechner/pi-ai/package.json");
-const piAiDistDir = resolve(dirname(piAiPackageJsonPath), "dist");
+const piAiOauthPath = piRequire.resolve("@mariozechner/pi-ai/oauth");
+const piAiDistDir = dirname(piAiOauthPath);
 
 const { loginOpenAICodex, refreshOpenAICodexToken } = await import(pathToFileURL(resolve(piAiDistDir, "oauth.js")).href);
 const { streamSimpleOpenAICodexResponses } = await import(
