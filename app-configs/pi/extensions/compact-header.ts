@@ -30,7 +30,7 @@ export default function (pi: ExtensionAPI) {
           [d("esc"), a("interrupt"),   d("S-tab"), a("thinking")],
           [d("^C"),  a("clear/exit"),  d("^O"),    a("expand")],
           [d("^P"),  a("model"),       d("^G"),    a("editor")],
-          [d("/"),   a("commands"),    d("^V"),    a("paste")],
+          [d("/"),   a("commands"),    d("^V"),    a("multiline")],
           [d("!"),   a("bash"),        d(""),      a("")],
         ];
         const k1w = 6, v1w = 13, k2w = 6, v2w = 9;
