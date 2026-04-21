@@ -1,5 +1,7 @@
 import os from "node:os";
-import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
+import { CustomEditor } from "@mariozechner/pi-coding-agent";
+import { matchesKey, truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
+import type { ExtensionAPI, ExtensionContext, KeybindingsManager } from "@mariozechner/pi-coding-agent";
 
 type ClipboardResult = {
   text: string;
@@ -91,17 +93,54 @@ async function pasteClipboard(pi: ExtensionAPI, ctx: ExtensionContext): Promise<
   ctx.ui.notify(`Pasted ${clipboard.text.length} chars from clipboard.`, "info");
 }
 
+class DictationEditor extends CustomEditor {
+  private dictationMode = false;
+
+  constructor(
+    tui: ConstructorParameters<typeof CustomEditor>[0],
+    theme: ConstructorParameters<typeof CustomEditor>[1],
+    keybindings: KeybindingsManager,
+  ) {
+    super(tui, theme, keybindings);
+  }
+
+  handleInput(data: string): void {
+    if (matchesKey(data, "ctrl+v")) {
+      this.dictationMode = !this.dictationMode;
+      this.tui.requestRender();
+      return;
+    }
+
+    if (this.dictationMode && this.keybindings.matches(data, "tui.input.submit")) {
+      super.handleInput("\n");
+      return;
+    }
+
+    super.handleInput(data);
+  }
+
+  render(width: number): string[] {
+    const lines = super.render(width);
+    if (lines.length === 0) return lines;
+
+    const label = this.dictationMode ? " DICTATION " : " NORMAL ";
+    const last = lines.length - 1;
+    if (visibleWidth(lines[last]!) >= label.length) {
+      lines[last] = truncateToWidth(lines[last]!, width - label.length, "") + label;
+    }
+    return lines;
+  }
+}
+
 export default function (pi: ExtensionAPI) {
+  pi.on("session_start", (_event, ctx) => {
+    if (!ctx.hasUI) return;
+    ctx.ui.setEditorComponent((tui, theme, keybindings) => new DictationEditor(tui, theme, keybindings));
+  });
+
   pi.registerCommand("paste", {
     description: "Paste text from the system clipboard directly into the editor",
     handler: async (_args, ctx) => {
-      await pasteClipboard(pi, ctx);
-    },
-  });
-
-  pi.registerShortcut("ctrl+v", {
-    description: "Paste text from the system clipboard into the editor",
-    handler: async (ctx) => {
       await pasteClipboard(pi, ctx);
     },
   });
