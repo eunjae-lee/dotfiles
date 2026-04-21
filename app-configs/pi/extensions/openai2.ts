@@ -19,10 +19,19 @@ function createPiRequire() {
       }),
     ),
   );
+  const probes = ["@mariozechner/pi-ai/oauth", "@mariozechner/pi-coding-agent/package.json"];
 
   for (const candidate of candidates) {
     try {
-      return createRequire(candidate);
+      const candidateRequire = createRequire(candidate);
+      for (const probe of probes) {
+        try {
+          candidateRequire.resolve(probe);
+          return candidateRequire;
+        } catch {
+          // Try the next probe.
+        }
+      }
     } catch {
       // Try the next anchor.
     }
