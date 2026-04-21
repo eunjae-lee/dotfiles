@@ -73,17 +73,12 @@ async function readClipboard(pi: ExtensionAPI): Promise<ClipboardResult | null> 
   return null;
 }
 
-function insertIntoEditor(ctx: ExtensionContext, text: string): void {
-  const current = ctx.ui.getEditorText();
-  ctx.ui.setEditorText(`${current}${text}`);
-}
-
 async function pasteClipboard(pi: ExtensionAPI, ctx: ExtensionContext): Promise<void> {
   if (!ctx.hasUI) return;
 
   const clipboard = await readClipboard(pi);
   if (!clipboard) {
-    ctx.ui.notify("Could not read clipboard text on this system.", "error")
+    ctx.ui.notify("Could not read clipboard text on this system.", "error");
     return;
   }
 
