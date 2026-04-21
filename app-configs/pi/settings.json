@@ -6,7 +6,7 @@
     "npm:pi-schedule-prompt",
     "npm:shitty-clipboard-extension"
   ],
-  "lastChangelogVersion": "0.64.0",
+  "lastChangelogVersion": "0.68.0",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4"
 }
