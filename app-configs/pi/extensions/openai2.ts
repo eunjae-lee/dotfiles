@@ -4,41 +4,16 @@ import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 function findPiAiDistDir() {
-  const rawCandidates = [process.argv[1], process.env.npm_execpath, process.execPath].filter(
-    (value): value is string => Boolean(value),
-  );
-  const candidates = Array.from(
-    new Set(
-      rawCandidates.flatMap((candidate) => {
-        try {
-          return [candidate, realpathSync(candidate)];
-        } catch {
-          return [candidate];
-        }
-      }),
-    ),
-  );
+  // Extension imports resolve relative to this file, not Pi's bundled install,
+  // so we derive pi-ai from the real Pi CLI entrypoint instead of using bare imports.
+  const piEntry = realpathSync(process.argv[1] ?? process.execPath);
+  const piAiDistDir = resolve(dirname(piEntry), "../node_modules/@mariozechner/pi-ai/dist");
 
-  for (const candidate of candidates) {
-    try {
-      const packageRootCandidates = [
-        resolve(dirname(candidate), ".."),
-        resolve(dirname(candidate), "../.."),
-        resolve(dirname(candidate), "../../.."),
-      ];
-
-      for (const packageRoot of packageRootCandidates) {
-        const piAiDistDir = resolve(packageRoot, "node_modules/@mariozechner/pi-ai/dist");
-        if (existsSync(resolve(piAiDistDir, "oauth.js"))) {
-          return piAiDistDir;
-        }
-      }
-    } catch {
-      // Try the next candidate.
-    }
+  if (!existsSync(resolve(piAiDistDir, "oauth.js"))) {
+    throw new Error(`openai2: could not find pi-ai dist from pi entry ${piEntry}`);
   }
 
-  throw new Error("Could not locate bundled @mariozechner/pi-ai files from the running pi installation");
+  return piAiDistDir;
 }
 
 const piAiDistDir = findPiAiDistDir();
