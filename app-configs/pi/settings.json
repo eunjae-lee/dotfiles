@@ -5,6 +5,9 @@
     "npm:pi-schedule-prompt",
     "npm:shitty-clipboard-extension"
   ],
+  "extensions": [
+    "/Users/eunjae/workspace/dotfiles/app-configs/pi/extensions/clipboard-paste.ts"
+  ],
   "lastChangelogVersion": "0.68.0",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4"
