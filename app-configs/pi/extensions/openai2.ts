@@ -1,11 +1,23 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import { realpathSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 function createPiRequire() {
-  const candidates = [process.argv[1], process.env.npm_execpath, process.execPath].filter(
+  const rawCandidates = [process.argv[1], process.env.npm_execpath, process.execPath].filter(
     (value): value is string => Boolean(value),
+  );
+  const candidates = Array.from(
+    new Set(
+      rawCandidates.flatMap((candidate) => {
+        try {
+          return [candidate, realpathSync(candidate)];
+        } catch {
+          return [candidate];
+        }
+      }),
+    ),
   );
 
   for (const candidate of candidates) {
