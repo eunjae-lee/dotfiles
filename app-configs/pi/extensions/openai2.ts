@@ -1,17 +1,31 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const piAiDistDir = resolve(
-  dirname(process.execPath),
-  "../lib/node_modules/@mariozechner/pi-coding-agent/node_modules/@mariozechner/pi-ai/dist",
-);
+function createPiRequire() {
+  const candidates = [process.argv[1], process.env.npm_execpath, process.execPath].filter(
+    (value): value is string => Boolean(value),
+  );
 
-const { loginOpenAICodex, refreshOpenAICodexToken } = await import(
-  pathToFileURL(resolve(piAiDistDir, "oauth.js")).href
-);
+  for (const candidate of candidates) {
+    try {
+      return createRequire(candidate);
+    } catch {
+      // Try the next anchor.
+    }
+  }
+
+  return createRequire(import.meta.url);
+}
+
+const piRequire = createPiRequire();
+const piAiPackageJsonPath = piRequire.resolve("@mariozechner/pi-ai/package.json");
+const piAiDistDir = resolve(dirname(piAiPackageJsonPath), "dist");
+
+const { loginOpenAICodex, refreshOpenAICodexToken } = await import(pathToFileURL(resolve(piAiDistDir, "oauth.js")).href);
 const { streamSimpleOpenAICodexResponses } = await import(
-  pathToFileURL(resolve(piAiDistDir, "providers/openai-codex-responses.js")).href
+  pathToFileURL(resolve(piAiDistDir, "providers/openai-codex-responses.js")).href,
 );
 
 export default function (pi: ExtensionAPI) {
