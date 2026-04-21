@@ -78,25 +78,36 @@ function insertIntoEditor(ctx: ExtensionContext, text: string): void {
   ctx.ui.setEditorText(`${current}${text}`);
 }
 
+async function pasteClipboard(pi: ExtensionAPI, ctx: ExtensionContext): Promise<void> {
+  if (!ctx.hasUI) return;
+
+  const clipboard = await readClipboard(pi);
+  if (!clipboard) {
+    ctx.ui.notify("Could not read clipboard text on this system.", "error")
+    return;
+  }
+
+  if (clipboard.text.length === 0) {
+    ctx.ui.notify("Clipboard is empty.", "warning");
+    return;
+  }
+
+  ctx.ui.pasteToEditor(clipboard.text);
+  ctx.ui.notify(`Pasted ${clipboard.text.length} chars from clipboard.`, "info");
+}
+
 export default function (pi: ExtensionAPI) {
   pi.registerCommand("paste", {
     description: "Paste text from the system clipboard directly into the editor",
     handler: async (_args, ctx) => {
-      if (!ctx.hasUI) return;
+      await pasteClipboard(pi, ctx);
+    },
+  });
 
-      const clipboard = await readClipboard(pi);
-      if (!clipboard) {
-        ctx.ui.notify("Could not read clipboard text on this system.", "error");
-        return;
-      }
-
-      if (clipboard.text.length === 0) {
-        ctx.ui.notify("Clipboard is empty.", "warning");
-        return;
-      }
-
-      insertIntoEditor(ctx, clipboard.text);
-      ctx.ui.notify(`Pasted ${clipboard.text.length} chars from clipboard.`, "info");
+  pi.registerShortcut("ctrl+v", {
+    description: "Paste text from the system clipboard into the editor",
+    handler: async (ctx) => {
+      await pasteClipboard(pi, ctx);
     },
   });
 }
