@@ -69,7 +69,6 @@ ZSH_THEME="spaceship"
 
 export PATH="/Users/$(whoami)/workspace/dotfiles/bin:$PATH"
 
-
 plugins=(zsh-z git auto-notify)
 
 zstyle ':omz:plugins:git' aliases no
@@ -192,7 +191,6 @@ alias zl="zellij"
 
 export PATH="/opt/homebrew/bin:$PATH"
 
-
 # Docker
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 
@@ -215,7 +213,6 @@ alias things="/Users/eunjae/.local/share/mise/installs/node/22.14.0/bin/things"
 
 # Added by Antigravity
 export PATH="/Users/eunjae/.antigravity/antigravity/bin:$PATH"
-
 
 # OpenCode Config - add bin directory to PATH
 export PATH="$HOME/.config/opencode/bin:$PATH"
@@ -316,7 +313,6 @@ zgc() {
     zellij -s glowcat -n ~/workspace/dotfiles/app-configs/zellij/glowcat.kdl
   fi
 }
-
 
 alias claude-mem='bun "/Users/eunjae/.claude/plugins/cache/thedotmack/claude-mem/10.5.2/scripts/worker-service.cjs"'
 
