@@ -32,7 +32,7 @@ class MultilineEditor extends CustomEditor {
 
     if (this.multilineMode) {
       if (matchesKey(data, "ctrl+enter")) {
-        this.onSubmit?.(this.getValue());
+        super.handleInput("\r");
         return;
       }
 
