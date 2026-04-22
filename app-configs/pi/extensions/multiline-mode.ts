@@ -30,9 +30,16 @@ class MultilineEditor extends CustomEditor {
       return;
     }
 
-    if (this.multilineMode && this.kb.matches(data, "tui.input.submit")) {
-      super.handleInput("\n");
-      return;
+    if (this.multilineMode) {
+      if (matchesKey(data, "ctrl+enter")) {
+        this.onSubmit?.(this.getValue());
+        return;
+      }
+
+      if (this.kb.matches(data, "tui.input.submit")) {
+        super.handleInput("\n");
+        return;
+      }
     }
 
     super.handleInput(data);
