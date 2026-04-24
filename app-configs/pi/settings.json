@@ -2,7 +2,8 @@
   "packages": [
     "npm:pi-subagents",
     "npm:pi-schedule-prompt",
-    "npm:shitty-clipboard-extension"
+    "npm:shitty-clipboard-extension",
+    "git:github.com/tmustier/pi-extensions"
   ],
   "lastChangelogVersion": "0.68.1",
   "defaultProvider": "openai-codex",
