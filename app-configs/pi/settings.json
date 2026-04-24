@@ -5,7 +5,7 @@
     "npm:shitty-clipboard-extension",
     {
       "source": "git:github.com/tmustier/pi-extensions",
-      "extensions": [["usage-extension/index.ts"]
+      "extensions": ["usage-extension/index.ts"]
     }
   ],
   "lastChangelogVersion": "0.68.1",
