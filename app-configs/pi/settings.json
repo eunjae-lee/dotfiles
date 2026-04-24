@@ -5,8 +5,11 @@
     "npm:shitty-clipboard-extension",
     {
       "source": "git:github.com/tmustier/pi-extensions",
-      "extensions": ["usage-extension/index.ts"]
-    }
+      "extensions": [
+        "usage-extension/index.ts"
+      ]
+    },
+    "npm:@plannotator/pi-extension"
   ],
   "lastChangelogVersion": "0.68.1",
   "defaultProvider": "openai-codex",
