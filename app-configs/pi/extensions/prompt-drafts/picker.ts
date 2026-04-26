@@ -79,7 +79,7 @@ export async function openDraftPicker(ctx: ExtensionContext): Promise<void> {
       const content: string[] = [];
       const title = theme.fg("accent", theme.bold("Drafts"));
       content.push(truncateToWidth(title, innerWidth));
-      content.push(truncateToWidth(theme.fg("dim", "cwd drafts first • enter load • delete remove • esc close"), innerWidth));
+      content.push(truncateToWidth(theme.fg("dim", "cwd drafts first • enter load • delete/backspace remove • esc close"), innerWidth));
       content.push("");
 
       if (drafts.length === 0) {
@@ -191,7 +191,7 @@ export async function openDraftPicker(ctx: ExtensionContext): Promise<void> {
           return;
         }
 
-        if (matchesKey(data, "delete") || matchesKey(data, "ctrl+d")) {
+        if (matchesKey(data, "delete") || matchesKey(data, "backspace") || matchesKey(data, "ctrl+d")) {
           void removeSelected();
           return;
         }
