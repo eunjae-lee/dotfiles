@@ -1,5 +1,5 @@
 import type { ExtensionContext } from "@mariozechner/pi-coding-agent";
-import { matchesKey, truncateToWidth } from "@mariozechner/pi-tui";
+import { matchesKey, truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
 import { deleteDraft, listDrafts } from "./store";
 
 type PickerResult =
@@ -125,7 +125,8 @@ export async function openDraftPicker(ctx: ExtensionContext): Promise<void> {
       const lines: string[] = [top];
       for (const line of content) {
         const padded = truncateToWidth(line, innerWidth);
-        lines.push(theme.fg("borderAccent", "│") + ` ${padded.padEnd(innerWidth, " ")} ` + theme.fg("borderAccent", "│"));
+        const fill = " ".repeat(Math.max(0, innerWidth - visibleWidth(padded)));
+        lines.push(theme.fg("borderAccent", "│") + ` ${padded}${fill} ` + theme.fg("borderAccent", "│"));
       }
       lines.push(bottom);
 
