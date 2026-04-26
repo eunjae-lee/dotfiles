@@ -1,6 +1,6 @@
 import type { ExtensionContext } from "@mariozechner/pi-coding-agent";
 import { matchesKey, truncateToWidth } from "@mariozechner/pi-tui";
-import { deleteDraft, listDrafts, type DraftListItem } from "./store";
+import { deleteDraft, listDrafts } from "./store";
 
 type PickerResult =
   | { action: "load"; text: string }
@@ -75,14 +75,15 @@ export async function openDraftPicker(ctx: ExtensionContext): Promise<void> {
     const render = (width: number): string[] => {
       if (cachedLines && cachedWidth === width) return cachedLines;
 
-      const lines: string[] = [];
+      const innerWidth = Math.max(20, width - 4);
+      const content: string[] = [];
       const title = theme.fg("accent", theme.bold("Drafts"));
-      lines.push(truncateToWidth(title, width));
-      lines.push(truncateToWidth(theme.fg("dim", "cwd drafts first • enter load • delete remove • esc close"), width));
-      lines.push(truncateToWidth(theme.fg("dim", "─".repeat(Math.max(1, width))), width));
+      content.push(truncateToWidth(title, innerWidth));
+      content.push(truncateToWidth(theme.fg("dim", "cwd drafts first • enter load • delete remove • esc close"), innerWidth));
+      content.push("");
 
       if (drafts.length === 0) {
-        lines.push(truncateToWidth(theme.fg("muted", "No drafts saved for this cwd or globally."), width));
+        content.push(truncateToWidth(theme.fg("muted", "No drafts saved for this cwd or globally."), innerWidth));
       } else {
         clampSelection();
         const window = drafts.slice(scrollTop, scrollTop + visibleRows);
@@ -94,27 +95,39 @@ export async function openDraftPicker(ctx: ExtensionContext): Promise<void> {
           const prefix = isSelected ? "› " : "  ";
           const preview = getPreview(draft.text);
           const text = `${prefix}${scopeLabel} ${preview}`;
+          const truncated = truncateToWidth(text, innerWidth);
           const styled = isSelected
-            ? theme.bg("selectedBg", theme.fg("accent", truncateToWidth(text, width)))
-            : theme.fg(draft.scope === "cwd" ? "text" : "muted", truncateToWidth(text, width));
-          lines.push(styled);
+            ? theme.bg("selectedBg", theme.fg("accent", truncated))
+            : theme.fg(draft.scope === "cwd" ? "text" : "muted", truncated);
+          content.push(styled);
         }
 
         const hiddenAbove = scrollTop;
         const hiddenBelow = Math.max(0, drafts.length - (scrollTop + window.length));
         if (hiddenAbove > 0 || hiddenBelow > 0) {
-          lines.push(
+          content.push("");
+          content.push(
             truncateToWidth(
               theme.fg("dim", `${hiddenAbove > 0 ? `↑ ${hiddenAbove} more` : ""}${hiddenAbove > 0 && hiddenBelow > 0 ? " • " : ""}${hiddenBelow > 0 ? `↓ ${hiddenBelow} more` : ""}`),
-              width,
+              innerWidth,
             ),
           );
         }
       }
 
       if (deleting) {
-        lines.push(truncateToWidth(theme.fg("warning", "Deleting draft..."), width));
+        content.push("");
+        content.push(truncateToWidth(theme.fg("warning", "Deleting draft..."), innerWidth));
       }
+
+      const top = theme.fg("borderAccent", `╭${"─".repeat(innerWidth + 2)}╮`);
+      const bottom = theme.fg("borderAccent", `╰${"─".repeat(innerWidth + 2)}╯`);
+      const lines: string[] = [top];
+      for (const line of content) {
+        const padded = truncateToWidth(line, innerWidth);
+        lines.push(theme.fg("borderAccent", "│") + ` ${padded.padEnd(innerWidth, " ")} ` + theme.fg("borderAccent", "│"));
+      }
+      lines.push(bottom);
 
       cachedWidth = width;
       cachedLines = lines;
