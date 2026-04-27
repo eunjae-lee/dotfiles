@@ -75,14 +75,22 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 
 	function queueAutoContinue(ctx: ExtensionContext) {
 		const prompt = buildAutoContinuePrompt(state.prompt);
+		const idleAtQueueTime = ctx.isIdle();
 
-		if (ctx.isIdle()) {
-			pi.sendUserMessage(prompt);
-			ctx.ui.notify("Auto-continue queued", "info");
-		} else {
-			pi.sendUserMessage(prompt, { deliverAs: "followUp" });
-			ctx.ui.notify("Auto-continue queued as follow-up", "info");
-		}
+		ctx.ui.notify(
+			idleAtQueueTime ? "Auto-continue queued" : "Auto-continue queued as follow-up",
+			"info",
+		);
+
+		setTimeout(() => {
+			if (idleAtQueueTime) {
+				pi.sendUserMessage(prompt);
+				ctx.ui.notify("Auto-continue dispatched", "info");
+			} else {
+				pi.sendUserMessage(prompt, { deliverAs: "followUp" });
+				ctx.ui.notify("Auto-continue follow-up dispatched", "info");
+			}
+		}, 0);
 	}
 
 	pi.registerCommand("autocontinue", {
