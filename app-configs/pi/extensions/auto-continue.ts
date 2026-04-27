@@ -4,6 +4,7 @@ import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-age
 
 type AutoContinueState = {
 	enabled: boolean;
+	waitingForInput: boolean;
 	prompt: string;
 	maxRuns: number;
 	runCount: number;
@@ -16,6 +17,7 @@ const STATUS_KEY = "auto-continue";
 
 const DEFAULT_STATE: AutoContinueState = {
 	enabled: false,
+	waitingForInput: false,
 	prompt: "",
 	maxRuns: 20,
 	runCount: 0,
@@ -59,7 +61,8 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 		}
 
 		const promptLabel = state.prompt.trim() ? "" : " default";
-		const label = `∞ auto-continue${promptLabel} ${state.runCount}/${state.maxRuns}`;
+		const pauseLabel = state.waitingForInput ? " paused" : "";
+		const label = `∞ auto-continue${promptLabel}${pauseLabel} ${state.runCount}/${state.maxRuns}`;
 		ctx.ui.setStatus(STATUS_KEY, ctx.ui.theme.fg("accent", label));
 	}
 
@@ -77,6 +80,7 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 			const effectivePrompt = buildAutoContinuePrompt(prompt);
 
 			state.enabled = true;
+			state.waitingForInput = false;
 			state.prompt = prompt;
 			state.runCount = 0;
 			state.lastAssistantText = undefined;
@@ -99,6 +103,7 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 		description: "Disable auto-continue mode",
 		handler: async (_args, ctx) => {
 			state.enabled = false;
+			state.waitingForInput = false;
 			state.runCount = 0;
 			state.lastAssistantText = undefined;
 			state.repeatCount = 0;
@@ -118,7 +123,7 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 			}
 
 			ctx.ui.notify(
-				`Auto-continue: on (${state.runCount}/${state.maxRuns})\nPrompt: ${state.prompt || "<default>"}`,
+				`Auto-continue: on${state.waitingForInput ? " (paused for input)" : ""} (${state.runCount}/${state.maxRuns})\nPrompt: ${state.prompt || "<default>"}`,
 				"info",
 			);
 		},
@@ -139,12 +144,19 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 		updateStatus(ctx);
 	});
 
-	pi.on("input", async (event) => {
+	pi.on("input", async (event, ctx) => {
 		if (event.source === "interactive" || event.source === "rpc") {
+			const wasWaitingForInput = state.waitingForInput;
+			state.waitingForInput = false;
 			state.runCount = 0;
 			state.lastAssistantText = undefined;
 			state.repeatCount = 0;
 			persistState();
+			updateStatus(ctx);
+
+			if (wasWaitingForInput && state.enabled) {
+				ctx.ui.notify("Auto-continue resumed", "info");
+			}
 		}
 		return { action: "continue" as const };
 	});
@@ -163,7 +175,15 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 		if (!normalized) return;
 
 		if (text.includes("[NEEDS_USER_INPUT]")) {
-			stop(ctx, "waiting for your input");
+			state.waitingForInput = true;
+			persistState();
+			updateStatus(ctx);
+			ctx.ui.notify("Auto-continue paused: waiting for your input", "info");
+			return;
+		}
+
+		if (state.waitingForInput) {
+			updateStatus(ctx);
 			return;
 		}
 
