@@ -17,7 +17,7 @@ const STATUS_KEY = "auto-continue";
 const DEFAULT_STATE: AutoContinueState = {
 	enabled: false,
 	prompt: "",
-	maxRuns: 50,
+	maxRuns: 20,
 	runCount: 0,
 	lastAssistantText: undefined,
 	repeatCount: 0,
