@@ -82,8 +82,10 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 
 		if (ctx.isIdle()) {
 			pi.sendMessage(message, { triggerTurn: true });
+			ctx.ui.notify("Auto-continue queued", "info");
 		} else {
 			pi.sendMessage(message, { deliverAs: "followUp", triggerTurn: true });
+			ctx.ui.notify("Auto-continue queued as follow-up", "info");
 		}
 	}
 
