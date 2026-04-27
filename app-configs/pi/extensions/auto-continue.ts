@@ -73,6 +73,20 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 		ctx.ui.notify(`Auto-continue stopped: ${reason}`, "info");
 	}
 
+	function queueAutoContinue(ctx: ExtensionContext) {
+		const message = {
+			customType: "auto-continue",
+			content: buildAutoContinuePrompt(state.prompt),
+			display: false,
+		} as const;
+
+		if (ctx.isIdle()) {
+			pi.sendMessage(message, { triggerTurn: true });
+		} else {
+			pi.sendMessage(message, { deliverAs: "followUp", triggerTurn: true });
+		}
+	}
+
 	pi.registerCommand("autocontinue", {
 		description: "Enable auto-continue mode with an optional stored prompt",
 		handler: async (args, ctx) => {
@@ -213,15 +227,6 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 		persistState();
 		updateStatus(ctx);
 
-		pi.sendMessage(
-			{
-				customType: "auto-continue",
-				content: buildAutoContinuePrompt(state.prompt),
-				display: false,
-			},
-			{
-				triggerTurn: true,
-			},
-		);
+		queueAutoContinue(ctx);
 	});
 }
