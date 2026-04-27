@@ -81,6 +81,13 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 			persistState();
 			updateStatus(ctx);
 			ctx.ui.notify("Auto-continue enabled", "success");
+
+			if (ctx.isIdle()) {
+				pi.sendUserMessage(prompt);
+			} else {
+				pi.sendUserMessage(prompt, { deliverAs: "followUp" });
+				ctx.ui.notify("Initial auto-continue prompt queued", "info");
+			}
 		},
 	});
 
