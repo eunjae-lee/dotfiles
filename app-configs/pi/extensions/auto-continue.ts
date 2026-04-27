@@ -42,7 +42,7 @@ function normalizeText(text: string): string {
 function buildAutoContinuePrompt(prompt: string): string {
 	const trimmed = prompt.trim();
 	const base = trimmed || "Continue from where you left off.";
-	return `${base}\n\nAuto-continue instructions:\n- Continue working autonomously as far as possible.\n- Do not ask whether you should continue.\n- If you can continue, continue.\n- If you truly need user input, end your response with exactly [NEEDS_USER_INPUT] and clearly state what you need.\n- If the task is fully complete, end your response with exactly [TASK_COMPLETE].`;
+	return `${base}\n\nAuto-continue instructions:\n- Do not ask whether you should continue.\n- If you can continue autonomously, continue with the next concrete action.\n- If you need user input, ask the specific question now and end your response with exactly [NEEDS_USER_INPUT].\n- If the task is fully complete, end your response with exactly [TASK_COMPLETE].`;
 }
 
 export default function autoContinueExtension(pi: ExtensionAPI) {
@@ -147,16 +147,6 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 			persistState();
 		}
 		return { action: "continue" as const };
-	});
-
-	pi.on("before_agent_start", async (event) => {
-		if (!state.enabled) return;
-
-		return {
-			systemPrompt:
-				event.systemPrompt +
-				`\n\nAuto-continue mode is enabled.\n\nRules:\n- Do not ask the user whether you should continue.\n- If you can continue autonomously, stop naturally; the extension will resume you automatically.\n- If you truly need user input, end your response with exactly [NEEDS_USER_INPUT] and explain what you need.\n- If the task is fully complete, end your response with exactly [TASK_COMPLETE].\n- Avoid filler like "if you want, I can continue".\n- Continue with the next concrete action whenever possible.\n`,
-		};
 	});
 
 	pi.on("agent_end", async (event, ctx) => {
