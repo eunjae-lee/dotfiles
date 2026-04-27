@@ -39,6 +39,12 @@ function normalizeText(text: string): string {
 	return text.replace(/\s+/g, " ").trim().toLowerCase();
 }
 
+function buildAutoContinuePrompt(prompt: string): string {
+	const trimmed = prompt.trim();
+	const base = trimmed || "Continue from where you left off.";
+	return `${base}\n\nAuto-continue instructions:\n- Continue working autonomously as far as possible.\n- Do not ask whether you should continue.\n- If you can continue, continue.\n- If you truly need user input, end your response with exactly [NEEDS_USER_INPUT] and clearly state what you need.\n- If the task is fully complete, end your response with exactly [TASK_COMPLETE].`;
+}
+
 export default function autoContinueExtension(pi: ExtensionAPI) {
 	let state: AutoContinueState = { ...DEFAULT_STATE };
 
@@ -52,7 +58,8 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 			return;
 		}
 
-		const label = `∞ auto-continue ${state.runCount}/${state.maxRuns}`;
+		const promptLabel = state.prompt.trim() ? "" : " default";
+		const label = `∞ auto-continue${promptLabel} ${state.runCount}/${state.maxRuns}`;
 		ctx.ui.setStatus(STATUS_KEY, ctx.ui.theme.fg("accent", label));
 	}
 
@@ -64,13 +71,10 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 	}
 
 	pi.registerCommand("autocontinue", {
-		description: "Enable auto-continue mode with a stored prompt",
+		description: "Enable auto-continue mode with an optional stored prompt",
 		handler: async (args, ctx) => {
 			const prompt = args.trim() || state.prompt.trim();
-			if (!prompt) {
-				ctx.ui.notify("Usage: /autocontinue <prompt>", "warning");
-				return;
-			}
+			const effectivePrompt = buildAutoContinuePrompt(prompt);
 
 			state.enabled = true;
 			state.prompt = prompt;
@@ -83,9 +87,9 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 			ctx.ui.notify("Auto-continue enabled", "success");
 
 			if (ctx.isIdle()) {
-				pi.sendUserMessage(prompt);
+				pi.sendUserMessage(effectivePrompt);
 			} else {
-				pi.sendUserMessage(prompt, { deliverAs: "followUp" });
+				pi.sendUserMessage(effectivePrompt, { deliverAs: "followUp" });
 				ctx.ui.notify("Initial auto-continue prompt queued", "info");
 			}
 		},
@@ -113,7 +117,10 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 				return;
 			}
 
-			ctx.ui.notify(`Auto-continue: on (${state.runCount}/${state.maxRuns})\nPrompt: ${state.prompt}`, "info");
+			ctx.ui.notify(
+				`Auto-continue: on (${state.runCount}/${state.maxRuns})\nPrompt: ${state.prompt || "<default>"}`,
+				"info",
+			);
 		},
 	});
 
@@ -199,7 +206,7 @@ export default function autoContinueExtension(pi: ExtensionAPI) {
 		pi.sendMessage(
 			{
 				customType: "auto-continue",
-				content: state.prompt,
+				content: buildAutoContinuePrompt(state.prompt),
 				display: false,
 			},
 			{
